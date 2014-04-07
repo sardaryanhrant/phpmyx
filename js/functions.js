@@ -383,7 +383,14 @@ function confirmQuery(theForm1, sqlQuery1)
  */
 function checkSqlQuery(theForm)
 {
-    var sqlQuery = theForm.elements['sql_query'];
+    // get the textarea element containing the query
+    if (codemirror_editor) {
+        codemirror_editor.save();
+        var sqlQuery = codemirror_editor.display.input;
+        sqlQuery.value = codemirror_editor.getValue();
+    } else {
+        var sqlQuery = theForm.elements['sql_query'];
+    }
     var isEmpty  = 1;
     var space_re = new RegExp('\\s+');
     if (typeof(theForm.elements['sql_file']) != 'undefined' &&
@@ -1393,6 +1400,7 @@ AJAX.registerOnload('functions.js', function () {
         //hide already existing success message
         var sql_query;
         if (codemirror_inline_editor) {
+            codemirror_inline_editor.save();
             sql_query = codemirror_inline_editor.getValue();
         } else {
             sql_query = $(this).prev().val();
@@ -3838,6 +3846,11 @@ AJAX.registerOnload('functions.js', function () {
     $('#createViewDialog').find('input, select').live('keydown', function (e) {
         if (e.which === 13) { // 13 is the ENTER key
             e.preventDefault();
+
+            // with preventing default, selection by <select> tag
+            // was also prevented in IE
+            $(this).blur();
+
             $(this).closest('.ui-dialog').find('.ui-button:first').click();
         }
     }); // end $.live()

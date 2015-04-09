@@ -290,30 +290,18 @@ The following three scenarios are covered by the Zero Configuration mode:
 Manual configuration
 --------------------
 
-<<<<<<< HEAD
 Please look at your ``./sql/`` directory, where you should find a
-=======
-Please look at your ``./examples/`` directory, where you should find a
->>>>>>> origin/master
 file called *create\_tables.sql*. (If you are using a Windows server,
 pay special attention to :ref:`faq1_23`).
 
 If you already had this infrastructure and:
 
 * upgraded to MySQL 4.1.2 or newer, please use
-<<<<<<< HEAD
   :file:`sql/upgrade_tables_mysql_4_1_2+.sql`.
 * upgraded to phpMyAdmin 4.3.0 or newer from 2.5.0 or newer (<= 4.2.x),
   please use :file:`sql/upgrade_column_info_4_3_0+.sql`.
 
 and then create new tables by importing :file:`sql/create_tables.sql`.
-=======
-  :file:`examples/upgrade_tables_mysql_4_1_2+.sql`.
-* upgraded to phpMyAdmin 4.3.0 or newer from 2.5.0 or newer (<= 4.2.x),
-  please use :file:`examples/upgrade_column_info_4_3_0+.sql`.
-
-and then create new tables by importing :file:`examples/create_tables.sql`.
->>>>>>> origin/master
 
 You can use your phpMyAdmin to create the tables for you. Please be
 aware that you may need special (administrator) privileges to create
@@ -362,11 +350,6 @@ If you have upgraded your phpMyAdmin to 4.3.0 or newer from 2.5.0 or
 newer (<= 4.2.x) and if you use the phpMyAdmin configuration storage, you
 should run the :term:`SQL` script found in
 :file:`sql/upgrade_column_info_4_3_0+.sql`.
-
-If you have upgraded your phpMyAdmin to 4.3.0 or newer from 2.5.0 or
-newer (<= 4.2.x) and if you use the phpMyAdmin configuration storage, you
-should run the :term:`SQL` script found in
-:file:`examples/upgrade_column_info_4_3_0+.sql`.
 
 .. index:: Authentication mode
 

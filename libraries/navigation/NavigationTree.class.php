@@ -161,7 +161,6 @@ class PMA_NavigationTree
     private function _getNavigationDbPos()
     {
         $retval = 0;
-<<<<<<< HEAD
 
         if (empty($GLOBALS['db'])) {
             return $retval;
@@ -190,83 +189,6 @@ class PMA_NavigationTree
             );
 
             return $retval;
-=======
-        if (! empty($GLOBALS['db'])) {
-            /*
-             * @todo describe a scenario where this code is executed
-             */
-            if (! $GLOBALS['cfg']['Server']['DisableIS']) {
-                $query  = "SELECT (COUNT(DB_first_level) DIV %d) * %d ";
-                $query .= "from ( ";
-                $query .= " SELECT distinct SUBSTRING_INDEX(SCHEMA_NAME, ";
-                $query .= " '{$GLOBALS['cfg']['NavigationTreeDbSeparator']}', 1) ";
-                $query .= " DB_first_level ";
-                $query .= " FROM INFORMATION_SCHEMA.SCHEMATA ";
-                $query .= " WHERE `SCHEMA_NAME` < '%s' ";
-                $query .= ") t ";
-
-                $retval = $GLOBALS['dbi']->fetchValue(
-                    sprintf(
-                        $query,
-                        (int)$GLOBALS['cfg']['FirstLevelNavigationItems'],
-                        (int)$GLOBALS['cfg']['FirstLevelNavigationItems'],
-                        PMA_Util::sqlAddSlashes($GLOBALS['db'])
-                    )
-                );
-            } else {
-                $prefixMap = array();
-                if ($GLOBALS['dbs_to_test'] === false) {
-                    $handle = $GLOBALS['dbi']->tryQuery("SHOW DATABASES");
-                    if ($handle !== false) {
-                        while ($arr = $GLOBALS['dbi']->fetchArray($handle)) {
-                            if (strcasecmp($arr[0], $GLOBALS['db']) < 0) {
-                                $prefix = strstr(
-                                    $arr[0],
-                                    $GLOBALS['cfg']['NavigationTreeDbSeparator'],
-                                    true
-                                );
-                                if ($prefix === false) {
-                                    $prefix = $arr[0];
-                                }
-                                $prefixMap[$prefix] = 1;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    $databases = array();
-                    foreach ($GLOBALS['dbs_to_test'] as $db) {
-                        $query = "SHOW DATABASES LIKE '" . $db . "'";
-                        $handle = $GLOBALS['dbi']->tryQuery($query);
-                        if ($handle !== false) {
-                            while ($arr = $GLOBALS['dbi']->fetchArray($handle)) {
-                                $databases[] = $arr[0];
-                            }
-                        }
-                    }
-                    sort($databases);
-                    foreach ($databases as $database) {
-                        if (strcasecmp($database, $GLOBALS['db']) < 0) {
-                            $prefix = strstr(
-                                $database,
-                                $GLOBALS['cfg']['NavigationTreeDbSeparator'],
-                                true
-                            );
-                            if ($prefix === false) {
-                                $prefix = $database;
-                            }
-                            $prefixMap[$prefix] = 1;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-
-                $navItems = (int) $GLOBALS['cfg']['FirstLevelNavigationItems'];
-                $retval = floor((count($prefixMap) / $navItems)) * $navItems;
-            }
->>>>>>> origin/master
         }
 
         $prefixMap = array();
@@ -491,11 +413,7 @@ class PMA_NavigationTree
 
         $table = $container->getChild($path[0], true);
         if ($table === false) {
-<<<<<<< HEAD
             if (!$db->getPresence('tables', $path[0])) {
-=======
-            if (!$db->getPresence('tables', $path[0], true)) {
->>>>>>> origin/master
                 return false;
             }
 
@@ -711,11 +629,7 @@ class PMA_NavigationTree
     public function groupNode($node)
     {
         if ($node->type != Node::CONTAINER
-<<<<<<< HEAD
             || ! $GLOBALS['cfg']['NavigationTreeEnableExpansion']
-=======
-            || $GLOBALS['cfg']['NavigationTreeDisableDatabaseExpansion']
->>>>>>> origin/master
         ) {
             return;
         }
@@ -867,12 +781,8 @@ class PMA_NavigationTree
         $retval .= '<div class="clearfloat"></div>';
         $retval .= '<ul>';
         $retval .= $this->_fastFilterHtml($this->_tree);
-<<<<<<< HEAD
         if ($GLOBALS['cfg']['NavigationTreeEnableExpansion']
         ) {
-=======
-        if (! $GLOBALS['cfg']['NavigationTreeDisableDatabaseExpansion']) {
->>>>>>> origin/master
             $retval .= $this->_controls();
         }
         $retval .= '</ul>';
@@ -1133,7 +1043,6 @@ class PMA_NavigationTree
                 $retval .= "<i>";
             }
 
-<<<<<<< HEAD
             $divClass = '';
 
             if (isset($node->links['icon']) && !empty($node->links['icon'])) {
@@ -1152,15 +1061,10 @@ class PMA_NavigationTree
             $retval .= "<div class='block " . $divClass . "'>";
 
             if (isset($node->links['icon']) && !empty($node->links['icon'])) {
-=======
-            $retval .= "<div class='block'>";
-            if (isset($node->links['icon'])) {
->>>>>>> origin/master
                 $args = array();
                 foreach ($node->parents(true) as $parent) {
                     $args[] = urlencode($parent->real_name);
                 }
-<<<<<<< HEAD
 
                 foreach ($icons as $key => $icon) {
                     $link = vsprintf($iconLinks[$key], $args);
@@ -1170,14 +1074,6 @@ class PMA_NavigationTree
                     } else {
                         $retval .= "<a href='$link'>{$icon}</a>";
                     }
-=======
-                $link = vsprintf($node->links['icon'], $args);
-                if ($linkClass != '') {
-                    $retval .= "<a class='$linkClass' href='$link'>";
-                    $retval .= "{$node->icon}</a>";
-                } else {
-                    $retval .= "<a href='$link'>{$node->icon}</a>";
->>>>>>> origin/master
                 }
             } else {
                 $retval .= "<u>{$node->icon}</u>";

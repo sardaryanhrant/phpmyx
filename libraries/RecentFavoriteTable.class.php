@@ -297,22 +297,14 @@ class PMA_RecentFavoriteTable
      * @param string $db    database
      * @param string $table table
      *
-<<<<<<< HEAD
      * @return boolean|PMA_Message True if invalid and removed, False if not invalid,
-=======
-     * @return booean|PMA_Message True if invalid and removed, False if not invalid,
->>>>>>> origin/master
      *                            PMA_Message if error while removing
      */
     public function removeIfInvalid($db, $table)
     {
         foreach ($this->_tables as $tbl) {
             if ($tbl['db'] == $db && $tbl['table'] == $table) {
-<<<<<<< HEAD
                 // TODO Figure out a better way to find the existence of a table
-=======
-                // TODO Figure out a better way to find the existance of a table
->>>>>>> origin/master
                 if (! $GLOBALS['dbi']->getColumns($tbl['db'], $tbl['table'])) {
                     return $this->remove($tbl['db'], $tbl['table']);
                 }

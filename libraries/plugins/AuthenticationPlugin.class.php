@@ -91,18 +91,10 @@ abstract class AuthenticationPlugin
      *
      * @param string $password New password to set
      *
-<<<<<<< HEAD
      * @return void 
      */
     public function handlePasswordChange($password)
     {
-=======
-     * @return array Additional URL parameters.
-     */
-    public function handlePasswordChange($password)
-    {
-        return array();
->>>>>>> origin/master
     }
 }
 ?>

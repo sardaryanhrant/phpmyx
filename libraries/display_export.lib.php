@@ -803,11 +803,7 @@ function PMA_getHtmlForAliasModalDialog($db = '', $table = '')
         }
         $db_input_html .= '<input type="text" name="' . $name_attr . '" '
             . 'placeholder="' . $db . ' alias" class="' . $class . '" '
-<<<<<<< HEAD
             . 'id="' . $id_attr . '" value="' . $val . '" disabled="disabled"/>';
-=======
-            . 'id="' . $id_attr . '" value="' . $val . '"/>';
->>>>>>> origin/master
         $db_html .= '<option value="' . $id_attr . '">' . $db . '</option>';
         $table_html .= '<span id="' . $id_attr . '_tables" class="' . $class . '">';
         $table_html .= '<select id="' . $id_attr . '_tables_select" '
@@ -831,12 +827,8 @@ function PMA_getHtmlForAliasModalDialog($db = '', $table = '')
             }
             $table_input_html .= '<input type="text" value="' . $val . '" '
                 . 'name="' . $name_attr . '" id="' . $id_attr . '" '
-<<<<<<< HEAD
                 . 'placeholder="' . $table . ' alias" class="' . $class . '" '
                 . 'disabled="disabled"/>';
-=======
-                . 'placeholder="' . $table . ' alias" class="' . $class . '"/>';
->>>>>>> origin/master
             $table_html .= '<option value="' . $id_attr . '">'
                 . $table . '</option>';
             $col_html .= '<table id="' . $id_attr . '_cols" class="'

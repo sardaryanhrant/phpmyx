@@ -214,11 +214,7 @@ AJAX.registerOnload('tbl_gis_visualization.js', function () {
         }
     });
 
-<<<<<<< HEAD
     $(document).on('mousewheel', '#placeholder', function (event, delta) {
-=======
-    $('#placeholder').live('mousewheel', function (event, delta) {
->>>>>>> origin/master
         event.preventDefault();
         var relCoords = getRelativeCoords(event);
         if (delta > 0) {

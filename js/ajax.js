@@ -165,11 +165,7 @@ var AJAX = {
         // Show lock icon if locked targets is not empty.
         // otherwise remove lock icon
         if (!jQuery.isEmptyObject(AJAX.lockedTargets)) {
-<<<<<<< HEAD
             $('#lock_page_icon').html(PMA_getImage('s_lock.png',PMA_messages.strLockToolTip).toString());
-=======
-            $('#lock_page_icon').html(PMA_getImage('s_lock.png').toString());
->>>>>>> origin/master
         } else {
             $('#lock_page_icon').html('');
         }
@@ -608,7 +604,6 @@ AJAX.registerOnload('functions.js', function () {
             $(this).data('onsubmit', this.onsubmit).attr('onsubmit', '');
         }
     });
-<<<<<<< HEAD
 
     /**
      * Workaround for passing submit button name,value on ajax form submit
@@ -626,8 +621,6 @@ AJAX.registerOnload('functions.js', function () {
         }));
     });
 
-=======
->>>>>>> origin/master
     /**
      * Attach event listener to events when user modify visible
      * Input or Textarea fields to make changes in forms

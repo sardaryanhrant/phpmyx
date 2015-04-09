@@ -237,7 +237,6 @@ class PMA_DisplayResults
             'Text_Plain'
         );
         $sql_highlighting_data = array(
-<<<<<<< HEAD
             'libraries/plugins/transformations/output/Text_Plain_Sql.class.php',
             'Text_Plain_Sql',
             'Text_Plain'
@@ -250,10 +249,6 @@ class PMA_DisplayResults
         $link_data = array(
             'libraries/plugins/transformations/Text_Plain_Link.class.php',
             'Text_Plain_Link',
-=======
-            'libraries/plugins/transformations/output/Text_Plain_Formatted.class.php',
-            'Text_Plain_Formatted',
->>>>>>> origin/master
             'Text_Plain'
         );
         $this->transformation_info = array(
@@ -409,7 +404,6 @@ class PMA_DisplayResults
 
 
     /**
-<<<<<<< HEAD
      * Defines the parts to display for the results of a SQL query
      *
      * @param string  $displayParts the parts to display (see a few
@@ -419,31 +413,6 @@ class PMA_DisplayResults
      *                              LIMIT clause
      *                              (just a copy of $unlim_num_rows if it exists,
      *                              elsecomputed inside this function)
-=======
-     * Defines the display mode to use for the results of a SQL query
-     *
-     * It uses a synthetic string that contains all the required information.
-     * In this string:
-     *   - the first two characters stand for the action to do while
-     *     clicking on the "edit" link (e.g. 'ur' for update a row, 'nn' for no
-     *     edit link...);
-     *   - the next two characters stand for the action to do while
-     *     clicking on the "delete" link (e.g. 'kp' for kill a process, 'nn' for
-     *     no delete link...);
-     *   - the next characters are boolean values (1/0) and respectively stand
-     *     for sorting links, navigation bar, "insert a new row" link, the
-     *     bookmark feature, the expand/collapse text/blob fields button and
-     *     the "display printable view" option.
-     *     Of course '0'/'1' means the feature won't/will be enabled.
-     *
-     * @param string  &$the_disp_mode the synthetic value for display_mode (see a few
-     *                                lines above for explanations)
-     * @param integer &$the_total     the total number of rows returned by the SQL
-     *                                 query without any programmatically appended
-     *                                 LIMIT clause
-     *                                 (just a copy of $unlim_num_rows if it exists,
-     *                                 elsecomputed inside this function)
->>>>>>> origin/master
      *
      * @return array    an array with explicit indexes for all the display
      *                   elements
@@ -509,55 +478,12 @@ class PMA_DisplayResults
                 $this->__get('sql_query'), $which
             );
 
-<<<<<<< HEAD
             $bIsProcessList = isset($which[1]);
             if ($bIsProcessList) {
                 $str = ' ' . strtoupper($which[1]);
                 $bIsProcessList = $bIsProcessList
                     && strpos($str, 'PROCESSLIST') > 0;
             }
-=======
-            } elseif ($this->__get('is_show')) {
-                // 2.2 Statement is a "SHOW..."
-                /**
-                 * 2.2.1
-                 * @todo defines edit/delete links depending on show statement
-                 */
-                preg_match(
-                    '@^SHOW[[:space:]]+(VARIABLES|(FULL[[:space:]]+)?'
-                    . 'PROCESSLIST|STATUS|TABLE|GRANTS|CREATE|LOGS|DATABASES|FIELDS'
-                    . ')@i',
-                    $this->__get('sql_query'), $which
-                );
-
-                $bIsProcessList = isset($which[1]);
-                if ($bIsProcessList) {
-                    $str = ' ' . strtoupper($which[1]);
-                    $bIsProcessList = $bIsProcessList
-                        && strpos($str, 'PROCESSLIST') > 0;
-                }
-
-                if ($bIsProcessList) {
-                    // no edit link
-                    $do_display['edit_lnk'] = self::NO_EDIT_OR_DELETE;
-                    // "kill process" type edit link
-                    $do_display['del_lnk']  = self::KILL_PROCESS;
-                } else {
-                    // Default case -> no links
-                    // no edit link
-                    $do_display['edit_lnk'] = self::NO_EDIT_OR_DELETE;
-                    // no delete link
-                    $do_display['del_lnk']  = self::NO_EDIT_OR_DELETE;
-                }
-                unset($bIsProcessList);
-                // 2.2.2 Other settings
-                $do_display['sort_lnk']  = (string) '0';
-                $do_display['nav_bar']   = (string) '0';
-                $do_display['ins_row']   = (string) '0';
-                $do_display['bkm_form']  = (string) '1';
-                $do_display['text_btn']  = (string) '1';
-                $do_display['pview_lnk'] = (string) '1';
->>>>>>> origin/master
 
             if ($bIsProcessList) {
                 // no edit link
@@ -626,13 +552,8 @@ class PMA_DisplayResults
         // 3. Gets the total number of rows if it is unknown
         if (isset($unlim_num_rows) && $unlim_num_rows != '') {
             $the_total = $unlim_num_rows;
-<<<<<<< HEAD
         } elseif ((($displayParts['nav_bar'] == '1')
             || ($displayParts['sort_lnk'] == '1'))
-=======
-        } elseif ((($do_display['nav_bar'] == '1')
-            || ($do_display['sort_lnk'] == '1'))
->>>>>>> origin/master
             && (/*overload*/mb_strlen($db) && !empty($table))
         ) {
             $the_total   = PMA_Table::countRecords($db, $table);
@@ -640,13 +561,8 @@ class PMA_DisplayResults
 
         // if for COUNT query, number of rows returned more than 1 (may be being used GROUP BY)
         if ($this->__get('is_count') && isset($num_rows) && $num_rows > 1) {
-<<<<<<< HEAD
             $displayParts['nav_bar']   = (string) '1';
             $displayParts['sort_lnk']  = (string) '1';
-=======
-            $do_display['nav_bar']   = (string) '1';
-            $do_display['sort_lnk']  = (string) '1';
->>>>>>> origin/master
         }
         // 4. If navigation bar or sorting fields names URLs should be
         //    displayed but there is only one row, change these settings to
@@ -1001,26 +917,17 @@ class PMA_DisplayResults
             . '<input type="hidden" name="sql_query" value="'
             . $html_sql_query . '" />'
             . '<input type="hidden" name="pos" value="0" />'
-<<<<<<< HEAD
             . '<input type="hidden" name="is_browse_distinct" value="'
             . $this->__get('is_browse_distinct') . '" />'
-=======
->>>>>>> origin/master
             . '<input type="hidden" name="session_max_rows" value="'
             . (! $showing_all ? 'all' : $GLOBALS['cfg']['MaxRows']) . '" />'
             . '<input type="hidden" name="goto" value="' . $this->__get('goto')
             . '" />'
-<<<<<<< HEAD
             . '<input type="checkbox" name="navig"'
             . ' id="showAll_' . $this->__get('unique_id') . '" class="showAllRows"'
             . (! $showing_all ? '' : ' checked="checked"') . ' value="all" />'
             . '<label for="showAll_' . $this->__get('unique_id') . '">'
             . __('Show all') . '</label>'
-=======
-            . '<input type="checkbox" name="navig" id="navig" class="showAllRows"'
-            . (! $showing_all ? '' : ' checked="checked"') . ' value="all" />'
-            . '<label for="navig">' . __('Show all') . '</label>'
->>>>>>> origin/master
             . '</form>'
             . '</td>';
     } // end of the '_getShowAllButtonForTableNavigation()' function
@@ -1143,11 +1050,7 @@ class PMA_DisplayResults
     /**
      * Get the headers of the results table
      *
-<<<<<<< HEAD
      * @param array   &$displayParts               which elements to display
-=======
-     * @param array   &$is_display                 which elements to display
->>>>>>> origin/master
      * @param array   $analyzed_sql                the analyzed query
      * @param string  $sort_expression             sort expression
      * @param string  $sort_expression_nodirection sort expression
@@ -1163,11 +1066,7 @@ class PMA_DisplayResults
      * @see    getTable()
      */
     private function _getTableHeaders(
-<<<<<<< HEAD
         &$displayParts, $analyzed_sql,
-=======
-        &$is_display, $analyzed_sql,
->>>>>>> origin/master
         $sort_expression = '', $sort_expression_nodirection = '',
         $sort_direction = '', $is_limited_display = false
     ) {
@@ -1253,24 +1152,7 @@ class PMA_DisplayResults
 
         // 2.0.1 Prepare Display column comments if enabled
         //       ($GLOBALS['cfg']['ShowBrowseComments']).
-<<<<<<< HEAD
         $comments_map = $this->_getTableCommentsArray($analyzed_sql);
-=======
-        //       Do not show comments, if using horizontalflipped mode,
-        //       because of space usage
-        $comments_map = $this->_getTableCommentsArray($direction, $analyzed_sql);
-
-        if ($GLOBALS['cfgRelation']['commwork']
-            && $GLOBALS['cfgRelation']['mimework']
-            && $GLOBALS['cfg']['BrowseMIME']
-            && ! $_SESSION['tmpval']['hide_transformation']
-        ) {
-            $this->__set(
-                'mime_map',
-                PMA_getMIME($this->__get('db'), $this->__get('table'))
-            );
-        }
->>>>>>> origin/master
 
         // See if we have to highlight any header fields of a WHERE query.
         // Uses SQL-Parser results.
@@ -1303,11 +1185,7 @@ class PMA_DisplayResults
                     = $this->_getOrderLinkAndSortedHeaderHtml(
                         $fields_meta[$i], $sort_expression,
                         $sort_expression_nodirection, $i, $unsorted_sql_query,
-<<<<<<< HEAD
                         $session_max_rows, $comments,
-=======
-                        $session_max_rows, $direction, $comments,
->>>>>>> origin/master
                         $sort_direction, $col_visib,
                         $col_visib[$j]
                     );
@@ -1767,12 +1645,8 @@ class PMA_DisplayResults
             . '<br />'
             . PMA_Util::getCheckbox(
                 'display_blob', __('Show BLOB contents'),
-<<<<<<< HEAD
                 ! empty($_SESSION['tmpval']['display_blob']), false,
                 'display_blob_' . $this->__get('unique_id')
-=======
-                ! empty($_SESSION['tmpval']['display_blob']), false
->>>>>>> origin/master
             )
             . '</div>';
 
@@ -1961,11 +1835,7 @@ class PMA_DisplayResults
      */
     private function _getOrderLinkAndSortedHeaderHtml(
         $fields_meta, $sort_expression, $sort_expression_nodirection,
-<<<<<<< HEAD
         $column_index, $unsorted_sql_query, $session_max_rows,
-=======
-        $column_index, $unsorted_sql_query, $session_max_rows, $direction,
->>>>>>> origin/master
         $comments, $sort_direction, $col_visib, $col_visib_j
     ) {
 
@@ -2298,10 +2168,6 @@ class PMA_DisplayResults
      *
      * @param string  $order_img       the sort order image
      * @param integer $col_index       the index of the column
-<<<<<<< HEAD
-=======
-     * @param string  $direction       the display direction
->>>>>>> origin/master
      * @param array   $fields_meta     set of field properties
      * @param string  $order_url       the url for sort
      * @param string  $multi_order_url the url for sort
@@ -2313,11 +2179,7 @@ class PMA_DisplayResults
      * @see     _getTableHeaders()
      */
     private function _getSortOrderLink(
-<<<<<<< HEAD
         $order_img, $col_index,
-=======
-        $order_img, $col_index, $direction,
->>>>>>> origin/master
         $fields_meta, $order_url, $multi_order_url
     ) {
         $order_link_params = array();
@@ -2625,7 +2487,6 @@ class PMA_DisplayResults
 
         if (isset($meta->mimetype)) {
             $classes[] = preg_replace('/\//', '_', $meta->mimetype);
-<<<<<<< HEAD
         }
 
         if ($condition_field) {
@@ -2644,25 +2505,6 @@ class PMA_DisplayResults
             $classes[] = 'transformed';
         }
 
-=======
-        }
-
-        if ($condition_field) {
-            $classes[] = 'condition';
-        }
-
-        if ($is_field_truncated) {
-            $classes[] = 'truncated';
-        }
-
-        $mime_map = $this->__get('mime_map');
-        if ($transformation_plugin != $default_function
-            || !empty($mime_map[$meta->name]['input_transformation'])
-        ) {
-            $classes[] = 'transformed';
-        }
-
->>>>>>> origin/master
         // Define classes to be added to this data field based on the type of data
         $matches = array(
             'enum' => 'enum',
@@ -2826,11 +2668,7 @@ class PMA_DisplayResults
                 list($del_url, $del_str, $js_conf)
                     = $this->_getDeleteAndKillLinks(
                         $where_clause, $clause_is_unique,
-<<<<<<< HEAD
                         $url_sql_query, $displayParts['del_lnk'],
-=======
-                        $url_sql_query, $is_display['del_lnk'],
->>>>>>> origin/master
                         $row
                     );
 
@@ -2880,25 +2718,8 @@ class PMA_DisplayResults
 
             } // end if (3)
 
-<<<<<<< HEAD
             $table_body_html .= '</tr>';
             $table_body_html .= "\n";
-=======
-            if ($directionCondition) {
-                $table_body_html .= '</tr>';
-            } // end if
-
-            // 4. Gather links of del_urls and edit_urls in an array for later
-            //    output
-            $this->_gatherLinksForLaterOutputs(
-                $row_no, $is_display, $where_clause, $where_clause_html, $js_conf,
-                $del_url, $del_str, $edit_anchor_class, $edit_url,
-                $edit_str, $copy_url, $copy_str, $alternating_color_class,
-                $condition_array
-            );
-
-            $table_body_html .= $directionCondition ? "\n" : '';
->>>>>>> origin/master
             $row_no++;
 
         } // end while
@@ -3096,53 +2917,12 @@ class PMA_DisplayResults
                 } // end if transformation is set
             } // end if mime/transformation works.
 
-<<<<<<< HEAD
 
             // Check whether the field needs to display with syntax highlighting
 
             $dbLower = /*overload*/mb_strtolower($meta->db);
             $tblLower = /*overload*/mb_strtolower($meta->orgtable);
             $nameLower = /*overload*/mb_strtolower($meta->orgname);
-=======
-            $_url_params = array(
-                'db'            => $this->__get('db'),
-                'table'         => $this->__get('table'),
-                'where_clause'  => $where_clause,
-                'transform_key' => $meta->name,
-            );
-
-            $unique_conditions = PMA_Util::getUniqueCondition(
-                $dt_result,
-                $this->__get('fields_cnt'),
-                $this->__get('fields_meta'),
-                $row,
-                false,
-                $this->__get('table')
-            );
-
-            $transform_url_params = array(
-                'db'            => $this->__get('db'),
-                'table'         => $this->__get('table'),
-                'where_clause'  => $unique_conditions[0],
-                'transform_key' => $meta->name
-            );
-
-            if (! empty($sql_query)) {
-                $_url_params['sql_query'] = $url_sql_query;
-                $transform_url_params['sql_query'] = $url_sql_query;
-            }
-
-            $transform_options['wrapper_link']
-                = PMA_URL_getCommon($transform_url_params);
-
-            $vertical_display = $this->__get('vertical_display');
-
-            // Check whether the field needs to display with syntax highlighting
-
-            $dbLower = /*overload*/mb_strtolower($this->__get('db'));
-            $tblLower = /*overload*/mb_strtolower($this->__get('table'));
-            $nameLower = /*overload*/mb_strtolower($meta->name);
->>>>>>> origin/master
             if (! empty($this->transformation_info[$dbLower][$tblLower][$nameLower])
                 && (trim($row[$i]) != '')
                 && ! $_SESSION['tmpval']['hide_transformation']
@@ -3158,17 +2938,11 @@ class PMA_DisplayResults
                     : ''
                 );
 
-                $dbLower = /*overload*/mb_strtolower($this->__get('db'));
                 $meta->mimetype = str_replace(
                     '_', '/',
                     $this->transformation_info[$dbLower]
-<<<<<<< HEAD
                     [/*overload*/mb_strtolower($meta->orgtable)]
                     [/*overload*/mb_strtolower($meta->orgname)][2]
-=======
-                    [/*overload*/mb_strtolower($this->__get('table'))]
-                    [/*overload*/mb_strtolower($meta->name)][2]
->>>>>>> origin/master
                 );
 
             }
@@ -3181,11 +2955,7 @@ class PMA_DisplayResults
             ) {
 
                 $linking_url = $this->_getSpecialLinkUrl(
-<<<<<<< HEAD
                     $row[$i], $row_info, /*overload*/mb_strtolower($meta->orgname)
-=======
-                    $row[$i], $row_info, /*overload*/mb_strtolower($meta->name)
->>>>>>> origin/master
                 );
                 include_once
                     "libraries/plugins/transformations/Text_Plain_Link.class.php";
@@ -3293,120 +3063,6 @@ class PMA_DisplayResults
 
     } // end of the '_getRowValues()' function
 
-<<<<<<< HEAD
-=======
-
-    /**
-     * Gather delete/edit url links for further outputs
-     *
-     * @param integer $row_no                  the index of current row
-     * @param array   $is_display              which elements to display
-     * @param string  $where_clause            where clause
-     * @param string  $where_clause_html       the html encoded where clause
-     * @param string  $js_conf                 text for the JS confirmation
-     * @param string  $del_url                 the url for delete row
-     * @param string  $del_str                 the label for delete row
-     * @param string  $edit_anchor_class       the class for html element for edit
-     * @param string  $edit_url                the url for edit row
-     * @param string  $edit_str                the label for edit row
-     * @param string  $copy_url                the url for copy row
-     * @param string  $copy_str                the label for copy row
-     * @param string  $alternating_color_class class for display two colors in rows
-     * @param array   $condition_array         array of keys
-     *                                         (primary,unique,condition)
-     *
-     * @return  void
-     *
-     * @access  private
-     *
-     * @see     _getTableBody()
-     */
-    private function _gatherLinksForLaterOutputs(
-        $row_no, $is_display, $where_clause, $where_clause_html, $js_conf,
-        $del_url, $del_str, $edit_anchor_class, $edit_url, $edit_str,
-        $copy_url, $copy_str, $alternating_color_class, $condition_array
-    ) {
-
-        $vertical_display = $this->__get('vertical_display');
-
-        if (! isset($vertical_display['edit'][$row_no])) {
-            $vertical_display['edit'][$row_no]       = '';
-            $vertical_display['copy'][$row_no]       = '';
-            $vertical_display['delete'][$row_no]     = '';
-            $vertical_display['row_delete'][$row_no] = '';
-        }
-
-        $vertical_class = ' row_' . $row_no;
-        if ($GLOBALS['cfg']['BrowsePointerEnable'] == true) {
-            $vertical_class .= ' vpointer';
-        }
-
-        if ($GLOBALS['cfg']['BrowseMarkerEnable'] == true) {
-            $vertical_class .= ' vmarker';
-        }
-
-        if (!empty($del_url)
-            && ($is_display['del_lnk'] != self::KILL_PROCESS)
-        ) {
-
-            $vertical_display['row_delete'][$row_no]
-                .= $this->_getCheckboxForMultiRowSubmissions(
-                    $del_url, $is_display, $row_no, $where_clause_html,
-                    $condition_array, '[%_PMA_CHECKBOX_DIR_%]',
-                    $alternating_color_class . $vertical_class
-                );
-
-        } else {
-            unset($vertical_display['row_delete'][$row_no]);
-        }
-
-        if (isset($edit_url)) {
-
-            $vertical_display['edit'][$row_no] .= $this->_getEditLink(
-                $edit_url,
-                $alternating_color_class . ' ' . $edit_anchor_class
-                . $vertical_class, $edit_str,
-                $where_clause,
-                $where_clause_html
-            );
-
-        } else {
-            unset($vertical_display['edit'][$row_no]);
-        }
-
-        if (isset($copy_url)) {
-
-            $vertical_display['copy'][$row_no] .= $this->_getCopyLink(
-                $copy_url, $copy_str, $where_clause, $where_clause_html,
-                $alternating_color_class . $vertical_class
-            );
-
-        } else {
-            unset($vertical_display['copy'][$row_no]);
-        }
-
-        if (isset($del_url)) {
-
-            if (! isset($js_conf)) {
-                $js_conf = '';
-            }
-
-            $vertical_display['delete'][$row_no]
-                .= $this->_getDeleteLink(
-                    $del_url, $del_str, $js_conf,
-                    $alternating_color_class . $vertical_class
-                );
-
-        } else {
-            unset($vertical_display['delete'][$row_no]);
-        }
-
-        $this->__set('vertical_display', $vertical_display);
-
-    } // end of the '_gatherLinksForLaterOutputs()' function
-
-
->>>>>>> origin/master
     /**
      * Get link for display special schema links
      *
@@ -3436,7 +3092,6 @@ class PMA_DisplayResults
             $linking_url_params[$link_relations['link_param'][0]] = $sql;
         }
 
-<<<<<<< HEAD
         $divider = strpos($link_relations['default_page'], '?') ? '&' : '?';
         if (empty($link_relations['link_dependancy_params'])) {
             return $link_relations['default_page']
@@ -3460,46 +3115,11 @@ class PMA_DisplayResults
             // to the type of the routine, url param changes
             if (empty($row_info['routine_type'])) {
                 continue;
-=======
-        if (empty($link_relations['link_dependancy_params'])) {
-            return $link_relations['default_page']
-            . PMA_URL_getCommon($linking_url_params);
-        }
-
-        foreach ($link_relations['link_dependancy_params'] as $new_param) {
-
-            // If param_info is an array, set the key and value
-            // from that array
-            if (is_array($new_param['param_info'])) {
-                $linking_url_params[$new_param['param_info'][0]]
-                    = $new_param['param_info'][1];
-                continue;
-            }
-
-            $linking_url_params[$new_param['param_info']]
-                = $row_info[/*overload*/mb_strtolower($new_param['column_name'])];
-
-            // Special case 1 - when executing routines, according
-            // to the type of the routine, url param changes
-            if (empty($row_info['routine_type'])) {
-                continue;
-            }
-
-            $lowerRoutineType = strtolower($row_info['routine_type']);
-            if ($lowerRoutineType == self::ROUTINE_PROCEDURE
-                || $lowerRoutineType == self::ROUTINE_FUNCTION
-            ) {
-                $linking_url_params['edit_item'] = 1;
->>>>>>> origin/master
             }
         }
 
         return $link_relations['default_page']
-<<<<<<< HEAD
             . PMA_URL_getCommon($linking_url_params, 'html', $divider);
-=======
-            . PMA_URL_getCommon($linking_url_params);
->>>>>>> origin/master
     }
 
 
@@ -3594,19 +3214,10 @@ class PMA_DisplayResults
 
 
     /**
-<<<<<<< HEAD
      * Get HTML for repeating headers
      *
      * @param array $vertical_display information used with vertical
      *                                display mode
-=======
-     * Prepare vertical display mode necessary HTML stuff
-     *
-     * @param array   $vertical_display   information used with vertical
-     *                                    display mode
-     * @param integer $row_no             the index of current row
-     * @param boolean $directionCondition the directional condition
->>>>>>> origin/master
      *
      * @return  string  $header_html    html content
      *
@@ -3864,11 +3475,7 @@ class PMA_DisplayResults
      * @see     _getTableBody()
      */
     private function _getPlacedLinks(
-<<<<<<< HEAD
         $dir, $del_url, $displayParts, $row_no, $where_clause, $where_clause_html,
-=======
-        $dir, $del_url, $is_display, $row_no, $where_clause, $where_clause_html,
->>>>>>> origin/master
         $condition_array, $edit_url, $copy_url,
         $edit_anchor_class, $edit_str, $copy_str, $del_str, $js_conf
     ) {
@@ -4032,10 +3639,6 @@ class PMA_DisplayResults
         if (! isset($column) || is_null($column)) {
             $cell = $this->_buildNullDisplay($class, $condition_field, $meta);
             return $cell;
-<<<<<<< HEAD
-        }
-
-=======
         }
 
         if ($column == '') {
@@ -4170,294 +3773,11 @@ class PMA_DisplayResults
             return $cell;
         }
 
->>>>>>> origin/master
-        if ($column == '') {
-            $cell = $this->_buildEmptyDisplay($class, $condition_field, $meta);
-            return $cell;
-        }
-<<<<<<< HEAD
-
-        // Display as [GEOMETRY - (size)]
-        if ($_SESSION['tmpval']['geoOption'] == self::GEOMETRY_DISP_GEOM) {
-            $geometry_text = $this->_handleNonPrintableContents(
-                strtoupper(self::GEOMETRY_FIELD),
-                (isset($column) ? $column : ''), $transformation_plugin,
-                $transform_options, $default_function, $meta
-            );
-
-            $cell = $this->_buildValueDisplay(
-                $class, $condition_field, $geometry_text
-=======
-
-        // Cut all fields to $GLOBALS['cfg']['LimitChars']
-        // (unless it's a link-type transformation or binary)
-        if (!(gettype($transformation_plugin) === "object"
-            && strpos($transformation_plugin->getName(), 'Link') !== false)
-            && !stristr($field_flags, self::BINARY_FIELD)
-        ) {
-            $is_field_truncated = $this->_getPartialText($column);
-        }
-
-        $formatted = false;
-        if (isset($meta->_type) && $meta->_type === MYSQLI_TYPE_BIT) {
-
-            $column = PMA_Util::printableBitValue(
-                $column, $meta->length
-            );
-
-            // some results of PROCEDURE ANALYSE() are reported as
-            // being BINARY but they are quite readable,
-            // so don't treat them as BINARY
-        } elseif (stristr($field_flags, self::BINARY_FIELD)
-            && !(isset($is_analyse) && $is_analyse)
-        ) {
-            // we show the BINARY or BLOB message and field's size
-            // (or maybe use a transformation)
-            $binary_or_blob = self::BLOB_FIELD;
-            if ($meta->type === self::STRING_FIELD) {
-                $binary_or_blob = self::BINARY_FIELD;
-            }
-            $column = $this->_handleNonPrintableContents(
-                $binary_or_blob, $column, $transformation_plugin,
-                $transform_options, $default_function,
-                $meta, $_url_params, $is_field_truncated
-            );
-            $class = $this->_addClass(
-                $class, $condition_field, $meta, '',
-                $is_field_truncated, $transformation_plugin, $default_function
-            );
-            $result = strip_tags($column);
-            // disable inline grid editing
-            // if binary or blob data is not shown
-            if (stristr($result, $binary_or_blob)) {
-                $class = str_replace('grid_edit', '', $class);
-            }
-            $formatted = true;
-
-        } elseif (((substr($meta->type, 0, 9) == self::TIMESTAMP_FIELD)
-            || ($meta->type == self::DATETIME_FIELD)
-            || ($meta->type == self::TIME_FIELD))
-            && (/*overload*/mb_strpos($column, ".") !== false) // micro seconds delimiter
-        ) {
-            $column = PMA_Util::addMicroseconds($column);
-        }
-
-        if ($formatted) {
-            $cell = $this->_buildValueDisplay(
-                $class, $condition_field, $column
->>>>>>> origin/master
-            );
-            return $cell;
-        }
-
-<<<<<<< HEAD
-        if ($_SESSION['tmpval']['geoOption'] == self::GEOMETRY_DISP_WKT) {
-            // Prepare in Well Known Text(WKT) format.
-            $where_comparison = ' = ' . $column;
-
-            // Convert to WKT format
-            $wktval = PMA_Util::asWKT($column);
-            $is_field_truncated = $this->_getPartialText($wktval);
-
-            $cell = $this->_getRowData(
-                $class, $condition_field, $analyzed_sql, $meta, $map,
-                $wktval, $transformation_plugin, $default_function, '',
-                $where_comparison, $transform_options,
-                $is_field_truncated
-            );
-            return $cell;
-        }
-
-        // Prepare in  Well Known Binary (WKB) format.
-
-        if ($_SESSION['tmpval']['display_binary']) {
-            $where_comparison = ' = ' . $column;
-
-            $wkbval = substr(bin2hex($column), 8);
-            $is_field_truncated = $this->_getPartialText($wkbval);
-
-            $cell = $this->_getRowData(
-                $class, $condition_field,
-                $analyzed_sql, $meta, $map, $wkbval,
-                $transformation_plugin, $default_function, '',
-                $where_comparison, $transform_options,
-                $is_field_truncated
-            );
-            return $cell;
-        }
-
-        $wkbval = $this->_handleNonPrintableContents(
-            self::BINARY_FIELD, $column, $transformation_plugin,
-            $transform_options, $default_function, $meta,
-            $_url_params
-        );
-
-        $cell = $this->_buildValueDisplay(
-            $class, $condition_field, $wkbval
-        );
-=======
-        // transform functions may enable no-wrapping:
-        $function_nowrap = 'applyTransformationNoWrap';
-
-        $bool_nowrap = (($default_function != $transformation_plugin)
-            && function_exists($transformation_plugin->$function_nowrap()))
-            ? $transformation_plugin->$function_nowrap($transform_options)
-            : false;
-
-        // do not wrap if date field type
-        $nowrap = (preg_match('@DATE|TIME@i', $meta->type)
-            || $bool_nowrap) ? ' nowrap' : '';
-
-        $where_comparison = ' = \''
-            . PMA_Util::sqlAddSlashes($column)
-            . '\'';
-
-        $cell = $this->_getRowData(
-            $class, $condition_field,
-            $analyzed_sql, $meta, $map, $column,
-            $transformation_plugin, $default_function, $nowrap,
-            $where_comparison, $transform_options,
-            $is_field_truncated
-        );
-
-        return $cell;
-
-    } // end of the '_getDataCellForNonNumericColumns()' function
-
-    /**
-     * Get one link for the vertical direction mode.
-     *
-     * @param string $leftOrRight      'left' or 'right' constant
-     * @param string $linkName         the name of the link to generate
-     * @param array  $vertical_display the vertical display elements
-     *
-     * @return string       html content
-     *
-     * @access  private
-     *
-     */
-    private function _getOneLink($leftOrRight, $linkName, $vertical_display)
-    {
-        $html = '';
-        if ((($GLOBALS['cfg']['RowActionLinks'] == $leftOrRight)
-            || ($GLOBALS['cfg']['RowActionLinks'] == self::POSITION_BOTH))
-            && is_array($vertical_display[$linkName])
-            && ((count($vertical_display[$linkName]) > 0)
-            || !empty($vertical_display['textbtn']))
-        ) {
-            $html .= $this->_getOperationLinksForVerticalTable(
-                $linkName
-            );
-        } // end if
-        return $html;
-    }
-
-    /**
-     * Get three links for the vertical direction mode.
-     *
-     * @param string $leftOrRight      'left' or 'right' constant
-     * @param array  $vertical_display the vertical display elements
-     *
-     * @return string       html content
-     *
-     * @access  private
-     *
-     */
-    private function _getThreeLinks($leftOrRight, $vertical_display)
-    {
-        $html = '';
->>>>>>> origin/master
-
-        // Prepares "edit" link if required
-        $html .= $this->_getOneLink(
-            $leftOrRight, 'edit', $vertical_display
-        );
-
-<<<<<<< HEAD
-    } // end of the '_getDataCellForGeometryColumns()' function
-=======
-        // Prepares "copy" link if required
-        $html .= $this->_getOneLink(
-            $leftOrRight, 'copy', $vertical_display
-        );
->>>>>>> origin/master
-
-        // Prepares "delete" link if required
-        $html .= $this->_getOneLink(
-            $leftOrRight, 'delete', $vertical_display
-        );
-        return $html;
-    }
-
-    /**
-     * Get data cell for non numeric type fields
-     *
-     * @param string        $column                the relevant column in data row
-     * @param string        $class                 the html class for column
-     * @param object        $meta                  the meta-information about
-     *                                             the field
-     * @param array         $map                   the list of relations
-     * @param array         $_url_params           the parameters for generate
-     *                                             url
-     * @param boolean       $condition_field       the column should highlighted
-     *                                             or not
-     * @param object|string $transformation_plugin the name of transformation
-     *                                             function
-     * @param string        $default_function      the default transformation
-     *                                             function
-     * @param string        $transform_options     the transformation parameters
-     * @param boolean       $is_field_truncated    is data truncated due to
-     *                                             LimitChars
-     * @param array         $analyzed_sql          the analyzed query
-     * @param integer       &$dt_result            the link id associated to
-     *                                             the query which results
-     *                                             have to be displayed
-     * @param integer       $col_index             the column index
-     *
-     * @return  string  $cell the prepared data cell, html content
-     *
-     * @access  private
-     *
-     * @see     _getTableBody()
-     */
-    private function _getDataCellForNonNumericColumns(
-        $column, $class, $meta, $map, $_url_params, $condition_field,
-        $transformation_plugin, $default_function, $transform_options,
-        $is_field_truncated, $analyzed_sql, &$dt_result, $col_index
-    ) {
-        $is_analyse = $this->__get('is_analyse');
-        $field_flags = $GLOBALS['dbi']->fieldFlags($dt_result, $col_index);
-
-        $bIsText = gettype($transformation_plugin) === 'object'
-            && strpos($transformation_plugin->getMIMEtype(), 'Text')
-            === false;
-
-        // disable inline grid editing
-        // if binary fields are protected
-        // or transformation plugin is of non text type
-        // such as image
-        if ((stristr($field_flags, self::BINARY_FIELD)
-            && ($GLOBALS['cfg']['ProtectBinary'] === 'all'
-            || ($GLOBALS['cfg']['ProtectBinary'] === 'noblob'
-            && !stristr($meta->type, self::BLOB_FIELD))
-            || ($GLOBALS['cfg']['ProtectBinary'] === 'blob'
-            && stristr($meta->type, self::BLOB_FIELD))))
-            || $bIsText
-        ) {
-            $class = str_replace('grid_edit', '', $class);
-        }
-
-        if (! isset($column) || is_null($column)) {
-            $cell = $this->_buildNullDisplay($class, $condition_field, $meta);
-            return $cell;
-        }
-
         if ($column == '') {
             $cell = $this->_buildEmptyDisplay($class, $condition_field, $meta);
             return $cell;
         }
 
-<<<<<<< HEAD
         // Cut all fields to $GLOBALS['cfg']['LimitChars']
         // (unless it's a link-type transformation or binary)
         if (!(gettype($transformation_plugin) === "object"
@@ -4513,88 +3833,6 @@ class PMA_DisplayResults
 
         // transform functions may enable no-wrapping:
         $function_nowrap = 'applyTransformationNoWrap';
-=======
-        // Prepare three links at top if required
-        $vertical_table_html .= $this->_getThreeLinks(
-            self::POSITION_LEFT, $vertical_display
-        );
-
-        list($col_order, $col_visib) = $this->_getColumnParams($analyzed_sql);
-
-        // Prepares data
-        foreach ($vertical_display['desc'] as $j => $val) {
-
-            // assign appropriate key with current column order
-            $key = $col_order ? $col_order[$j] : $j;
-
-            $vertical_table_html .= '<tr'
-                . (($col_visib && !$col_visib[$j]) ? ' class="hide"' : '')
-                . '>' . "\n"
-                . $val;
-
-            $cell_displayed = 0;
-            foreach ($vertical_display['rowdata'][$key] as $subval) {
-
-                if (($cell_displayed != 0)
-                    && ($_SESSION['tmpval']['repeat_cells'] != 0)
-                    && ! ($cell_displayed % $_SESSION['tmpval']['repeat_cells'])
-                ) {
-                    $vertical_table_html .= $val;
-                }
-
-                $vertical_table_html .= $subval;
-                $cell_displayed++;
-
-            } // end while
-
-            $vertical_table_html .= '</tr>' . "\n";
-        } // end while
-
-        // Prepares "multi row delete" link at bottom if required
-        if ((($GLOBALS['cfg']['RowActionLinks'] == self::POSITION_RIGHT)
-            || ($GLOBALS['cfg']['RowActionLinks'] == self::POSITION_BOTH))
-            && is_array($vertical_display['row_delete'])
-            && ((count($vertical_display['row_delete']) > 0)
-            || !empty($vertical_display['textbtn']))
-        ) {
-
-            $vertical_table_html .= '<tr>' . "\n"
-                . $vertical_display['textbtn']
-                . $this->_getCheckBoxesForMultipleRowOperations(
-                    '_right', $is_display
-                )
-                . '</tr>' . "\n";
-        } // end if
-
-        // Prepare three links at bottom if required
-        $vertical_table_html .= $this->_getThreeLinks(
-            self::POSITION_RIGHT, $vertical_display
-        );
-
-        return $vertical_table_html;
-
-    } // end of the '_getVerticalTable' function
-
-
-    /**
-     * Prepare edit, copy and delete links for vertical table
-     *
-     * @param string $operation edit/copy/delete
-     *
-     * @return  string  $links_html  html content
-     *
-     * @access  private
-     *
-     * @see     _getVerticalTable()
-     */
-    private function _getOperationLinksForVerticalTable($operation)
-    {
-
-        $link_html = '<tr>' . "\n";
-        $vertical_display = $this->__get('vertical_display');
-
-        if (! is_array($vertical_display['row_delete'])) {
->>>>>>> origin/master
 
         $bool_nowrap = (($default_function != $transformation_plugin)
             && function_exists($transformation_plugin->$function_nowrap()))
@@ -4617,11 +3855,7 @@ class PMA_DisplayResults
             $is_field_truncated
         );
 
-<<<<<<< HEAD
         return $cell;
-=======
-    } // end of the '_getOperationLinksForVerticalTable' function
->>>>>>> origin/master
 
     } // end of the '_getDataCellForNonNumericColumns()' function
 
@@ -4917,11 +4151,7 @@ class PMA_DisplayResults
         // 2. ----- Prepare to display the top of the page -----
 
         // 2.1 Prepares a messages with position information
-<<<<<<< HEAD
         if (($displayParts['nav_bar'] == '1') && isset($pos_next)) {
-=======
-        if (($is_display['nav_bar'] == '1') && isset($pos_next)) {
->>>>>>> origin/master
 
             $message = $this->_setMessageInformation(
                 $sorted_column_message, $analyzed_sql[0]['limit_clause'],
@@ -5196,7 +4426,6 @@ class PMA_DisplayResults
         if ($sorted_column_index === false) {
             return null;
         }
-<<<<<<< HEAD
 
         // fetch first row of the result set
         $row = $GLOBALS['dbi']->fetchRow($dt_result);
@@ -5209,20 +4438,6 @@ class PMA_DisplayResults
         // check for non printable sorted row data
         $meta = $fields_meta[$sorted_column_index];
 
-=======
-
-        // fetch first row of the result set
-        $row = $GLOBALS['dbi']->fetchRow($dt_result);
-
-        // initializing default arguments
-        $default_function = 'PMA_mimeDefaultFunction';
-        $transformation_plugin = $default_function;
-        $transform_options = array();
-
-        // check for non printable sorted row data
-        $meta = $fields_meta[$sorted_column_index];
-
->>>>>>> origin/master
         if (stristr($meta->type, self::BLOB_FIELD)
             || ($meta->type == self::GEOMETRY_FIELD)
         ) {
@@ -5912,11 +5127,7 @@ class PMA_DisplayResults
             ) {
                 // Applying Transformations on hex string of binary data
                 // seems more appropriate
-<<<<<<< HEAD
                 $result = pack("H*", bin2hex($content));
-=======
-                $result = bin2hex($content);
->>>>>>> origin/master
             }
         }
 
@@ -5964,11 +5175,7 @@ class PMA_DisplayResults
      * @param string        $class                 css classes for the td element
      * @param bool          $condition_field       whether the column is a part of
      *                                             the where clause
-<<<<<<< HEAD
      * @param array         $analyzed_sql          the analyzed query
-=======
-     * @param string        $analyzed_sql          the analyzed query
->>>>>>> origin/master
      * @param object        $meta                  the meta-information about the
      *                                             field
      * @param array         $map                   the list of relations
@@ -6150,27 +5357,6 @@ class PMA_DisplayResults
                     $meta
                 )
                 : $default_function($data)
-<<<<<<< HEAD
-=======
-            );
-        }
-
-        // create hidden field if results from structure table
-        if (isset($_GET['browse_distinct']) && ($_GET['browse_distinct'] == 1)) {
-
-            $where_comparison = " = '" . $data . "'";
-
-            $_url_params_for_show_data_row = array(
-                'db'    => $this->__get('db'),
-                'table' => $meta->orgtable,
-                'pos'   => '0',
-                'sql_query' => 'SELECT * FROM '
-                    . PMA_Util::backquote($this->__get('db'))
-                    . '.' . PMA_Util::backquote($meta->orgtable)
-                    . ' WHERE '
-                    . PMA_Util::backquote($meta->orgname)
-                    . $where_comparison,
->>>>>>> origin/master
             );
         }
 
@@ -6200,11 +5386,7 @@ class PMA_DisplayResults
      * @see     _getTableBody(), _getCheckboxAndLinks()
      */
     private function _getCheckboxForMultiRowSubmissions(
-<<<<<<< HEAD
         $del_url, $displayParts, $row_no, $where_clause_html, $condition_array,
-=======
-        $del_url, $is_display, $row_no, $where_clause_html, $condition_array,
->>>>>>> origin/master
         $id_suffix, $class
     ) {
 
@@ -6389,11 +5571,7 @@ class PMA_DisplayResults
      * @see     _getPlacedLinks()
      */
     private function _getCheckboxAndLinks(
-<<<<<<< HEAD
         $position, $del_url, $displayParts, $row_no, $where_clause,
-=======
-        $position, $del_url, $is_display, $row_no, $where_clause,
->>>>>>> origin/master
         $where_clause_html, $condition_array,
         $edit_url, $copy_url, $class, $edit_str, $copy_str, $del_str, $js_conf
     ) {
@@ -6403,13 +5581,8 @@ class PMA_DisplayResults
         if ($position == self::POSITION_LEFT) {
 
             $ret .= $this->_getCheckboxForMultiRowSubmissions(
-<<<<<<< HEAD
                 $del_url, $displayParts, $row_no, $where_clause_html,
                 $condition_array, '_left', ''
-=======
-                $del_url, $is_display, $row_no, $where_clause_html, $condition_array,
-                '_left', ''
->>>>>>> origin/master
             );
 
             $ret .= $this->_getEditLink(
@@ -6435,22 +5608,14 @@ class PMA_DisplayResults
             );
 
             $ret .= $this->_getCheckboxForMultiRowSubmissions(
-<<<<<<< HEAD
                 $del_url, $displayParts, $row_no, $where_clause_html, $condition_array,
-=======
-                $del_url, $is_display, $row_no, $where_clause_html, $condition_array,
->>>>>>> origin/master
                 '_right', ''
             );
 
         } else { // $position == self::POSITION_NONE
 
             $ret .= $this->_getCheckboxForMultiRowSubmissions(
-<<<<<<< HEAD
                 $del_url, $displayParts, $row_no, $where_clause_html, $condition_array,
-=======
-                $del_url, $is_display, $row_no, $where_clause_html, $condition_array,
->>>>>>> origin/master
                 '_left', ''
             );
         }

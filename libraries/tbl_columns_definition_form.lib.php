@@ -12,7 +12,6 @@ if (!defined('PHPMYADMIN')) {
 /**
  * Function to get form parameters
  *
- * @param string $server     server
  * @param string $db         database
  * @param string $table      table
  * @param string $action     action
@@ -22,14 +21,9 @@ if (!defined('PHPMYADMIN')) {
  * @return array $form_params form parameters
  */
 function PMA_getFormsParameters(
-<<<<<<< HEAD
     $db, $table, $action, $num_fields, $selected
-=======
-    $server, $db, $table, $action, $num_fields, $selected
->>>>>>> origin/master
 ) {
     $form_params = array(
-        'server' => $server,
         'db' => $db
     );
 
@@ -119,24 +113,12 @@ function PMA_getHtmlForTableConfigurations()
         )
         . '</td>'
         . '<td width="25">&nbsp;</td>'
-<<<<<<< HEAD
         . '<td><input type="text" name="connection" size="40"'
         . ' value="' . (isset($_REQUEST['connection'])
             ? htmlspecialchars($_REQUEST['connection'])
             : '') . '"'
         . ' placeholder="scheme://user_name[:password]@host_name[:port_num]/db_name/tbl_name"'
         . ' class="textfield" required="required" />'
-=======
-        . '<td>'
-        . PMA_generateCharsetDropdownBox(
-            PMA_CSDROPDOWN_COLLATION, 'tbl_collation', null,
-            (isset($_REQUEST['tbl_collation'])
-                ? $_REQUEST['tbl_collation']
-                : null
-            ),
-            false
-        )
->>>>>>> origin/master
         . '</td>'
         . '</tr>';
 
@@ -1206,11 +1188,6 @@ function PMA_getHtmlForColumnDefault($columnNumber, $ci, $ci_offset, $type_upper
  * @param array|null $extracted_columnspec             extracted column spec
  * @param string     $submit_attribute                 submit attribute
  * @param array|null $analyzed_sql                     analyzed sql
-<<<<<<< HEAD
-=======
- * @param string     $submit_default_current_timestamp submit default current
- *                                                     timestamp
->>>>>>> origin/master
  * @param array      $comments_map                     comments map
  * @param array|null $fields_meta                      fields map
  * @param bool       $is_backup                        is backup

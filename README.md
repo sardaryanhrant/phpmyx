@@ -1,11 +1,7 @@
 phpMyAdmin - Readme
 ===================
 
-<<<<<<< HEAD
 Version 4.4.1.1
-=======
-Version 4.3.9
->>>>>>> origin/master
 
 A set of PHP-scripts to manage MySQL over the web.
 

@@ -1298,7 +1298,6 @@ class ExportSql extends ExportPlugin
                 )) {
                     $has_constraints = 1;
                     // comments -> constraints for dumped tables
-<<<<<<< HEAD
                     $sql_constraints = $this->generateComment(
                         $crlf, $sql_constraints, __('Constraints for dumped tables'),
                         __('Constraints for table'), $table_alias, $compat
@@ -1323,52 +1322,6 @@ class ExportSql extends ExportPlugin
                             $table_alias, $compat, $sql_backquotes
                         )
                         . $crlf;
-=======
-                    if (! isset($sql_constraints)) {
-                        if (isset($GLOBALS['no_constraints_comments'])) {
-                            $sql_constraints = '';
-                        } else {
-                            $sql_constraints = $crlf
-                                . $this->_exportComment()
-                                . $this->_exportComment(
-                                    __('Constraints for dumped tables')
-                                )
-                                . $this->_exportComment();
-                        }
-                    }
-                        // comments for current table
-                    if (! isset($GLOBALS['no_constraints_comments'])) {
-                        $sql_constraints .= $crlf
-                        . $this->_exportComment()
-                        . $this->_exportComment(
-                            __('Constraints for table')
-                            . ' '
-                            . PMA_Util::backquoteCompat(
-                                $table_alias, $compat, $sql_backquotes
-                            )
-                        )
-                        . $this->_exportComment();
-                    }
-                    $sql_constraints_query .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $table_alias, $compat, $sql_backquotes
-                    )
-                    . $crlf;
-                    $sql_constraints .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $table_alias,  $compat, $sql_backquotes
-                    )
-                    . $crlf;
-                    $sql_drop_foreign_keys .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $db_alias, $compat, $sql_backquotes
-                    )
-                    . '.'
-                    . PMA_Util::backquoteCompat(
-                        $table_alias, $compat, $sql_backquotes
-                    )
-                    . $crlf;
->>>>>>> origin/master
                 }
                 //if there are indexes
                 // (look for KEY followed by whitespace to avoid matching
@@ -1380,7 +1333,6 @@ class ExportSql extends ExportPlugin
                     $has_indexes = 1;
 
                     // comments -> indexes for dumped tables
-<<<<<<< HEAD
                     $sql_indexes = $this->generateComment(
                         $crlf, $sql_indexes, __('Indexes for dumped tables'),
                         __('Indexes for table'), $table_alias, $compat
@@ -1396,51 +1348,12 @@ class ExportSql extends ExportPlugin
                             $table_alias,  $compat, $sql_backquotes
                         );
                     $sql_indexes .= $sql_indexes_start;
-=======
-                    if (! isset($sql_indexes)) {
-                        if (isset($GLOBALS['no_constraints_comments'])) {
-                            $sql_indexes = '';
-                        } else {
-                            $sql_indexes = $crlf
-                                . $this->_exportComment()
-                                . $this->_exportComment(
-                                    __('Indexes for dumped tables')
-                                )
-                                . $this->_exportComment();
-                        }
-                    }
-                    // comments for current table
-                    if (! isset($GLOBALS['no_constraints_comments'])) {
-                        $sql_indexes .= $crlf
-                        . $this->_exportComment()
-                        . $this->_exportComment(
-                            __('Indexes for table')
-                            . ' '
-                            . PMA_Util::backquoteCompat(
-                                $table_alias, $compat, $sql_backquotes
-                            )
-                        )
-                        . $this->_exportComment();
-                    }
-                    $sql_indexes_query .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $table_alias, $compat, $sql_backquotes
-                    )
-                    . $crlf . ' ';
-
-                    $sql_indexes .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $table_alias,  $compat, $sql_backquotes
-                    )
-                    . $crlf . ' ';
->>>>>>> origin/master
                 }
                 if ($update_indexes_increments && preg_match(
                     '@AUTO_INCREMENT@',
                     $create_query
                 )) {
                     // comments -> auto increments for dumped tables
-<<<<<<< HEAD
                     $sql_auto_increments = $this->generateComment(
                         $crlf, $sql_auto_increments,
                         __('AUTO_INCREMENT for dumped tables'),
@@ -1451,38 +1364,6 @@ class ExportSql extends ExportPlugin
                             $table_alias, $compat, $sql_backquotes
                         )
                         . $crlf;
-=======
-                    if (! isset($sql_auto_increments)) {
-                        if (isset($GLOBALS['no_constraints_comments'])) {
-                            $sql_auto_increments = '';
-                        } else {
-                            $sql_auto_increments = $crlf
-                                . $this->_exportComment()
-                                . $this->_exportComment(
-                                    __('AUTO_INCREMENT for dumped tables')
-                                )
-                                . $this->_exportComment();
-                        }
-                    }
-                    // comments for current table
-                    if (! isset($GLOBALS['no_constraints_comments'])) {
-                        $sql_auto_increments .= $crlf
-                        . $this->_exportComment()
-                        . $this->_exportComment(
-                            __('AUTO_INCREMENT for table')
-                            . ' '
-                            . PMA_Util::backquoteCompat(
-                                $table_alias, $compat, $sql_backquotes
-                            )
-                        )
-                        . $this->_exportComment();
-                    }
-                    $sql_auto_increments .= 'ALTER TABLE '
-                    . PMA_Util::backquoteCompat(
-                        $table_alias, $compat, $sql_backquotes
-                    )
-                    . $crlf;
->>>>>>> origin/master
                 }
 
                 // Split the query into lines, so we can easily handle it.
@@ -1908,7 +1789,6 @@ class ExportSql extends ExportPlugin
                         $used_alias = true;
                     }
                     $trigger_query .= 'DELIMITER ;' . $crlf;
-<<<<<<< HEAD
                 }
                 // One warning per table.
                 if ($used_alias) {
@@ -1920,19 +1800,6 @@ class ExportSql extends ExportPlugin
                     )
                     . $this->_exportComment();
                 }
-=======
-                }
-                // One warning per table.
-                if ($used_alias) {
-                    $dump .= $this->_exportComment(
-                        __('It appears your table uses triggers;')
-                    )
-                    . $this->_exportComment(
-                        __('alias export may not work reliably in all cases.')
-                    )
-                    . $this->_exportComment();
-                }
->>>>>>> origin/master
                 $dump .= $trigger_query;
             }
             break;
@@ -2344,13 +2211,9 @@ class ExportSql extends ExportPlugin
         ) {
             $outputSucceeded = PMA_exportOutputHandler(
                 $crlf . 'SET IDENTITY_INSERT '
-<<<<<<< HEAD
                 . PMA_Util::backquoteCompat(
                     $table_alias, $compat, $sql_backquotes
                 )
-=======
-                . PMA_Util::backquoteCompat($table_alias, $compat, $sql_backquotes)
->>>>>>> origin/master
                 . ' OFF;' . $crlf
             );
             if (! $outputSucceeded) {
@@ -2675,11 +2538,7 @@ class ExportSql extends ExportPlugin
      * @param string $data      the data to be replaced
      * @param string $alias     the replacement
      * @param string $pos       the position of alias
-<<<<<<< HEAD
      * @param string &$offset   the change in pos occurred after substitution
-=======
-     * @param string &$offset   the change in pos occured after substitution
->>>>>>> origin/master
      *
      * @return string replaced query with alias
      */
@@ -2698,7 +2557,6 @@ class ExportSql extends ExportPlugin
         );
         return $sql_query;
     }
-<<<<<<< HEAD
 
     /**
      * Generate comment
@@ -2740,6 +2598,4 @@ class ExportSql extends ExportPlugin
 
         return $sql_statement;
     }
-=======
->>>>>>> origin/master
 }

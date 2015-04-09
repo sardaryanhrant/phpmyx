@@ -2071,14 +2071,9 @@ function PMA_getHtmlForSpecificDbPrivileges($db)
     $html_output = '';
     if ($GLOBALS['is_superuser']) {
         // check the privileges for a particular database.
-<<<<<<< HEAD
         $html_output  = '<form id="usersForm" action="server_privileges.php">';
         $html_output .= PMA_URL_getHiddenInputs($db);
         $html_output .= '<fieldset>';
-=======
-        $html_output = '<form id="usersForm" action="server_privileges.php">'
-            . '<fieldset>' . "\n";
->>>>>>> origin/master
         $html_output .= '<legend>' . "\n"
             . PMA_Util::getIcon('b_usrcheck.png')
             . '    '
@@ -2096,7 +2091,6 @@ function PMA_getHtmlForSpecificDbPrivileges($db)
         $html_output .= PMA_getHtmlForPrivsTableHead();
         $privMap = PMA_getPrivMap($db);
         $html_output .= PMA_getHtmlTableBodyForSpecificDbOrTablePrivs($privMap, $db);
-<<<<<<< HEAD
         $html_output .= '</table>';
 
         $html_output .= '<div style="float:left;">';
@@ -2110,11 +2104,6 @@ function PMA_getHtmlForSpecificDbPrivileges($db)
 
         $html_output .= '</fieldset>';
         $html_output .= '</form>';
-=======
-        $html_output .= '</table>'
-            . '</fieldset>'
-            . '</form>' . "\n";
->>>>>>> origin/master
     } else {
         $html_output .= PMA_getHtmlForViewUsersError();
     }
@@ -2148,10 +2137,7 @@ function PMA_getHtmlForSpecificTablePrivileges($db, $table)
     if ($GLOBALS['is_superuser']) {
         // check the privileges for a particular table.
         $html_output  = '<form id="usersForm" action="server_privileges.php">';
-<<<<<<< HEAD
         $html_output .= PMA_URL_getHiddenInputs($db, $table);
-=======
->>>>>>> origin/master
         $html_output .= '<fieldset>';
         $html_output .= '<legend>'
             . PMA_Util::getIcon('b_usrcheck.png')
@@ -2183,7 +2169,6 @@ function PMA_getHtmlForSpecificTablePrivileges($db, $table)
         PMA_mergePrivMapFromResult($privMap, $res);
         $html_output .= PMA_getHtmlTableBodyForSpecificDbOrTablePrivs($privMap, $db);
         $html_output .= '</table>';
-<<<<<<< HEAD
 
         $html_output .= '<div style="float:left;">';
         $html_output .= PMA_Util::getWithSelected(
@@ -2194,8 +2179,6 @@ function PMA_getHtmlForSpecificTablePrivileges($db, $table)
             __('Export'), 'b_tblexport.png', 'export'
         );
 
-=======
->>>>>>> origin/master
         $html_output .= '</fieldset>';
         $html_output .= '</form>';
     } else {
@@ -2268,13 +2251,9 @@ function PMA_mergePrivMapFromResult(&$privMap, $result)
 function PMA_getHtmlForPrivsTableHead()
 {
     return '<thead>'
-<<<<<<< HEAD
         . '<tr>'
         . '<th></th>'
         . '<th>' . __('User') . '</th>'
-=======
-        . '<tr><th>' . __('User') . '</th>'
->>>>>>> origin/master
         . '<th>' . __('Host') . '</th>'
         . '<th>' . __('Type') . '</th>'
         . '<th>' . __('Privileges') . '</th>'
@@ -2458,7 +2437,6 @@ function PMA_getHtmlListOfPrivs(
 
         // action
         $html_output .= '<td>';
-<<<<<<< HEAD
         if ($GLOBALS['is_grantuser']) {
             $specific_db = (isset($current['Db']) && $current['Db'] != '*')
                 ? $current['Db'] : '';
@@ -2473,20 +2451,6 @@ function PMA_getHtmlListOfPrivs(
                 $specific_table
             );
         }
-=======
-        $specific_db = (isset($current['Db']) && $current['Db'] != '*')
-            ? $current['Db'] : '';
-        $specific_table = (isset($current['Table_name'])
-            && $current['Table_name'] != '*')
-            ? $current['Table_name'] : '';
-        $html_output .= PMA_getUserLink(
-            'edit',
-            $current_user,
-            $current_host,
-            $specific_db,
-            $specific_table
-        );
->>>>>>> origin/master
         $html_output .= '</td>';
 
         $html_output .= '</tr>';
@@ -2676,17 +2640,11 @@ function PMA_getExtraDataForAjaxBehavior(
         }
         $new_user_string .='</td>';
 
-<<<<<<< HEAD
         if ($GLOBALS['is_grantuser']) {
             $new_user_string .= '<td>'
                 . PMA_getUserLink('edit', $username, $hostname)
                 . '</td>' . "\n";
         }
-=======
-        $new_user_string .= '<td>'
-            . PMA_getUserLink('edit', $username, $hostname)
-            . '</td>' . "\n";
->>>>>>> origin/master
 
         if (isset($cfgRelation['menuswork']) && $user_group_count > 0) {
             $new_user_string .= '<td>'
@@ -2973,7 +2931,6 @@ function PMA_getHtmlForUserRights($db_rights, $dbname,
         $html_output .= '<tr class="odd">' . "\n"
            . '<td colspan="6"><center><i>' . __('None') . '</i></center></td>' . "\n"
            . '</tr>' . "\n";
-<<<<<<< HEAD
         return array($found_rows, $html_output);
     }
 
@@ -3017,47 +2974,6 @@ function PMA_getHtmlForUserRights($db_rights, $dbname,
 
         $html_output .= '<td>';
         if ($GLOBALS['is_grantuser']) {
-=======
-    } else {
-        $odd_row = true;
-        //while ($row = $GLOBALS['dbi']->fetchAssoc($res)) {
-        foreach ($db_rights as $row) {
-            $dbNameLength = /*overload*/mb_strlen($dbname);
-            $found_rows[] = (!$dbNameLength)
-                ? $row['Db']
-                : $row['Table_name'];
-
-            $html_output .= '<tr class="' . ($odd_row ? 'odd' : 'even') . '">' . "\n"
-                . '<td>'
-                . htmlspecialchars(
-                    (!$dbNameLength)
-                    ? $row['Db']
-                    : $row['Table_name']
-                )
-                . '</td>' . "\n"
-                . '<td><code>' . "\n"
-                . '        '
-                . join(
-                    ',' . "\n" . '            ',
-                    PMA_extractPrivInfo($row, true)
-                ) . "\n"
-                . '</code></td>' . "\n"
-                . '<td>'
-                    . ((((!$dbNameLength) && $row['Grant_priv'] == 'Y')
-                        || ($dbNameLength
-                        && in_array('Grant', explode(',', $row['Table_priv']))))
-                    ? __('Yes')
-                    : __('No'))
-                . '</td>' . "\n"
-                . '<td>';
-            if (! empty($row['Table_privs']) || ! empty ($row['Column_priv'])) {
-                $html_output .= __('Yes');
-            } else {
-                $html_output .= __('No');
-            }
-            $html_output .= '</td>' . "\n"
-               . '<td>';
->>>>>>> origin/master
             $html_output .= PMA_getUserLink(
                 'edit',
                 $username,
@@ -3065,7 +2981,6 @@ function PMA_getHtmlForUserRights($db_rights, $dbname,
                 (!$dbNameLength) ? $row['Db'] : $dbname,
                 (!$dbNameLength) ? '' : $row['Table_name']
             );
-<<<<<<< HEAD
         }
         $html_output .= '</td>';
 
@@ -3087,27 +3002,6 @@ function PMA_getHtmlForUserRights($db_rights, $dbname,
         $odd_row = ! $odd_row;
     } // end while
 
-=======
-            $html_output .= '</td>' . "\n"
-               . '    <td>';
-            if (! empty($row['can_delete'])
-                || isset($row['Table_name'])
-                && /*overload*/mb_strlen($row['Table_name'])
-            ) {
-                $html_output .= PMA_getUserLink(
-                    'revoke',
-                    $username,
-                    $hostname,
-                    (!$dbNameLength) ? $row['Db'] : $dbname,
-                    (!$dbNameLength) ? '' : $row['Table_name']
-                );
-            }
-            $html_output .= '</td>' . "\n"
-               . '</tr>' . "\n";
-            $odd_row = ! $odd_row;
-        } // end while
-    } //end if
->>>>>>> origin/master
     return array($found_rows, $html_output);
 }
 
@@ -3439,7 +3333,6 @@ function PMA_getHtmlTableBodyForUserRights($db_rights)
                 . ($host['Grant_priv'] == 'Y' ? __('Yes') : __('No'))
                 . '</td>' . "\n";
 
-<<<<<<< HEAD
             if ($GLOBALS['is_grantuser']) {
                 $html_output .= '<td class="center">'
                     . PMA_getUserLink(
@@ -3450,16 +3343,6 @@ function PMA_getHtmlTableBodyForUserRights($db_rights)
                     . '</td>';
             }
             if ($cfgRelation['menuswork'] && $user_group_count > 0) {
-=======
-            $html_output .= '<td class="center">'
-                . PMA_getUserLink(
-                    'edit',
-                    $host['User'],
-                    $host['Host']
-                )
-                . '</td>';
-            if ($GLOBALS['cfgRelation']['menuswork'] && $user_group_count > 0) {
->>>>>>> origin/master
                 if (empty($host['User'])) {
                     $html_output .= '<td class="center"></td>';
                 } else {
@@ -4182,20 +4065,12 @@ function PMA_getAddUserHtmlFieldset($db = '', $table = '')
 
     return '<fieldset id="fieldset_add_user">' . "\n"
         . '<legend>' . _pgettext('Create new user', 'New') . '</legend>'
-<<<<<<< HEAD
         . '<a id="add_user_anchor" href="server_privileges.php'
-=======
-        . '<a href="server_privileges.php'
->>>>>>> origin/master
         . PMA_URL_getCommon($url_params) . '" '
         . (!empty($rel_params)
             ? ('rel="' . PMA_URL_getCommon($rel_params) . '" ')
             : '')
-<<<<<<< HEAD
         . '>' . "\n"
-=======
-        . '">' . "\n"
->>>>>>> origin/master
         . PMA_Util::getIcon('b_usradd.png')
         . '            ' . __('Add user') . '</a>' . "\n"
         . '</fieldset>' . "\n";

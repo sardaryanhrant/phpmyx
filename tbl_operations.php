@@ -22,14 +22,11 @@ $pma_table = new PMA_Table($GLOBALS['table'], $GLOBALS['db']);
  * Load JavaScript files
  */
 $response = PMA_Response::getInstance();
-<<<<<<< HEAD
 $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('functions.js');
 $scripts->addFile('tbl_operations.js');
 
-=======
->>>>>>> origin/master
 /**
  * Runs common work
  */

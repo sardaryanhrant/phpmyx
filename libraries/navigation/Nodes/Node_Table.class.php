@@ -51,29 +51,11 @@ class Node_Table extends Node_DatabaseChild
             $this->title = __('Browse');
             break;
         }
-        switch($GLOBALS['cfg']['DefaultTabTable']) {
-        case 'tbl_structure.php':
-            $this->title = __('Structure');
-            break;
-        case 'tbl_select.php':
-            $this->title = __('Search');
-            break;
-        case 'tbl_change.php':
-            $this->title = __('Insert');
-            break;
-        case 'tbl_sql.php':
-            $this->title = __('SQL');
-            break;
-        case 'sql.php':
-            $this->title = __('Browse');
-            break;
-        }
         $this->links = array(
             'text' => $GLOBALS['cfg']['DefaultTabTable']
                     . '?server=' . $GLOBALS['server']
                     . '&amp;db=%2$s&amp;table=%1$s'
                     . '&amp;pos=0&amp;token=' . $_SESSION[' PMA_token '],
-<<<<<<< HEAD
             'icon' => array(
                 $GLOBALS['cfg']['NavigationTreeDefaultTabTable']
                 . '?server=' . $GLOBALS['server']
@@ -84,12 +66,6 @@ class Node_Table extends Node_DatabaseChild
                 . '&amp;db=%2$s&amp;table=%1$s&amp;token='
                 . $_SESSION[' PMA_token ']
             ),
-=======
-            'icon' => $GLOBALS['cfg']['NavigationTreeDefaultTabTable']
-                    . '?server=' . $GLOBALS['server']
-                    . '&amp;db=%2$s&amp;table=%1$s&amp;token='
-                    . $_SESSION[' PMA_token '],
->>>>>>> origin/master
             'title' => $this->title
         );
         $this->classes = 'table';
@@ -225,19 +201,11 @@ class Node_Table extends Node_DatabaseChild
             while ($arr = $GLOBALS['dbi']->fetchArray($handle)) {
                 if (in_array($arr['Key_name'], $retval)) {
                     continue;
-<<<<<<< HEAD
                 }
                 if ($pos <= 0 && $count < $maxItems) {
                     $retval[] = $arr['Key_name'];
                     $count++;
                 }
-=======
-                }
-                if ($pos <= 0 && $count < $maxItems) {
-                    $retval[] = $arr['Key_name'];
-                    $count++;
-                }
->>>>>>> origin/master
                 $pos--;
             }
             break;

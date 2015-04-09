@@ -83,26 +83,6 @@ class Table_Stats_Eps extends TableStats
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * Displays an error on missing coordinates
-     *
-     * @return void
-     */
-    protected function showMissingCoordinatesError()
-    {
-        PMA_Export_Relation_Schema::dieSchema(
-            $this->pageNumber,
-            "EPS",
-            sprintf(
-                __('Please configure the coordinates for table %s'),
-                $this->tableName
-            )
-        );
-    }
-
-    /**
->>>>>>> origin/master
      * Sets the width of the table
      *
      * @param string  $font     The font name

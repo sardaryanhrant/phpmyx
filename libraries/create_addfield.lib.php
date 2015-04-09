@@ -121,22 +121,14 @@ function PMA_setColumnCreationStatementSuffix($current_field_num,
  * Create relevant index statements
  *
  * @param array   $index         an array of index columns
-<<<<<<< HEAD
  * @param string  $index_choice  index choice that which represents
-=======
- * @param string  $index_type    index type that which represents
->>>>>>> origin/master
  *                               the index type of $indexed_fields
  * @param boolean $is_create_tbl true if requirement is to get the statement
  *                               for table creation
  *
  * @return array an array of sql statements for indexes
  */
-<<<<<<< HEAD
 function PMA_buildIndexStatements($index, $index_choice,
-=======
-function PMA_buildIndexStatements($index, $index_type,
->>>>>>> origin/master
     $is_create_tbl = true
 ) {
     $statement = array();
@@ -144,7 +136,6 @@ function PMA_buildIndexStatements($index, $index_type,
         return $statement;
     }
 
-<<<<<<< HEAD
     $sql_query = PMA_getStatementPrefix($is_create_tbl)
         . ' ' . $index_choice;
 
@@ -190,23 +181,6 @@ function PMA_buildIndexStatements($index, $index_type,
     }
 
     $statement[] = $sql_query;
-=======
-    $fields = array();
-    foreach ($index['columns'] as $field) {
-        $fields[]
-            = PMA_Util::backquote($_REQUEST['field_name'][$field['col_index']])
-            . (! empty($field['size']) ? '(' . $field['size'] . ')' : '');
-    }
-    $statement[] = PMA_getStatementPrefix($is_create_tbl)
-        . ' ' . $index_type
-        . (! empty($index['Key_name']) && $index['Key_name'] != 'PRIMARY' ?
-        PMA_Util::backquote($index['Key_name'])
-        : '')
-        . ' (' . implode(', ', $fields) . ') '
-        . (! empty($index['Index_comment']) ? 'COMMENT '
-        . "'" . $index['Index_comment'] . "' " : '');
-    unset($fields);
->>>>>>> origin/master
 
     return $statement;
 }
@@ -229,11 +203,7 @@ function PMA_getStatementPrefix($is_create_tbl = true)
 }
 
 /**
-<<<<<<< HEAD
  * Merge index definitions for one type of index
-=======
- * Merge index definitions for one type of index 
->>>>>>> origin/master
  *
  * @param array   $definitions     the index definitions to merge to
  * @param boolean $is_create_tbl   true if requirement is to get the statement
@@ -241,11 +211,7 @@ function PMA_getStatementPrefix($is_create_tbl = true)
  * @param array   $indexed_columns the columns for one type of index
  * @param string  $index_keyword   the index keyword to use in the definition
  *
-<<<<<<< HEAD
  * @return array $index_definitions
-=======
- * @return array $index_definitions 
->>>>>>> origin/master
  */
 function PMA_mergeIndexStatements(
     $definitions, $is_create_tbl, $indexed_columns, $index_keyword

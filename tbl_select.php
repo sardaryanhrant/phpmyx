@@ -74,11 +74,7 @@ if (! isset($_POST['columnsToDisplay']) && ! isset($_POST['displayAllColumns']))
 
     PMA_executeQueryAndSendQueryResponse(
         $analyzed_sql_results, false, $db, $table, null, null, null, false,
-<<<<<<< HEAD
         null, null, null, $GLOBALS['goto'], $pmaThemeImage, null,
-=======
-        null, null, null, null, $GLOBALS['goto'], $pmaThemeImage, null,
->>>>>>> origin/master
         null, null, $sql_query, null, null
     );
 }

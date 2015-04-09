@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
-=======
->>>>>>> origin/master
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
@@ -193,11 +190,7 @@ CodeMirror.defineMode("sql", function(config, parserConfig) {
 
     indent: function(state, textAfter) {
       var cx = state.context;
-<<<<<<< HEAD
       if (!cx) return CodeMirror.Pass;
-=======
-      if (!cx) return 0;
->>>>>>> origin/master
       var closing = textAfter.charAt(0) == cx.type;
       if (cx.align) return cx.col + (closing ? 0 : 1);
       else return cx.indent + (closing ? 0 : config.indentUnit);

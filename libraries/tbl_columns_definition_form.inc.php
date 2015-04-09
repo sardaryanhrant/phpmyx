@@ -52,7 +52,7 @@ $pmaString = $GLOBALS['PMA_String'];
 $length_values_input_size = 8;
 
 $_form_params = PMA_getFormsParameters(
-    $server, $db, $table, $action, isset($num_fields) ? $num_fields : null,
+    $db, $table, $action, isset($num_fields) ? $num_fields : null,
     isset($selected) ? $selected : null
 );
 
@@ -92,16 +92,12 @@ if (isset($_REQUEST['submit_num_fields'])) {
 }
 
 $foreigners = PMA_getForeigners($db, $table, '', 'foreign');
-<<<<<<< HEAD
 $child_references = null;
 // From MySQL 5.6.6 onwards columns with foreign keys can be renamed.
 // Hence, no need to get child references
 if (PMA_MYSQL_INT_VERSION < 50606) {
     $child_references = PMA_getChildReferences($db, $table);
 }
-=======
-$child_references = PMA_getChildReferences($db, $table);
->>>>>>> origin/master
 for ($columnNumber = 0; $columnNumber < $num_fields; $columnNumber++) {
     if (! empty($regenerate)) {
         list($columnMeta, $submit_length, $submit_attribute,

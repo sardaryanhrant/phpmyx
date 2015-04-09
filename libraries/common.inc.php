@@ -163,12 +163,6 @@ if (! defined('PMA_MINIMUM_COMMON')) {
 $PMA_PHP_SELF = PMA_getenv('PHP_SELF');
 $_PATH_INFO = PMA_getenv('PATH_INFO');
 if (! empty($_PATH_INFO) && ! empty($PMA_PHP_SELF)) {
-<<<<<<< HEAD
-=======
-    /** @var PMA_String $pmaString */
-    $pmaString = $GLOBALS['PMA_String'];
-
->>>>>>> origin/master
     $path_info_pos = /*overload*/mb_strrpos($PMA_PHP_SELF, $_PATH_INFO);
     $pathLength = $path_info_pos + /*overload*/mb_strlen($_PATH_INFO);
     if ($pathLength === /*overload*/mb_strlen($PMA_PHP_SELF)) {
@@ -879,13 +873,7 @@ if (! defined('PMA_MINIMUM_COMMON')) {
         }
 
         // Check IP-based Allow/Deny rules as soon as possible to reject the
-<<<<<<< HEAD
         // user based on mod_access in Apache
-=======
-        // user based on mod_access in Apache:
-        // http://cvs.apache.org/viewcvs.cgi/httpd-2.0/modules/aaa/mod_access.c?rev=1.37&content-type=text/vnd.viewcvs-markup
-        // Look at: "static int check_dir_access(request_rec *r)"
->>>>>>> origin/master
         if (isset($cfg['Server']['AllowDeny'])
             && isset($cfg['Server']['AllowDeny']['order'])
         ) {
@@ -1196,7 +1184,6 @@ if (! defined('PMA_MINIMUM_COMMON')
             PMA_fixPMATables($GLOBALS['db'], false);
         }
     }
-<<<<<<< HEAD
     $cfgRelation = PMA_getRelationsParam();
     if (empty($cfgRelation['db'])) {
         foreach ($GLOBALS['pma']->databases as $database) {
@@ -1205,7 +1192,5 @@ if (! defined('PMA_MINIMUM_COMMON')
             }
         }
     }
-=======
->>>>>>> origin/master
 }
 ?>

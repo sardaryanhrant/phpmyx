@@ -250,18 +250,11 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
             $(g.t).find('table.pma_table').find('thead th:first').removeClass('before-condition');
             for (var n = 0, l = $firstRowCols.length; n < l; n++) {
                 var $col = $($firstRowCols[n]);
-<<<<<<< HEAD
                 var colWidth;
                 if (navigator.userAgent.toLowerCase().indexOf("safari") != -1) {
                     colWidth = $col.outerWidth();
                 } else {
                     colWidth = $col.outerWidth(true);
-=======
-                if ($.browser.safari) {
-                    var colWidth = $col.outerWidth();
-                } else {
-                    var colWidth = $col.outerWidth(true);
->>>>>>> origin/master
                 }
                 $($resizeHandles[n]).css('left', $col.position().left + colWidth)
                    .show();
@@ -651,7 +644,6 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
                             ? data.truncatableFieldValue
                             : $this_field.data('value');
 
-<<<<<<< HEAD
                         // Truncates the text.
                         $this_field.removeClass('truncated');
                         if (PMA_commonParams.get('pftext') === 'P' && value.length > g.maxTruncatedLen) {
@@ -661,10 +653,6 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
 
                         //Add <br> before carriage return.
                         new_html = escapeHtml(value);
-=======
-                        //Add <br> before carriage return.
-                        new_html = escapeHtml(new_html);
->>>>>>> origin/master
                         new_html = new_html.replace(/\n/g, '<br>\n');
 
                         //remove decimal places if column type not supported
@@ -676,7 +664,6 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
                         if (($this_field.attr('data-decimals') > 0) && ( $this_field.attr('data-type').indexOf('time') != -1)){
                             new_html = new_html.substring(0, new_html.length - (6 - $this_field.attr('data-decimals')));
                         }
-<<<<<<< HEAD
 
                         var selector = 'span';
                         if ($this_field.hasClass('hex') && $this_field.find('a').length) {
@@ -688,18 +675,6 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
                         if (!PMA_updateCode($target, new_html, value)) {
                             $target.html(new_html);
                         }
-=======
-                        $this_field.removeClass('truncated');
-                        if (PMA_commonParams.get('pftext') === 'P' && new_html.length > g.maxTruncatedLen) {
-                            $this_field.addClass('truncated');
-                            new_html = new_html.substring(0, g.maxTruncatedLen) + '...';
-                        }
-                        var selector = 'span';
-                        if ($this_field.hasClass('hex') && $this_field.find('a').length) {
-                            selector = 'a';
-                        }
-                        $this_field.find(selector).html(new_html);
->>>>>>> origin/master
                     }
                     if ($this_field.is('.bit')) {
                         $this_field.find('span').text($this_field.data('value'));
@@ -783,17 +758,6 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
 
                 // remember this instead of testing more than once
                 var is_null = $td.is('.null');
-<<<<<<< HEAD
-=======
-
-                // add show data row link if the data resulted by 'browse distinct values' in table structure
-                if ($td.find('input').hasClass('data_browse_link')) {
-                    var showDataRowLink = document.createElement('div');
-                    showDataRowLink.className = 'goto_link';
-                    $(showDataRowLink).append("<a href='" + $td.find('.data_browse_link').val() + "'>" + g.showDataRowLinkText + "</a>");
-                    $editArea.append(showDataRowLink);
-                }
->>>>>>> origin/master
 
                 // add goto link, if this cell contains a link
                 if ($td.find('a').length > 0) {
@@ -1083,14 +1047,11 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
                     // change in names when updating
                     $(document).unbind('mousedown', $.datepicker._checkExternalClick);
 
-<<<<<<< HEAD
                     //move ui-datepicker-div inside cEdit div
                     var datepicker_div = $('#ui-datepicker-div');
                     datepicker_div.css({'top': 0, 'left': 0, 'position': 'relative'});
                     $(g.cEdit).append(datepicker_div);
 
-=======
->>>>>>> origin/master
                     if (is_null){
                         $(g.cEdit).find('.edit_area').hide();
                     }
@@ -1372,17 +1333,10 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
                                 if (typeof sqlOuter != 'undefined' && typeof tools != 'undefined') {
                                     $existing_query = $(g.o).find('.result_query');
                                     // If two query box exists update query in second else add a second box
-<<<<<<< HEAD
                                     if ($existing_query.find('div.sqlOuter').length > 1) {
                                         $existing_query.children(":nth-child(4)").remove();
                                         $existing_query.children(":nth-child(4)").remove();
                                         $existing_query.append(sqlOuter + tools);
-=======
-                                    if ($('#result_query').find('div.sqlOuter').length > 1) {
-                                        $('#result_query').children(":nth-child(4)").remove();
-                                        $('#result_query').children(":nth-child(4)").remove();
-                                        $('#result_query').append(sqlOuter + tools);
->>>>>>> origin/master
                                     } else {
                                         $existing_query.append(sqlOuter + tools);
                                     }
@@ -1776,11 +1730,7 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
             g.gotoLinkText = PMA_messages.strGoToLink;
 
             // initialize cell editing configuration
-<<<<<<< HEAD
             g.saveCellsAtOnce = $(g.o).find('.save_cells_at_once').val();
-=======
-            g.saveCellsAtOnce = $('#save_cells_at_once').val();
->>>>>>> origin/master
             g.maxTruncatedLen = PMA_commonParams.get('LimitChars');
 
             // register events
@@ -1839,11 +1789,7 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
             $(g.cEditStd).find('.edit_box').focus(function (e) {
                 g.showEditArea();
             });
-<<<<<<< HEAD
             $(g.cEditStd).on('keydown', '.edit_box, select', function (e) {
-=======
-            $(g.cEditStd).find('.edit_box, select').live('keydown', function (e) {
->>>>>>> origin/master
                 if (e.which == 13) {
                     // post on pressing "Enter"
                     e.preventDefault();
@@ -1859,11 +1805,7 @@ function PMA_makegrid(t, enableResize, enableReorder, enableVisib, enableGridEdi
             $(g.cEditTextarea).find('.edit_box').focus(function (e) {
                 g.showEditArea();
             });
-<<<<<<< HEAD
             $(g.cEditTextarea).on('keydown', '.edit_box, select', function (e) {
-=======
-            $(g.cEditTextarea).find('.edit_box, select').live('keydown', function (e) {
->>>>>>> origin/master
                 if (e.which == 13 && !e.shiftKey) {
                     // post on pressing "Enter"
                     e.preventDefault();

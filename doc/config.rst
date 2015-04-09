@@ -618,11 +618,7 @@ Server connection settings
     transformation system to work. phpMyAdmin will upgrade it automatically
     for you by analyzing your current column\_info table structure.
     However, if something goes wrong with the auto-upgrade then you can
-<<<<<<< HEAD
     use the SQL script found in ``./sql/upgrade_column_info_4_3_0+.sql``
-=======
-    use the SQL script found in ``./examples/upgrade_column_info_4_3_0+.sql``
->>>>>>> origin/master
     to upgrade it manually.
 
     To allow the usage of this functionality:
@@ -642,11 +638,7 @@ Server connection settings
            ADD `transformation` VARCHAR( 255 ) NOT NULL,
            ADD `transformation_options` VARCHAR( 255 ) NOT NULL;
     * to update your PRE-4.3.0 Column\_info table manually use this
-<<<<<<< HEAD
       ``./sql/upgrade_column_info_4_3_0+.sql`` SQL script.
-=======
-      ``./examples/upgrade_column_info_4_3_0+.sql`` SQL script.
->>>>>>> origin/master
 
     .. note::
 
@@ -1439,11 +1431,7 @@ Navigation panel setup
 .. config:option:: $cfg['FirstLevelNavigationItems']
 
     :type: integer
-<<<<<<< HEAD
     :default: 100
-=======
-    :default: 25
->>>>>>> origin/master
 
     The number of first level databases that can be displayed on each page
     of navigation tree.
@@ -2327,21 +2315,6 @@ Design customization
     the left side, right side, both sides or nowhere). "left" and "right"
     are parsed as "top" and "bottom" with vertical display mode.
 
-<<<<<<< HEAD
-=======
-.. config:option:: $cfg['DefaultDisplay']
-
-    :type: string
-    :default: ``'horizontal'``
-
-    There are 3 display modes: horizontal, horizontalflipped and vertical.
-    Define which one is displayed by default. The first mode displays each
-    row on a horizontal line, the second rotates the headers by 90
-    degrees, so you can use descriptive headers even though columns only
-    contain small values and still print them out. The vertical mode sorts
-    each row on a vertical lineup.
-
->>>>>>> origin/master
 .. config:option:: $cfg['RememberSorting']
 
     :type: boolean
@@ -2350,18 +2323,6 @@ Design customization
     If enabled, remember the sorting of each table when browsing them.
 
 .. config:option:: $cfg['TablePrimaryKeyOrder']
-<<<<<<< HEAD
-=======
-
-    :type: string
-    :default: ``'NONE'``
-
-    This defines the default sort order for the tables, having a primary key,
-    when there is no sort order defines externally.
-    Acceptable values : ['NONE', 'ASC', 'DESC']
-
-.. config:option:: $cfg['HeaderFlipType']
->>>>>>> origin/master
 
     :type: string
     :default: ``'NONE'``

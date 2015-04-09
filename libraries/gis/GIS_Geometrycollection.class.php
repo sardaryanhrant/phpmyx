@@ -278,11 +278,7 @@ class PMA_GIS_Geometrycollection extends PMA_GIS_Geometry
                 $br_count--;
                 if ($br_count == 0) {
                     $sub_parts[] = /*overload*/mb_substr(
-<<<<<<< HEAD
                         $geom_col,
-=======
-                        $goem_col,
->>>>>>> origin/master
                         $start,
                         ($count + 1 - $start)
                     );

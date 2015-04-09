@@ -62,166 +62,6 @@ function PMA_getTableNameBySQL($sql, $tables)
 
 
 /**
-<<<<<<< HEAD
-=======
- * Generate table html when SQL statement have multiple queries
- * which return displayable results
- *
- * @param object $displayResultsObject PMA_DisplayResults object
- * @param string $db                   database name
- * @param array  $sql_data             information about SQL statement
- * @param string $goto                 URL to go back in case of errors
- * @param string $pmaThemeImage        path for theme images  directory
- * @param string $printview            whether printview is enabled
- * @param string $url_query            URL query
- * @param array  $disp_mode            the display mode
- * @param string $sql_limit_to_append  limit clause
- * @param bool   $editable             whether editable or not
- *
- * @return string   $table_html   html content
- */
-function PMA_getTableHtmlForMultipleQueries(
-    $displayResultsObject, $db, $sql_data, $goto, $pmaThemeImage,
-    $printview, $url_query, $disp_mode, $sql_limit_to_append,
-    $editable
-) {
-    $table_html = '';
-
-    $tables_array = $GLOBALS['dbi']->getTables($db);
-    $databases_array = $GLOBALS['dbi']->getDatabasesFull();
-    $multi_sql = implode(";", $sql_data['valid_sql']);
-    $querytime_before = array_sum(explode(' ', microtime()));
-
-    // Assignment for variable is not needed since the results are
-    // looping using the connection
-    @$GLOBALS['dbi']->tryMultiQuery($multi_sql);
-
-    $querytime_after = array_sum(explode(' ', microtime()));
-    $querytime = $querytime_after - $querytime_before;
-    $sql_no = 0;
-
-    do {
-        $analyzed_sql = array();
-        $is_affected = false;
-        $showtable = array();
-
-        $result = $GLOBALS['dbi']->storeResult();
-        $fields_meta = ($result !== false)
-            ? $GLOBALS['dbi']->getFieldsMeta($result)
-            : array();
-        $fields_cnt  = count($fields_meta);
-
-        // Initialize needed params related to each query in multiquery statement
-        if (isset($sql_data['valid_sql'][$sql_no])) {
-            // 'Use' query can change the database
-            if (/*overload*/mb_stripos(
-                $sql_data['valid_sql'][$sql_no],
-                "use "
-            )) {
-                $db = PMA_getNewDatabase(
-                    $sql_data['valid_sql'][$sql_no],
-                    $databases_array
-                );
-            }
-
-            $table = PMA_getTableNameBySQL(
-                $sql_data['valid_sql'][$sql_no],
-                $tables_array
-            );
-
-            // for the use of the parse_analyze.inc.php
-            $sql_query = $sql_data['valid_sql'][$sql_no];
-
-            // Parse and analyze the query
-            include 'libraries/parse_analyze.inc.php';
-
-            $unlim_num_rows = PMA_Table::countRecords($db, $table, true);
-            $showtable = PMA_Table::sGetStatusInfo($db, $table, null, true);
-            $url_query = PMA_URL_getCommon(array('db' => $db, 'table' => $table));
-
-            // Handle remembered sorting order, only for single table query
-            if ($GLOBALS['cfg']['RememberSorting']
-                && ! ($is_count || $is_export || $is_func || $is_analyse)
-                && isset($analyzed_sql[0]['select_expr'])
-                && (count($analyzed_sql[0]['select_expr']) == 0)
-                && isset($analyzed_sql[0]['queryflags']['select_from'])
-                && count($analyzed_sql[0]['table_ref']) == 1
-            ) {
-                PMA_handleSortOrder(
-                    $db,
-                    $table,
-                    $analyzed_sql,
-                    $sql_data['valid_sql'][$sql_no]
-                );
-            }
-
-            // Do append a "LIMIT" clause?
-            if (($_SESSION['tmpval']['max_rows'] != 'all')
-                && ! ($is_count || $is_export || $is_func || $is_analyse)
-                && isset($analyzed_sql[0]['queryflags']['select_from'])
-                && ! isset($analyzed_sql[0]['queryflags']['offset'])
-                && empty($analyzed_sql[0]['limit_clause'])
-            ) {
-                $sql_limit_to_append = ' LIMIT '
-                    . $_SESSION['tmpval']['pos']
-                    . ', ' . $_SESSION['tmpval']['max_rows'] . " ";
-                $sql_data['valid_sql'][$sql_no] = PMA_getSqlWithLimitClause(
-                    $analyzed_sql,
-                    $sql_limit_to_append
-                );
-            }
-
-            // Set the needed properties related to executing sql query
-            $displayResultsObject->__set('db', $db);
-            $displayResultsObject->__set('table', $table);
-            $displayResultsObject->__set('goto', $goto);
-        }
-
-        if (! $is_affected) {
-            $num_rows = ($result) ? @$GLOBALS['dbi']->numRows($result) : 0;
-        } elseif (! isset($num_rows)) {
-            $num_rows = @$GLOBALS['dbi']->affectedRows();
-        }
-
-        if (isset($sql_data['valid_sql'][$sql_no])) {
-
-            $displayResultsObject->__set(
-                'sql_query',
-                $sql_data['valid_sql'][$sql_no]
-            );
-            $displayResultsObject->setProperties(
-                $unlim_num_rows, $fields_meta, $is_count, $is_export, $is_func,
-                $is_analyse, $num_rows, $fields_cnt, $querytime, $pmaThemeImage,
-                $GLOBALS['text_dir'], $is_maint, $is_explain, $is_show,
-                $showtable, $printview, $url_query, $editable
-            );
-        }
-
-        if ($num_rows == 0) {
-            continue;
-        }
-
-        // With multiple results, operations are limited
-        $disp_mode = 'nnnn000000';
-        $is_limited_display = true;
-
-        // Collect the tables
-        $table_html .= $displayResultsObject->getTable(
-            $result, $disp_mode, $analyzed_sql, $is_limited_display
-        );
-
-        // Free the result to save the memory
-        $GLOBALS['dbi']->freeResult($result);
-
-        $sql_no++;
-
-    } while ($GLOBALS['dbi']->moreResults() && $GLOBALS['dbi']->nextResult());
-
-    return $table_html;
-}
-
-/**
->>>>>>> origin/master
  * Handle remembered sorting order, only for single table query
  *
  * @param string $db                    database name
@@ -1132,28 +972,6 @@ function PMA_getEnumOrSetValues($db, $table, $columnType)
 }
 
 /**
-<<<<<<< HEAD
-=======
- * Function to append the limit clause
- *
- * @param array $analyzed_sql analyzed sql query
- *
- * @return array
- */
-function PMA_appendLimitClause($analyzed_sql)
-{
-    $sql_limit_to_append = ' LIMIT ' . $_SESSION['tmpval']['pos']
-        . ', ' . $_SESSION['tmpval']['max_rows'] . " ";
-    $full_sql_query = PMA_getSqlWithLimitClause(
-        $analyzed_sql,
-        $sql_limit_to_append
-    );
-
-    return array($sql_limit_to_append, $full_sql_query);
-}
-
-/**
->>>>>>> origin/master
  * Function to get the default sql query for browsing page
  *
  * @param String $db    the current database
@@ -1695,52 +1513,6 @@ function PMA_getMessageForNoRowsReturned($message_to_show, $analyzed_sql_results
     // In case of ROLLBACK, notify the user.
     if (isset($_REQUEST['rollback_query'])) {
         $message->addMessage(__('[ROLLBACK occurred.]'));
-<<<<<<< HEAD
-=======
-    }
-
-    return $message;
-}
-
-/**
- * Function to send the Ajax response when no rows returned
- *
- * @param string $message              message to be send
- * @param array  $analyzed_sql         analyzed sql
- * @param object $displayResultsObject DisplayResult instance
- * @param array  $extra_data           extra data
- *
- * @return void
- */
-function PMA_sendAjaxResponseForNoResultsReturned($message, $analyzed_sql,
-    $displayResultsObject, $extra_data
-) {
-    /**
-     * @todo find a better way to make getMessage() in Header.class.php
-     *       output the intended message
-     */
-    $GLOBALS['message'] = $message;
-
-    if ($GLOBALS['cfg']['ShowSQL']) {
-        $extra_data['sql_query'] = PMA_Util::getMessage(
-            $message, $GLOBALS['sql_query'], 'success'
-        );
-    }
-    if (isset($GLOBALS['reload']) && $GLOBALS['reload'] == 1) {
-        $extra_data['reload'] = 1;
-        $extra_data['db'] = $GLOBALS['db'];
-    }
-    $response = PMA_Response::getInstance();
-    $response->isSuccess($message->isSuccess());
-    // No need to manually send the message
-    // The Response class will handle that automatically
-    $query__type = PMA_DisplayResults::QUERY_TYPE_SELECT;
-    if ($analyzed_sql[0]['querytype'] == $query__type) {
-        $createViewHTML = $displayResultsObject->getCreateViewQueryResultOp(
-            $analyzed_sql
-        );
-        $response->addHTML($createViewHTML . '<br />');
->>>>>>> origin/master
     }
 
     return $message;
@@ -1916,20 +1688,9 @@ function PMA_getHtmlForSqlQueryResultsTable($displayResultsObject,
 ) {
     $printview = isset($_REQUEST['printview']) ? $_REQUEST['printview'] : null;
     $table_html = '';
-<<<<<<< HEAD
     $browse_dist = ! empty($_REQUEST['is_browse_distinct']);
 
     if ($analyzed_sql_results['is_procedure']) {
-=======
-    if (! empty($sql_data) && ($sql_data['valid_queries'] > 1)) {
-        $_SESSION['is_multi_query'] = true;
-        $table_html .= PMA_getTableHtmlForMultipleQueries(
-            $displayResultsObject, $db, $sql_data, $goto,
-            $pmaThemeImage, $printview, $url_query,
-            $disp_mode, $sql_limit_to_append, $editable
-        );
-    } elseif ($analyzed_sql_results['is_procedure']) {
->>>>>>> origin/master
 
         do {
             if (! isset($result)) {
@@ -1960,7 +1721,6 @@ function PMA_getHtmlForSqlQueryResultsTable($displayResultsObject,
                     $showtable,
                     $printview,
                     $url_query,
-<<<<<<< HEAD
                     $editable,
                     $browse_dist
                 );
@@ -1979,15 +1739,6 @@ function PMA_getHtmlForSqlQueryResultsTable($displayResultsObject,
                 $table_html .= $displayResultsObject->getTable(
                     $result,
                     $displayParts,
-=======
-                    $editable
-                );
-
-                $disp_mode = 'nnnn110111'; // uneditable
-                $table_html .= $displayResultsObject->getTable(
-                    $result,
-                    $disp_mode,
->>>>>>> origin/master
                     $analyzed_sql_results['analyzed_sql']
                 );
             }
@@ -2014,11 +1765,7 @@ function PMA_getHtmlForSqlQueryResultsTable($displayResultsObject,
         );
 
         $table_html .= $displayResultsObject->getTable(
-<<<<<<< HEAD
             $result, $displayParts, $analyzed_sql_results['analyzed_sql']
-=======
-            $result, $disp_mode, $analyzed_sql_results['analyzed_sql']
->>>>>>> origin/master
         );
         $GLOBALS['dbi']->freeResult($result);
     }
@@ -2135,7 +1882,6 @@ function PMA_getHtmlForPrintButton()
 /**
  * Function to display results when the executed query returns non empty results
  *
-<<<<<<< HEAD
  * @param array              $result               executed query results
  * @param array              $analyzed_sql_results analysed sql results
  * @param string             $db                   current database
@@ -2165,38 +1911,6 @@ function PMA_getHtmlForPrintButton()
 function PMA_getQueryResponseForResultsReturned($result,
     $analyzed_sql_results, $db, $table, $message, $sql_data,
     $displayResultsObject, $pmaThemeImage,
-=======
- * @param array      $result               executed query results
- * @param array      $analyzed_sql_results analysed sql results
- * @param string     $db                   current database
- * @param string     $table                current table
- * @param string     $disp_mode            display mode
- * @param string     $message              message to show
- * @param array      $sql_data             sql data
- * @param object     $displayResultsObject Instance of DisplayResults.class
- * @param string     $goto                 goto page url
- * @param string     $pmaThemeImage        uri of the theme image
- * @param string     $sql_limit_to_append  sql limit to append
- * @param int        $unlim_num_rows       unlimited number of rows
- * @param int        $num_rows             number of rows
- * @param string     $full_sql_query       full sql query
- * @param string     $disp_query           display query
- * @param string     $disp_message         display message
- * @param array      $profiling_results    profiling results
- * @param string     $query_type           query type
- * @param array|null $selectedTables       array of table names selected from
- *                                         the database structure page, for an
- *                                         action like check table, optimize
- *                                         table, analyze table or repair table
- * @param string     $sql_query            sql query
- * @param string     $complete_query       complete sql query
- *
- * @return void
- */
-function PMA_sendQueryResponseForResultsReturned($result,
-    $analyzed_sql_results, $db, $table, $disp_mode, $message, $sql_data,
-    $displayResultsObject, $goto, $pmaThemeImage, $sql_limit_to_append,
->>>>>>> origin/master
     $unlim_num_rows, $num_rows,  $full_sql_query, $disp_query,
     $disp_message, $profiling_results, $query_type, $selectedTables, $sql_query,
     $complete_query
@@ -2342,11 +2056,7 @@ function PMA_sendQueryResponseForResultsReturned($result,
     $cfgBookmark = PMA_Bookmark_getParams();
     if ($cfgBookmark) {
         $bookmark_support_html = PMA_getHtmlForBookmark(
-<<<<<<< HEAD
             $displayParts,
-=======
-            $disp_mode,
->>>>>>> origin/master
             $cfgBookmark,
             $sql_query, $db, $table,
             isset($complete_query) ? $complete_query : $sql_query,
@@ -2375,7 +2085,6 @@ function PMA_sendQueryResponseForResultsReturned($result,
 /**
  * Function to execute the query and send the response
  *
-<<<<<<< HEAD
  * @param array      $analyzed_sql_results   analysed sql results
  * @param bool       $is_gotofile            whether goto file or not
  * @param string     $db                     current database
@@ -2406,45 +2115,6 @@ function PMA_executeQueryAndSendQueryResponse($analyzed_sql_results,
     $extra_data, $is_affected, $message_to_show, $message,
     $sql_data, $goto, $pmaThemeImage, $disp_query, $disp_message,
     $query_type, $sql_query, $selectedTables, $complete_query
-=======
- * @param int        $num_rows             number of rows returned by the
- *                                         executed query
- * @param int        $unlim_num_rows       unlimited number of rows
- * @param bool       $is_affected          is affected
- * @param string     $db                   current database
- * @param string     $table                current table
- * @param string     $message_to_show      message to show
- * @param array      $analyzed_sql_results analyzed Sql Results
- * @param object     $displayResultsObject Instance of DisplayResult class
- * @param array      $extra_data           extra data
- * @param array      $result               executed query results
- * @param string     $disp_mode            display mode
- * @param object     $message              message
- * @param array      $sql_data             sql data
- * @param string     $goto                 goto page url
- * @param string     $pmaThemeImage        uri of the PMA theme image
- * @param string     $sql_limit_to_append  sql limit to append
- * @param string     $full_sql_query       full sql query
- * @param string     $disp_query           display query
- * @param string     $disp_message         display message
- * @param array      $profiling_results    profiling results
- * @param string     $query_type           query type
- * @param array|null $selectedTables       array of table names selected from
- *                                         the database structure page, for an
- *                                         action like check table, optimize
- *                                         table, analyze table or repair table
- * @param string     $sql_query            sql query
- * @param string     $complete_query       complete query
- *
- * @return void
- */
-function PMA_sendQueryResponse($num_rows, $unlim_num_rows, $is_affected,
-    $db, $table, $message_to_show, $analyzed_sql_results, $displayResultsObject,
-    $extra_data, $result, $disp_mode,$message, $sql_data,
-    $goto, $pmaThemeImage, $sql_limit_to_append, $full_sql_query,
-    $disp_query, $disp_message, $profiling_results, $query_type,
-    $selectedTables, $sql_query, $complete_query
->>>>>>> origin/master
 ) {
     $html_output = PMA_executeQueryAndGetQueryResponse(
         $analyzed_sql_results, $is_gotofile, $db, $table,
@@ -2454,27 +2124,8 @@ function PMA_sendQueryResponse($num_rows, $unlim_num_rows, $is_affected,
         $query_type, $sql_query, $selectedTables, $complete_query
     );
 
-<<<<<<< HEAD
     $response = PMA_Response::getInstance();
     $response->addHTML($html_output);
-=======
-    } else {
-        // At least one row is returned -> displays a table with results
-        PMA_sendQueryResponseForResultsReturned(
-            isset($result) ? $result : null, $analyzed_sql_results,
-            $db, $table, isset($disp_mode) ? $disp_mode : null,
-            isset($message) ? $message : null, isset($sql_data) ? $sql_data : null,
-            $displayResultsObject, $goto, $pmaThemeImage,
-            $sql_limit_to_append, $unlim_num_rows,
-            $num_rows, $full_sql_query,
-            isset($disp_query) ? $disp_query : null,
-            isset($disp_message) ? $disp_message : null, $profiling_results,
-            isset($query_type) ? $query_type : null,
-            isset($selectedTables) ? $selectedTables : null, $sql_query,
-            isset($complete_query) ? $complete_query : null
-        );
-    } // end rows returned
->>>>>>> origin/master
 }
 
 /**
@@ -2522,11 +2173,7 @@ function PMA_executeQueryAndGetQueryResponse($analyzed_sql_results,
     if (PMA_isRememberSortingOrder($analyzed_sql_results)
         && ! isset($analyzed_sql_results['analyzed_sql'][0]['queryflags']['union'])
     ) {
-<<<<<<< HEAD
         if (! isset($_SESSION['sql_from_query_box'])) {
-=======
-        if(!isset($_SESSION['sql_from_query_box'])) {
->>>>>>> origin/master
             PMA_handleSortOrder($db, $table, $analyzed_sql_results, $sql_query);
         } else {
             unset($_SESSION['sql_from_query_box']);
@@ -2544,15 +2191,10 @@ function PMA_executeQueryAndGetQueryResponse($analyzed_sql_results,
 
     // Do append a "LIMIT" clause?
     if (PMA_isAppendLimitClause($analyzed_sql_results)) {
-<<<<<<< HEAD
         $full_sql_query = PMA_getSqlWithLimitClause(
             $analyzed_sql_results['analyzed_sql'],
             ' LIMIT ' . $_SESSION['tmpval']['pos']
             . ', ' . $_SESSION['tmpval']['max_rows'] . " "
-=======
-        list($sql_limit_to_append, $full_sql_query) = PMA_appendLimitClause(
-            $analyzed_sql_results['analyzed_sql']
->>>>>>> origin/master
         );
     }
 
@@ -2572,7 +2214,6 @@ function PMA_executeQueryAndGetQueryResponse($analyzed_sql_results,
             isset($extra_data) ? $extra_data : null
         );
 
-<<<<<<< HEAD
     // No rows returned -> move back to the calling page
     if ((0 == $num_rows && 0 == $unlim_num_rows) || $is_affected) {
         $html_output = PMA_getQueryResponseForNoResultsReturned(
@@ -2605,34 +2246,6 @@ function PMA_executeQueryAndGetQueryResponse($analyzed_sql_results,
     }
 
     return $html_output;
-=======
-    PMA_sendQueryResponse(
-        $num_rows,
-        $unlim_num_rows,
-        $is_affected,
-        $db,
-        $table,
-        isset($message_to_show) ? $message_to_show : null,
-        $analyzed_sql_results,
-        $displayResultsObject,
-        $extra_data,
-        isset($result) ? $result : null,
-        isset($disp_mode) ? $disp_mode : null,
-        isset($message) ? $message : null,
-        isset($sql_data) ? $sql_data : null,
-        $goto,
-        $pmaThemeImage,
-        $sql_limit_to_append,
-        $full_sql_query,
-        isset($disp_query) ? $disp_query : null,
-        isset($disp_message) ? $disp_message : null,
-        $profiling_results,
-        isset($query_type) ? $query_type : null,
-        isset($selectedTables) ? $selectedTables : null,
-        $sql_query,
-        isset($complete_query) ? $complete_query : null
-    );
->>>>>>> origin/master
 }
 
 /**

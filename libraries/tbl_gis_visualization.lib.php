@@ -72,17 +72,6 @@ function PMA_GIS_visualizationResults($data, &$visualizationSettings, $format)
                 $visualizationSettings[$setting] = $val;
             }
         }
-<<<<<<< HEAD
-=======
-    }
-
-    if ($format == 'svg') {
-        return $visualization->asSvg();
-    } elseif ($format == 'png') {
-        return $visualization->asPng();
-    } elseif ($format == 'ol') {
-        return $visualization->asOl();
->>>>>>> origin/master
     }
 
     if ($format == 'svg') {

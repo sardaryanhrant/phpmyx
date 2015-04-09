@@ -176,10 +176,6 @@ if ($GLOBALS['dbi']->numRows($all_tables_result) > 0) {
             <td class="right"><?php echo $version_data['version'];?></td>
             <td><?php echo $version_data['date_created'];?></td>
             <td><?php echo $version_data['date_updated'];?></td>
-<<<<<<< HEAD
-=======
-            <td><?php echo PMA_getVersionStatus($version_data);?></td>
->>>>>>> origin/master
             <td>
             <?php
                 $state = PMA_getVersionStatus($version_data);

@@ -3,11 +3,7 @@
 // File name   : tcpdf_static.php
 // Version     : 1.1.0
 // Begin       : 2002-08-03
-<<<<<<< HEAD
 // Last Update : 2014-12-10
-=======
-// Last Update : 2014-04-25
->>>>>>> origin/master
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
@@ -59,11 +55,7 @@ class TCPDF_STATIC {
 	 * Current TCPDF version.
 	 * @private static
 	 */
-<<<<<<< HEAD
 	private static $tcpdf_version = '6.2.3';
-=======
-	private static $tcpdf_version = '6.0.077';
->>>>>>> origin/master
 
 	/**
 	 * String alias for total number of pages.

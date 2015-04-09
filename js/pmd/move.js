@@ -156,7 +156,6 @@ function MouseMove(e)
 
     if (cur_click !== null) {
         MarkUnsaved();
-<<<<<<< HEAD
 
         var $cur_click = $(cur_click);
 
@@ -171,12 +170,6 @@ function MouseMove(e)
 
         $cur_click.attr('data-left', new_x);
         $cur_click.attr('data-top', new_y);
-=======
-        var mGx = Glob_X - dx;
-        var mGy = Glob_Y - dy;
-        mGx = mGx > 0 ? mGx : 0;
-        mGy = mGy > 0 ? mGy : 0;
->>>>>>> origin/master
 
         if (ON_grid) {
             new_x = parseInt(new_x / grid_size) * grid_size;
@@ -368,11 +361,7 @@ function Re_load()
                     var y1 = document.getElementById(key2).offsetTop +
                         row_offset_top +
                         height_field;
-<<<<<<< HEAD
 
-=======
-                    //alert(1);
->>>>>>> origin/master
 
                     row_offset_top = 0;
                     tab_hide_button = document.getElementById('id_hide_tbody_' + contr[K][key][key2][key3][0]);
@@ -385,11 +374,8 @@ function Re_load()
                         document.getElementById(contr[K][key][key2][key3][0]).offsetTop +
                         row_offset_top +
                         height_field;
-<<<<<<< HEAD
 
                     var osn_tab = document.getElementById('osn_tab');
-=======
->>>>>>> origin/master
 
                     Line0(
                         x1 + osn_tab.offsetLeft,
@@ -1149,12 +1135,8 @@ function New_relation()
             PMA_ajaxShowMessage(data.error, false);
         } else {
             PMA_ajaxRemoveMessage($msgbox);
-<<<<<<< HEAD
             // Load_page(selected_page);
             $("#designer_tab").click();
-=======
-            Load_page(selected_page);
->>>>>>> origin/master
         }
     }); // end $.post()
 }
@@ -1176,14 +1158,9 @@ function Start_tab_upd(table)
 
 function Small_tab_all(id_this) // max/min all tables
 {
-<<<<<<< HEAD
     var icon = id_this.childNodes[0];
     var key;
     if (icon.alt == "v") {
-=======
-    var key;
-    if (id_this.alt == "v") {
->>>>>>> origin/master
         for (key in j_tabs) {
             if (document.getElementById('id_hide_tbody_' + key).innerHTML == "v") {
                 Small_tab(key, 0);
@@ -1381,12 +1358,8 @@ function Upd_relation()
             PMA_ajaxShowMessage(data.error, false);
         } else {
             PMA_ajaxRemoveMessage($msgbox);
-<<<<<<< HEAD
             // Load_page(selected_page);
             $("#designer_tab").click();
-=======
-            Load_page(selected_page);
->>>>>>> origin/master
         }
     }); // end $.post()
 }
@@ -1532,7 +1505,6 @@ function Show_left_menu(id_this) // max/min all tables
 //------------------------------------------------------------------------------
 function Side_menu_right(id_this)
 {
-<<<<<<< HEAD
     $('#side_menu').toggleClass('right');
     $('#layer_menu').toggleClass('left');
     var icon = $(id_this.childNodes[0]);
@@ -1547,17 +1519,6 @@ function Side_menu_right(id_this)
     icon.attr('src', icon.attr('data-right'));
     icon.attr('data-right', current);
     menu_moved = !menu_moved;
-=======
-    if (id_this.alt === ">") {
-        moveTopMenuToRight(id_this);
-        id_this.alt = "<";
-        id_this.src = pmaThemeImage + "pmd/2leftarrow_m.png";
-    } else {
-        document.getElementById('top_menu').style.paddingLeft = 0;
-        id_this.alt = ">";
-        id_this.src = pmaThemeImage + "pmd/2rightarrow_m.png";
-    }
->>>>>>> origin/master
 }
 //------------------------------------------------------------------------------
 function Show_text () {
@@ -1814,15 +1775,9 @@ function add_object()
 }
 
 AJAX.registerTeardown('pmd/move.js', function () {
-<<<<<<< HEAD
     $('#side_menu').off('mouseenter mouseleave');
     $("#key_Show_left_menu").unbind('click');
     $("#toggleFullscreen").unbind('click');
-=======
-    $("#key_Show_left_menu").unbind('click');
-    $("#enterFullscreen").unbind('click');
-    $("#exitFullscreen").unbind('click');
->>>>>>> origin/master
     $("#newPage").unbind('click');
     $("#editPage").unbind('click');
     $("#savePos").unbind('click');
@@ -1841,10 +1796,7 @@ AJAX.registerTeardown('pmd/move.js', function () {
     $("#exportPages").unbind('click');
     $("#query_builder").unbind('click');
     $("#key_Left_Right").unbind('click');
-<<<<<<< HEAD
     $("#pin_Text").unbind('click');
-=======
->>>>>>> origin/master
     $("#canvas").unbind('click');
     $("#key_HS_all").unbind('click');
     $("#key_HS").unbind('click');
@@ -1861,21 +1813,12 @@ AJAX.registerTeardown('pmd/move.js', function () {
     $('.pmd_tab').off('click','.tab_field_2,.tab_field_3,.tab_field');
     $('.pmd_tab').off('click', '.select_all_store_col');
     $('.pmd_tab').off('click', '.small_tab_pref_click_opt');
-<<<<<<< HEAD
     $("#del_button").unbind('click');
     $("#cancel_button").unbind('click');
     $("#ok_add_object").unbind('click');
     $("#cancel_close_option").unbind('click');
     $("#ok_new_rel_panel").unbind('click');
     $("#cancel_new_rel_panel").unbind('click');
-=======
-    $("input#del_button").unbind('click');
-    $("input#cancel_button").unbind('click');
-    $("input#ok_add_object").unbind('click');
-    $("input#cancel_close_option").unbind('click');
-    $("input#ok_new_rel_panel").unbind('click');
-    $("input#cancel_new_rel_panel").unbind('click');
->>>>>>> origin/master
 });
 
 AJAX.registerOnload('pmd/move.js', function () {
@@ -1883,17 +1826,8 @@ AJAX.registerOnload('pmd/move.js', function () {
         Show_left_menu(this);
         return false;
     });
-<<<<<<< HEAD
     $("#toggleFullscreen").click(function() {
         Toggle_fullscreen();
-=======
-    $("#enterFullscreen").click(function() {
-        Enter_fullscreen();
-        return false;
-    });
-    $("#exitFullscreen").click(function() {
-        Exit_fullscreen();
->>>>>>> origin/master
         return false;
     });
     $("#newPage").click(function() {
@@ -1959,7 +1893,6 @@ AJAX.registerOnload('pmd/move.js', function () {
         build_query('SQL Query on Database', 0);
     });
     $("#key_Left_Right").click(function() {
-<<<<<<< HEAD
         Side_menu_right(this);
         return false;
     });
@@ -1976,13 +1909,6 @@ AJAX.registerOnload('pmd/move.js', function () {
     });
     $("#canvas").click(function(event) {
         Canvas_click(this, event);
-=======
-        Top_menu_right(this);
-        return false;
-    });
-    $("#canvas").click(function() {
-        Canvas_click(this);
->>>>>>> origin/master
     });
     $("#key_HS_all").click(function() {
         Hide_tab_all(this);

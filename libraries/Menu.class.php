@@ -515,13 +515,7 @@ class PMA_Menu
         $isCreateOrGrantUser = $GLOBALS['dbi']->isUserType('grant')
             || $GLOBALS['dbi']->isUserType('create');
         $binary_logs = null;
-<<<<<<< HEAD
         if (! defined('PMA_DRIZZLE') || ! PMA_DRIZZLE) {
-=======
-        $notDrizzle = ! defined('PMA_DRIZZLE')
-            || (defined('PMA_DRIZZLE') && ! PMA_DRIZZLE);
-        if ($notDrizzle) {
->>>>>>> origin/master
             if (PMA_Util::cacheExists('binary_logs')) {
                 $binary_logs = PMA_Util::cacheGet('binary_logs');
             } else {

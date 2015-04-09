@@ -195,11 +195,7 @@ class ExportCodegen extends ExportPlugin
         if (isset($CG_FORMATS[$format])) {
             $method = $CG_HANDLERS[$format];
             return PMA_exportOutputHandler(
-<<<<<<< HEAD
                 $this->$method($db, $table, $crlf, $aliases)
-=======
-                $this->$CG_HANDLERS[$format]($db, $table, $crlf, $aliases)
->>>>>>> origin/master
             );
         }
         return PMA_exportOutputHandler(sprintf("%s is not supported.", $format));

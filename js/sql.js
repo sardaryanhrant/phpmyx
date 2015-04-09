@@ -92,7 +92,6 @@ AJAX.registerTeardown('sql.js', function () {
     $("#togglequerybox").unbind('click');
     $(document).off('click', "#button_submit_query");
     $("input[name=bookmark_variable]").unbind("keypress");
-<<<<<<< HEAD
     $(document).off('submit', "#sqlqueryform.ajax");
     $(document).off('click', "input[name=navig].ajax");
     $(document).off('submit', "form[name='displayOptionsForm'].ajax");
@@ -106,26 +105,11 @@ AJAX.registerTeardown('sql.js', function () {
     } else {
         $('#sqlquery').off('input propertychange');
     }
-=======
-    $("#sqlqueryform.ajax").die('submit');
-    $("input[name=navig].ajax").die('click');
-    $("#pageselector").die('change');
-    $("#table_results.ajax").find("a[title=Sort]").die('click');
-    $("#displayOptionsForm.ajax").die('submit');
-    $('th.column_heading.pointer').die('hover');
-    $('th.column_heading.marker').die('click');
-    $(window).unbind('scroll');
-    $(".filter_rows").die("keyup");
->>>>>>> origin/master
     $('body').off('click', '.navigation .showAllRows');
     $('body').off('click','a.browse_foreign');
     $('body').off('click', '#simulate_dml');
     $('body').off('keyup', '#sqlqueryform');
-<<<<<<< HEAD
     $('body').off('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]');
-=======
-    $('body').off('click', '#resultsForm.ajax button[name="submit_mult"], #resultsForm.ajax input[name="submit_mult"]');
->>>>>>> origin/master
 });
 
 /**
@@ -373,17 +357,6 @@ AJAX.registerOnload('sql.js', function () {
                     PMA_commonParams.setAll(data._params);
                 }
 
-                if (data._menu) {
-                    AJAX.cache.menus.replace(data._menu);
-                    AJAX.cache.menus.add(data._menuHash, data._menu);
-                } else if (data._menuHash) {
-                    AJAX.cache.menus.replace(AJAX.cache.menus.get(data._menuHash));
-                }
-
-                if (data._params) {
-                    PMA_commonParams.setAll(data._params);
-                }
-
                 if (typeof data.ajax_reload != 'undefined') {
                     if (data.ajax_reload.reload) {
                         if (data.ajax_reload.table_name) {
@@ -448,11 +421,7 @@ AJAX.registerOnload('sql.js', function () {
         var $msgbox = PMA_ajaxShowMessage();
         $.post($form.attr('action'), $form.serialize() + '&ajax_request=true', function (data) {
             PMA_ajaxRemoveMessage($msgbox);
-<<<<<<< HEAD
             var $sqlqueryresults = $form.parents(".sqlqueryresults");
-=======
-            var $sqlqueryresults = $("#sqlqueryresults");
->>>>>>> origin/master
             $sqlqueryresults
              .html(data.message)
              .trigger('makegrid')
@@ -479,11 +448,7 @@ AJAX.registerOnload('sql.js', function () {
 
         var phrase = $(this).val();
         // Set same value to both Filter rows fields.
-<<<<<<< HEAD
         $(".filter_rows[data-for='" + unique_id + "']").not(this).val(phrase);
-=======
-        $(".filter_rows").not(this).val(phrase);
->>>>>>> origin/master
         // Handle colspan.
         $target_table.find("thead > tr").prepend(dummy_th);
         $.uiTableFilter($target_table, phrase, target_columns);
@@ -599,21 +564,13 @@ AJAX.registerOnload('sql.js', function () {
     /**
      * Handles multi submits of results browsing page such as edit, delete and export
      */
-<<<<<<< HEAD
     $('body').on('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]', function (e) {
-=======
-    $('body').on('click', '#resultsForm.ajax button[name="submit_mult"], #resultsForm.ajax input[name="submit_mult"]', function (e) {
->>>>>>> origin/master
         e.preventDefault();
         var $button = $(this);
         var $form = $button.parent('form');
         var submitData = $form.serialize() + '&ajax_request=true&ajax_page_request=true&submit_mult=' + $button.val();
         PMA_ajaxShowMessage();
-<<<<<<< HEAD
         $.post($form.attr('action'), submitData, AJAX.responseHandler);
-=======
-        $.get($form.attr('action'), submitData, AJAX.responseHandler);
->>>>>>> origin/master
     });
 }); // end $()
 
@@ -835,12 +792,8 @@ function rearrangeStickyColumns($sticky_columns, $table_results) {
     // clone width per cell
     $clonedHeader.find("tr:first").children().width(function(i,val) {
         var width = $originalColumns.eq(i).width();
-<<<<<<< HEAD
         var is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
         if (! is_firefox) {
-=======
-        if (! $.browser.mozilla) {
->>>>>>> origin/master
             width += 1;
         }
         return width;

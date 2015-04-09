@@ -1,7 +1,6 @@
 phpMyAdmin - ChangeLog
 ======================
 
-<<<<<<< HEAD
 4.4.1.1 (2015-04-08)
 - bug #4846 Web server's error log is flooded
 
@@ -142,8 +141,6 @@ explanation
 - bug #4752 Incorrect page after creating table
 - bug #4771 Central Columns not working, showing error
 
-=======
->>>>>>> origin/master
 4.3.9.0 (2015-02-05)
 - bug #4728 Incorrect headings in routine editor
 - bug #4730 Notice while browsing tables when phpmyadmin pma database exists, but not all the tables
@@ -169,10 +166,6 @@ explanation
 - bug #4719 'only_db' not working
 - bug #4700 Error text: Internal Server Error
 - bug #4722 Incorrect width table summary when favorite tables is disabled
-<<<<<<< HEAD
-=======
-- bug #4710 Nav tree error after filtering the tables
->>>>>>> origin/master
 - bug #4716 Collapse all in navigation panel is sometimes broken
 - bug #4724 Cannot navigate in filtered table list
 - bug #4717 Database navigation menu broken when resolution/screen is changing

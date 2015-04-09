@@ -53,11 +53,7 @@ AJAX.registerTeardown('tbl_select.js', function () {
     $('#togglesearchformlink').unbind('click');
     $(document).off('submit', "#tbl_search_form.ajax");
     $('select.geom_func').unbind('change');
-<<<<<<< HEAD
     $(document).off('click', 'span.open_search_gis_editor');
-=======
-    $('span.open_search_gis_editor').die('click');
->>>>>>> origin/master
     $('body').off('click', 'select[name*="criteriaColumnOperators"]');
 });
 
@@ -325,11 +321,7 @@ AJAX.registerOnload('tbl_select.js', function () {
 
                             // If target field is a select list.
                             if ($target_field.is('select')) {
-<<<<<<< HEAD
                                 $target_field.val(final_value);
-=======
-                                $target_field.attr('value', final_value);
->>>>>>> origin/master
                                 var $options = $target_field.find('option');
                                 var $closest_min = null;
                                 var $closest_max = null;

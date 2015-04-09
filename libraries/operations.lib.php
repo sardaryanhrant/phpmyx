@@ -523,11 +523,8 @@ function PMA_handleTheViews($views, $move, $db)
 
 /**
  * Create all accumulated constraints
-<<<<<<< HEAD
  *
  * @param array $sqlConstratints array of sql constraints for the database
-=======
->>>>>>> origin/master
  *
  * @return void
  */

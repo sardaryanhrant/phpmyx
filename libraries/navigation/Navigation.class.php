@@ -59,17 +59,10 @@ class PMA_Navigation
 
         if (! PMA_Response::getInstance()->isAjax()) {
             // closes the tags that were opened by the navigation header
-<<<<<<< HEAD
             $retval .= '</div>'; // pma_navigation_tree
             $retval .= '</div>'; // pma_navigation_content
             $retval .= $this->_getDropHandler();
             $retval .= '</div>'; // pma_navigation
-=======
-            $retval .= '</div>';
-            $retval .= '</div>';
-            $retval .= $this->_getDropHandler();
-            $retval .= '</div>';
->>>>>>> origin/master
         }
 
         return $retval;

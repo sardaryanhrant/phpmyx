@@ -14,11 +14,7 @@ $sql_autocomplete = array();
 if ($db) {
     $tableNames = $GLOBALS['dbi']->getTables($db);
     foreach ($tableNames as $tableName) {
-<<<<<<< HEAD
         $sql_autocomplete[$tableName] = $GLOBALS['dbi']->getColumns(
-=======
-        $sql_autocomplete[$tableName] = $GLOBALS['dbi']->getColumnNames(
->>>>>>> origin/master
             $db, $tableName
         );
     }

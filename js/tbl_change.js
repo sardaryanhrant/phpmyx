@@ -163,7 +163,6 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
     var new_salt_box = "<br><input type=text name=salt[multi_edit][" + multi_edit + "][" + urlField + "]" +
         " id=salt_" + target.id + " placeholder='" + PMA_messages.strEncryptionKey + "'>";
 
-<<<<<<< HEAD
     //If encrypting or decrypting functions that take salt as input is selected append the new textbox for salt
     if (target.value === 'AES_ENCRYPT' ||
             target.value === 'AES_DECRYPT' ||
@@ -175,26 +174,6 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
         }
     } else {
         //Remove the textbox for salt
-=======
-    //If AES_ENCRYPT is Selected then append the new textbox for salt
-    if (target.value === 'AES_DECRYPT' || target.value === 'AES_ENCRYPT') {
-        if (!($("#salt_" + target.id).length)) {
-            $this_input.after(new_salt_box);
-        }
-        if ($this_input.data('type') !== 'HEX') {
-            $('#' + target.id).addClass('invalid_value');
-            return false;
-        }
-    } else if(target.value === 'MD5' &&
-        typeof $this_input.data('maxlength') !== 'undefined' &&
-        $this_input.data('maxlength') < 32
-    ){
-        $('#' + target.id).addClass('invalid_value');
-        return false;
-    } else {
-        $('#' + target.id).removeClass('invalid_value');
-        //The value of the select is no longer AES_ENCRYPT, remove the textbox for salt
->>>>>>> origin/master
         $('#salt_' + target.id).prev('br').remove();
         $("#salt_" + target.id).remove();
     }
@@ -271,7 +250,6 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
             var min = $this_input.attr('min');
             var max = $this_input.attr('max');
             var value = $this_input.val();
-<<<<<<< HEAD
             $this_input.removeClass("invalid_value");
             if (isNaN(value) || BigInts.compare(value, min) < 0 ||
                 BigInts.compare(value, max) > 0
@@ -284,20 +262,6 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
             var len = $this_input.val().length;
             var maxlen = $this_input.data('maxlength');
             $this_input.removeClass("invalid_value");
-=======
-            $this_input.removeClass("invalid_value");
-            if (isNaN(value) || BigInts.compare(value, min) < 0 ||
-                BigInts.compare(value, max) > 0
-            ) {
-                $this_input.addClass("invalid_value");
-                return false;
-            }
-            //validation for CHAR types
-        } else if ($this_input.data('type') === 'CHAR') {
-            var len = $this_input.val().length;
-            var maxlen = $this_input.data('maxlength');
-            $this_input.removeClass("invalid_value");
->>>>>>> origin/master
             if (typeof maxlen !== 'undefined' && len > maxlen) {
                 $this_input.addClass("invalid_value");
                 return false;
@@ -341,15 +305,11 @@ function applyFunctionToAllRows(currId, functionName, copySalt, salt, targetRows
         }).attr("selected","selected");
 
         // Handle salt field.
-<<<<<<< HEAD
         if (functionName === 'AES_ENCRYPT' ||
                 functionName === 'AES_DECRYPT' ||
                 functionName === 'DES_ENCRYPT' ||
                 functionName === 'DES_DECRYPT' ||
                 functionName === 'ENCRYPT') {
-=======
-        if (functionName === 'AES_ENCRYPT' || functionName === 'AES_DECRYPT') {
->>>>>>> origin/master
             if ($("#salt_" + targetSelectList.attr("id")).length === 0) {
                 // Get hash value.
                 var hashed_value = targetSelectList.attr("name").match(/\[multi\_edit\]\[\d\]\[(.*)\]/);
@@ -360,11 +320,7 @@ function applyFunctionToAllRows(currId, functionName, copySalt, salt, targetRows
             }
 
             if (copySalt) {
-<<<<<<< HEAD
                 $("#salt_" + targetSelectList.attr("id")).val(salt);
-=======
-                $("#salt_" + targetSelectList.attr("id")).attr("value", salt);
->>>>>>> origin/master
             }
         } else {
             var id = targetSelectList.attr("id");

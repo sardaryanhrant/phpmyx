@@ -102,10 +102,6 @@ class Node_Database extends Node
      */
     private function _getTableOrViewCount($which, $searchClause, $singleItem)
     {
-<<<<<<< HEAD
-=======
-        $retval = 0;
->>>>>>> origin/master
         $db     = $this->real_name;
         if ($which == 'tables') {
             $condition = '=';
@@ -191,10 +187,6 @@ class Node_Database extends Node
      */
     private function _getProcedureCount($searchClause, $singleItem)
     {
-<<<<<<< HEAD
-=======
-        $retval = 0;
->>>>>>> origin/master
         $db     = $this->real_name;
         if (! $GLOBALS['cfg']['Server']['DisableIS']) {
             $db     = PMA_Util::sqlAddSlashes($db);
@@ -236,10 +228,6 @@ class Node_Database extends Node
      */
     private function _getFunctionCount($searchClause, $singleItem)
     {
-<<<<<<< HEAD
-=======
-        $retval = 0;
->>>>>>> origin/master
         $db     = $this->real_name;
         if (! $GLOBALS['cfg']['Server']['DisableIS']) {
             $db     = PMA_Util::sqlAddSlashes($db);
@@ -281,10 +269,6 @@ class Node_Database extends Node
      */
     private function _getEventCount($searchClause, $singleItem)
     {
-<<<<<<< HEAD
-=======
-        $retval = 0;
->>>>>>> origin/master
         $db     = $this->real_name;
         if (! $GLOBALS['cfg']['Server']['DisableIS']) {
             $db     = PMA_Util::sqlAddSlashes($db);
@@ -373,11 +357,7 @@ class Node_Database extends Node
 
         // Remove hidden items so that they are not displayed in navigation tree
         $cfgRelation = PMA_getRelationsParam();
-<<<<<<< HEAD
         if (isset($cfgRelation['navwork']) && $cfgRelation['navwork']) {
-=======
-        if ($cfgRelation['navwork']) {
->>>>>>> origin/master
             $navTable = PMA_Util::backquote($cfgRelation['db'])
                 . "." . PMA_Util::backquote($cfgRelation['navigationhiding']);
             $sqlQuery = "SELECT `item_name` FROM " . $navTable
@@ -668,7 +648,6 @@ class Node_Database extends Node
     {
         $this->_hiddenCount = $count;
     }
-<<<<<<< HEAD
 
     /**
      * Returns the number of hidden items in this database
@@ -679,8 +658,6 @@ class Node_Database extends Node
     {
         return $this->_hiddenCount;
     }
-=======
->>>>>>> origin/master
 }
 
 ?>

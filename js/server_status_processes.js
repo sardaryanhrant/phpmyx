@@ -86,7 +86,6 @@ var processList = {
         // if auto refresh is enabled
         if (processList.autoRefresh) {
             var interval = parseInt(processList.refreshInterval, 10) * 1000;
-<<<<<<< HEAD
             var urlParams = processList.getUrlParams();
             processList.refreshRequest = $.get(processList.refreshUrl,
                 urlParams,
@@ -101,22 +100,6 @@ var processList = {
                         interval
                     );
                 });
-=======
-            processList.refreshRequest = $.get(processList.refreshUrl, {
-                'ajax_request': true,
-                'refresh': true
-            }, function(data) {
-                if (data.hasOwnProperty('success') && data.success) {
-                    $newTable = $(data.message);
-                    $('#tableprocesslist').html($newTable.html());
-                    PMA_highlightSQL($('#tableprocesslist'));
-                }
-                processList.refreshTimeout = setTimeout(
-                    processList.refresh,
-                    interval
-                );
-            });
->>>>>>> origin/master
         }
     },
 
@@ -148,7 +131,6 @@ var processList = {
             processList.refresh();
         }
         $('a#toggleRefresh').html(PMA_getImage(img) + escapeHtml(label));
-<<<<<<< HEAD
     },
 
     /**
@@ -165,8 +147,6 @@ var processList = {
             return urlParams;
         }
         return urlParams;
-=======
->>>>>>> origin/master
     }
 };
 

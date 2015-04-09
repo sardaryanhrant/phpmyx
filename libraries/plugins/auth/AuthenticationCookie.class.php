@@ -34,12 +34,8 @@ require './libraries/plugins/auth/swekey/swekey.auth.lib.php';
 if (! function_exists('openssl_encrypt')
     || ! function_exists('openssl_decrypt')
     || ! function_exists('openssl_random_pseudo_bytes')
-<<<<<<< HEAD
     || PHP_VERSION_ID < 50304
 ) {
-=======
-    || PHP_VERSION_ID < 50304) {
->>>>>>> origin/master
     require PHPSECLIB_INC_DIR . '/Crypt/AES.php';
     require PHPSECLIB_INC_DIR . '/Crypt/Random.php';
 }
@@ -237,44 +233,10 @@ class AuthenticationCookie extends AuthenticationPlugin
             && !$skip
         ) {
             // If enabled show captcha to the user on the login screen.
-<<<<<<< HEAD
             echo '<script src="https://www.google.com/recaptcha/api.js?hl='
                 . $GLOBALS['lang'] . '" async defer></script>';
             echo '<div class="g-recaptcha" data-sitekey="'
                 . $GLOBALS['cfg']['CaptchaLoginPublicKey'] . '"></div>';
-=======
-            echo '<script type="text/javascript">
-                    var RecaptchaOptions = {
-                        theme : "white"
-                    };
-                 </script>
-                 <script type="text/javascript"
-                    src="https://www.google.com/recaptcha/api/challenge?'
-                    . 'k=' . $GLOBALS['cfg']['CaptchaLoginPublicKey'] . '&amp;'
-                    . 'hl=' . $GLOBALS['lang'] . '">
-                 </script>
-                 <noscript>
-                    <iframe src="https://www.google.com/recaptcha/api/noscript?k='
-                . $GLOBALS['cfg']['CaptchaLoginPublicKey'] . '"
-                        height="300" width="500" frameborder="0"></iframe><br>
-                    <textarea name="recaptcha_challenge_field" rows="3" cols="40">
-                    </textarea>
-                    <input type="hidden" name="recaptcha_response_field"
-                        value="manual_challenge">
-                 </noscript>
-                 <script type="text/javascript">
-                    $(function() {
-                        $("#recaptcha_reload_btn," +
-                          "#recaptcha_switch_audio_btn," +
-                          "#recaptcha_switch_img_btn," +
-                          "#recaptcha_whatsthis_btn," +
-                          "#recaptcha_audio_play_again")
-                        .live("mouseover", function() {
-                            $(this).addClass("disableAjax");
-                        });
-                    });
-                 </script>';
->>>>>>> origin/master
         }
 
         echo '</fieldset>
@@ -480,11 +442,7 @@ class AuthenticationCookie extends AuthenticationPlugin
 
         // check cookies
         if (empty($_COOKIE['pmaUser-' . $GLOBALS['server']])
-<<<<<<< HEAD
             || empty($_COOKIE['pma_iv-' . $GLOBALS['server']])
-=======
-            || empty($_COOKIE['pma_iv'])
->>>>>>> origin/master
         ) {
             return false;
         }
@@ -600,11 +558,7 @@ class AuthenticationCookie extends AuthenticationPlugin
     /**
      * Stores user credentials after successful login.
      *
-<<<<<<< HEAD
      * @return void|bool
-=======
-     * @return void
->>>>>>> origin/master
      */
     public function storeUserCredentials()
     {
@@ -830,11 +784,7 @@ class AuthenticationCookie extends AuthenticationPlugin
     public function cookieDecrypt($encdata, $secret)
     {
         if (is_null($this->_cookie_iv)) {
-<<<<<<< HEAD
             $this->_cookie_iv = base64_decode($_COOKIE['pma_iv-' . $GLOBALS['server']], true);
-=======
-            $this->_cookie_iv = base64_decode($_COOKIE['pma_iv'], true);
->>>>>>> origin/master
         }
         if (strlen($this->_cookie_iv) < $this->getIVSize()) {
                 $this->createIV();
@@ -853,24 +803,7 @@ class AuthenticationCookie extends AuthenticationPlugin
             $cipher->setIV($this->_cookie_iv);
             $cipher->setKey($secret);
             return $cipher->decrypt(base64_decode($encdata));
-<<<<<<< HEAD
         }
-    }
-
-    /**
-     * Returns size of IV for encryption.
-     *
-     * @return int
-     */
-    public function getIVSize()
-    {
-        if ($this->_useOpenSSL()) {
-            return openssl_cipher_iv_length('AES-128-CBC');
-=======
->>>>>>> origin/master
-        }
-        $cipher = new Crypt_AES(CRYPT_AES_MODE_CBC);
-        return $cipher->block_size;
     }
 
     /**
@@ -907,11 +840,7 @@ class AuthenticationCookie extends AuthenticationPlugin
             );
         }
         $GLOBALS['PMA_Config']->setCookie(
-<<<<<<< HEAD
             'pma_iv-' . $GLOBALS['server'],
-=======
-            'pma_iv',
->>>>>>> origin/master
             base64_encode($this->_cookie_iv)
         );
     }
@@ -933,14 +862,10 @@ class AuthenticationCookie extends AuthenticationPlugin
      *
      * @param string $password New password to set
      *
-     * @return array Additional URL parameters.
+     * @return void
      */
     public function handlePasswordChange($password)
     {
         $this->storePasswordCookie($password);
-<<<<<<< HEAD
-=======
-        return array();
->>>>>>> origin/master
     }
 }

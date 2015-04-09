@@ -44,11 +44,7 @@ function loadResult(result_path, table_name, link)
         /**  Load the browse results to the page */
         $("#table-info").show();
         $('#table-link').attr({"href" : 'sql.php' + link }).text(table_name);
-<<<<<<< HEAD
         var url = result_path + "#searchresults";
-=======
-        var url = result_path + "#sqlqueryresults";
->>>>>>> origin/master
         $.get(url, {'ajax_request': true, 'is_js_confirmed': true}, function (data) {
             if (typeof data !== 'undefined' && data.success) {
                 $('#browse-results').html(data.message);

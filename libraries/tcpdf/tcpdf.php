@@ -1,15 +1,9 @@
 <?php
 //============================================================+
 // File name   : tcpdf.php
-<<<<<<< HEAD
 // Version     : 6.2.3
 // Begin       : 2002-08-03
 // Last Update : 2014-12-18
-=======
-// Version     : 6.0.077
-// Begin       : 2002-08-03
-// Last Update : 2014-05-06
->>>>>>> origin/master
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
@@ -110,11 +104,7 @@
  * Tools to encode your unicode fonts are on fonts/utils directory.</p>
  * @package com.tecnick.tcpdf
  * @author Nicola Asuni
-<<<<<<< HEAD
  * @version 6.2.3
-=======
- * @version 6.0.077
->>>>>>> origin/master
  */
 
 // TCPDF configuration
@@ -138,11 +128,7 @@ require_once(dirname(__FILE__).'/include/tcpdf_static.php');
  * TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
  * @package com.tecnick.tcpdf
  * @brief PHP class for generating PDF documents without requiring external extensions.
-<<<<<<< HEAD
  * @version 6.2.3
-=======
- * @version 6.0.077
->>>>>>> origin/master
  * @author Nicola Asuni - info@tecnick.com
  */
 class TCPDF {
@@ -5857,31 +5843,18 @@ class TCPDF {
 					$fmin = 1;
 					$fmax = $this->FontSizePt;
 					$diff_epsilon = (1 / $this->k); // one point (min resolution)
-<<<<<<< HEAD
 					$maxit = (2 * min(100, max(10, intval($fmax)))); // max number of iterations
 					while ($maxit >= 0) {
-=======
-					$maxit = ($fmax - $fmin); // max number of iterations
-					while ($maxit > 0) {
->>>>>>> origin/master
 						$fmid = (($fmax + $fmin) / 2);
 						$this->SetFontSize($fmid, false);
 						$this->resetLastH();
 						$text_height = $this->getStringHeight($w, $txt, $reseth, $autopadding, $mc_padding, $border);
 						$diff = ($maxh - $text_height);
 						if ($diff >= 0) {
-<<<<<<< HEAD
 							if ($diff <= $diff_epsilon) {
 								break;
 							}
 							$fmin = $fmid;
-=======
-							if ($diff < $diff_epsilon) {
-								break;
-							} else {
-								$fmin = $fmid;
-							}
->>>>>>> origin/master
 						} else {
 							$fmax = $fmid;
 						}
@@ -6878,13 +6851,8 @@ class TCPDF {
 				if (in_array($file, $this->imagekeys)) {
 					// get existing image data
 					$info = $this->getImageBuffer($file);
-<<<<<<< HEAD
 					$imsize = array($info['w'], $info['h']);
 				} elseif (strpos($file, '__tcpdf_'.$this->file_id.'_img') === FALSE) {
-=======
-					$imsize = array($info['w'], $info['h']);				
-				} elseif (strpos($file, '__tcpdf_img') === FALSE) {
->>>>>>> origin/master
 					$imgdata = TCPDF_STATIC::fileGetContents($file);
 				}
 			}
@@ -7073,15 +7041,9 @@ class TCPDF {
 							$img = $imgr;
 						}
 						if (($type == 'gif') OR ($type == 'png')) {
-<<<<<<< HEAD
 							$info = TCPDF_IMAGES::_toPNG($img, TCPDF_STATIC::getObjFilename('img', $this->file_id));
 						} else {
 							$info = TCPDF_IMAGES::_toJPEG($img, $this->jpeg_quality, TCPDF_STATIC::getObjFilename('img', $this->file_id));
-=======
-							$info = TCPDF_IMAGES::_toPNG($img);
-						} else {
-							$info = TCPDF_IMAGES::_toJPEG($img, $this->jpeg_quality);
->>>>>>> origin/master
 						}
 					}
 				} catch(Exception $e) {
@@ -9757,28 +9719,14 @@ class TCPDF {
 		//$out .= ' /PieceInfo <<>>';
 		if (!empty($this->pdflayers)) {
 			$lyrobjs = '';
-<<<<<<< HEAD
 			$lyrobjs_off = '';
-=======
-			$lyrobjs_print = '';
-			$lyrobjs_view = '';
->>>>>>> origin/master
 			$lyrobjs_lock = '';
 			foreach ($this->pdflayers as $layer) {
 				$layer_obj_ref = ' '.$layer['objid'].' 0 R';
 				$lyrobjs .= $layer_obj_ref;
-<<<<<<< HEAD
 				if ($layer['view'] === false) {
 					$lyrobjs_off .= $layer_obj_ref;
 				}
-=======
-				if ($layer['print']) {
-					$lyrobjs_print .= $layer_obj_ref;
-				}
-				if ($layer['view']) {
-					$lyrobjs_view .= $layer_obj_ref;
-				}
->>>>>>> origin/master
 				if ($layer['lock']) {
 					$lyrobjs_lock .= $layer_obj_ref;
 				}
@@ -9788,12 +9736,7 @@ class TCPDF {
 			$out .= ' /Name '.$this->_textstring('Layers', $oid);
 			$out .= ' /Creator '.$this->_textstring('TCPDF', $oid);
 			$out .= ' /BaseState /ON';
-<<<<<<< HEAD
 			$out .= ' /OFF ['.$lyrobjs_off.']';
-=======
-			$out .= ' /ON ['.$lyrobjs_print.']';
-			$out .= ' /OFF ['.$lyrobjs_view.']';
->>>>>>> origin/master
 			$out .= ' /Locked ['.$lyrobjs_lock.']';
 			$out .= ' /Intent /View';
 			$out .= ' /AS [';
@@ -20699,29 +20642,6 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 
 	/**
 	 * Outputs the "save graphics state" operator 'q'
-<<<<<<< HEAD
-=======
-	 * @protected
-	 */
-	protected function _outSaveGraphicsState() {
-		$this->_out('q');
-	}
-
-	/**
-	 * Outputs the "restore graphics state" operator 'Q'
-	 * @protected
-	 */
-	protected function _outRestoreGraphicsState() {
-		$this->_out('Q');
-	}
-
-	/**
-	 * Writes data to a temporary file on filesystem.
-	 * @param $filename (string) file name
-	 * @param $data (mixed) data to write on file
-	 * @param $append (boolean) if true append data, false replace.
-	 * @since 4.5.000 (2008-12-31)
->>>>>>> origin/master
 	 * @protected
 	 */
 	protected function _outSaveGraphicsState() {
@@ -23241,10 +23161,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			if ($gradient['type'] == 3) {
 				// circular gradient
 				$cy -= ($gradient['coords'][1] * ($w + $h));
-<<<<<<< HEAD
 				$h = $w = max($w, $h);
-=======
->>>>>>> origin/master
 			} else {
 				$cy -= $h;
 			}

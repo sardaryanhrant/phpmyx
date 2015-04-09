@@ -93,11 +93,7 @@ function PMA_getRelationsParamDiagnostic($cfgRelation)
     $messages['enabled']  = '<font color="green">' . __('Enabled') . '</font>';
     $messages['disabled'] = '<font color="red">'   . __('Disabled') . '</font>';
 
-<<<<<<< HEAD
     if (empty($cfgRelation['db'])) {
-=======
-    if (empty($GLOBALS['cfg']['Server']['pmadb'])) {
->>>>>>> origin/master
         $retval .= __('Configuration of pmadb… ')
              . $messages['error']
              . PMA_Util::showDocu('setup', 'linked-tables')
@@ -106,11 +102,7 @@ function PMA_getRelationsParamDiagnostic($cfgRelation)
              . ' <font color="green">' . __('Disabled')
              . '</font>' . "\n";
         if (! empty($GLOBALS['db']) && $GLOBALS['cfg']['ZeroConf']) {
-<<<<<<< HEAD
             $retval .= PMA_getHtmlFixPMATables(true);
-=======
-            $retval .= PMA_getHtmlFixPMATables();
->>>>>>> origin/master
         }
     } else {
         $retval .= '<table>' . "\n";
@@ -331,11 +323,7 @@ function PMA_getRelationsParamDiagnostic($cfgRelation)
                     'Create the needed tables with the '
                     . '<code>%screate_tables.sql</code>.'
                 ),
-<<<<<<< HEAD
                 htmlspecialchars(SQL_DIR)
-=======
-                htmlspecialchars(EXAMPLES_DIR)
->>>>>>> origin/master
             );
             $retval .= ' ' . PMA_Util::showDocu('setup', 'linked-tables');
             $retval .= '</li>';
@@ -666,69 +654,6 @@ function PMA_tryUpgradeTransformations()
 }
 
 /**
- * Check whether column_info table input transformation
- * upgrade is required and try to upgrade silently
- *
- * @return bool false if upgrade failed
- *
- * @access  public
- */
-function PMA_tryUpgradeTransformations()
-{
-    // From 4.3, new input oriented transformation feature was introduced.
-    // Check whether column_info table has input transformation columns
-    $new_cols = array(
-        "input_transformation",
-        "input_transformation_options"
-    );
-    $query = 'SHOW COLUMNS FROM '
-        . PMA_Util::backquote($GLOBALS['cfg']['Server']['pmadb'])
-        . '.' . PMA_Util::backquote($GLOBALS['cfg']['Server']['column_info'])
-        . ' WHERE Field IN (\'' . implode('\', \'', $new_cols) . '\')';
-    $result = PMA_queryAsControlUser(
-        $query, false, PMA_DatabaseInterface::QUERY_STORE
-    );
-    if ($result) {
-        $rows = $GLOBALS['dbi']->numRows($result);
-        $GLOBALS['dbi']->freeResult($result);
-        // input transformations are present
-        // no need to upgrade
-        if ($rows === 2) {
-            return true;
-            // try silent upgrade without disturbing the user
-        } else {
-            // read upgrade query file
-            $query = @file_get_contents(EXAMPLES_DIR . 'upgrade_column_info_4_3_0+.sql');
-            // replace database name from query to with set in config.inc.php
-            $query = str_replace(
-                '`phpmyadmin`',
-                PMA_Util::backquote($GLOBALS['cfg']['Server']['pmadb']),
-                $query
-            );
-            // replace pma__column_info table name from query
-            // to with set in config.inc.php
-            $query = str_replace(
-                '`pma__column_info`',
-                PMA_Util::backquote($GLOBALS['cfg']['Server']['column_info']),
-                $query
-            );
-            $GLOBALS['dbi']->tryMultiQuery($query, $GLOBALS['controllink']);
-            // skips result sets of query as we are not interested in it
-            while ($GLOBALS['dbi']->moreResults($GLOBALS['controllink'])
-                && $GLOBALS['dbi']->nextResult($GLOBALS['controllink'])
-            ) {
-            }
-            $error = $GLOBALS['dbi']->getError($GLOBALS['controllink']);
-            // return true if no error exists otherwise false
-            return empty($error);
-        }
-    }
-    // some failure, either in upgrading or something else
-    // make some noise, time to wake up user.
-    return false;
-}
-
-/**
  * Gets all Relations to foreign tables for a given table or
  * optionally a given column in a table
  *
@@ -785,12 +710,8 @@ function PMA_getForeigners($db, $table, $column = '', $source = 'both')
     $isInformationSchema = /*overload*/mb_strtolower($db) == 'information_schema';
     $is_data_dictionary = PMA_DRIZZLE
         && /*overload*/mb_strtolower($db) == 'data_dictionary';
-<<<<<<< HEAD
     $isMysql = /*overload*/mb_strtolower($db) == 'mysql';
     if (($isInformationSchema || $is_data_dictionary || $isMysql)
-=======
-    if (($isInformationSchema || $is_data_dictionary)
->>>>>>> origin/master
         && ($source == 'internal' || $source == 'both')
     ) {
         if ($isInformationSchema) {
@@ -1902,15 +1823,12 @@ function PMA_searchColumnInForeigners($foreigners, $column)
                     : $GLOBALS['db'];
                 $foreigner['foreign_table'] = $one_key['ref_table_name'];
                 $foreigner['constraint'] = $one_key['constraint'];
-<<<<<<< HEAD
                 $foreigner['on_update'] = isset($one_key['on_update'])
                     ? $one_key['on_update']
                     : 'RESTRICT';
                 $foreigner['on_delete'] = isset($one_key['on_delete'])
                     ? $one_key['on_delete']
                     : 'RESTRICT';
-=======
->>>>>>> origin/master
 
                 return $foreigner;
             }
@@ -1930,19 +1848,11 @@ function PMA_getDefaultPMATableNames()
     $pma_tables = array();
     if (PMA_DRIZZLE) {
         $create_tables_file = file_get_contents(
-<<<<<<< HEAD
             SQL_DIR . 'create_tables_drizzle.sql'
         );
     } else {
         $create_tables_file = file_get_contents(
             SQL_DIR . 'create_tables.sql'
-=======
-            EXAMPLES_DIR. 'create_tables_drizzle.sql'
-        );
-    } else {
-        $create_tables_file = file_get_contents(
-            EXAMPLES_DIR. 'create_tables.sql'
->>>>>>> origin/master
         );
     }
 
@@ -1995,10 +1905,7 @@ function PMA_fixPMATables($db, $create = true)
     $existingTables = $GLOBALS['dbi']->getTables($db, $GLOBALS['controllink']);
 
     $createQueries = null;
-<<<<<<< HEAD
     $foundOne = false;
-=======
->>>>>>> origin/master
     foreach ($tablesToFeatures as $table => $feature) {
         if (! in_array($table, $existingTables)) {
             if ($create) {
@@ -2012,21 +1919,13 @@ function PMA_fixPMATables($db, $create = true)
                     return;
                 }
                 $GLOBALS['cfg']['Server'][$feature] = $table;
-<<<<<<< HEAD
             }
         } else {
             $foundOne = true;
-=======
-            } else {
-                return;
-            }
-        } else {
->>>>>>> origin/master
             $GLOBALS['cfg']['Server'][$feature] = $table;
         }
     }
 
-<<<<<<< HEAD
     if (! $foundOne) {
         return;
     }
@@ -2055,47 +1954,20 @@ function PMA_fixPMATables($db, $create = true)
         // Reload navi panel to update the recent/favorite lists.
         $GLOBALS['reload'] = true;
     }
-=======
-    $GLOBALS['cfg']['Server']['pmadb'] = $db;
-    $_SESSION['relation'][$GLOBALS['server']] = PMA_checkRelationsParam();
-
-    // Since configuration storage is updated, we need to
-    // re-initialize the favorite and recent tables stored in the
-    // session from the current configuration storage.
-    include_once 'libraries/RecentFavoriteTable.class.php';
-
-    $fav_tables = PMA_RecentFavoriteTable::getInstance('favorite');
-    $_SESSION['tmpval']['favorite_tables'][$GLOBALS['server']]
-        = $fav_tables->getFromDb();
-
-    $recent_tables = PMA_RecentFavoriteTable::getInstance('recent');
-    $_SESSION['tmpval']['recent_tables'][$GLOBALS['server']]
-        = $recent_tables->getFromDb();
-
-    // Reload navi panel to update the recent/favorite lists.
-    $GLOBALS['reload'] = true;
->>>>>>> origin/master
 }
 
 /**
  * Get Html for PMA tables fixing anchor.
  *
-<<<<<<< HEAD
  * @param boolean $allTables whether to create all tables
  *
  * @return string Html
  */
 function PMA_getHtmlFixPMATables($allTables)
-=======
- * @return string Html
- */
-function PMA_getHtmlFixPMATables()
->>>>>>> origin/master
 {
     $retval = '';
 
     $url_query = PMA_URL_getCommon(array('db' => $GLOBALS['db']));
-<<<<<<< HEAD
     if ($allTables) {
         $url_query .= '&amp;goto=db_operations.php&amp;create_pmadb=1';
         $message = PMA_Message::notice(
@@ -2110,15 +1982,6 @@ function PMA_getHtmlFixPMATables()
             __('%sCreate%s missing phpMyAdmin configuration storage tables.')
         );
     }
-=======
-    $url_query .= '&amp;goto=db_operations.php&amp;fix_pmadb=1';
-    $message = PMA_Message::notice(
-        __(
-            '%sCreate%s the phpMyAdmin configuration storage in the '
-            . 'current database.'
-        )
-    );
->>>>>>> origin/master
     $message->addParam(
         '<a href="' . $GLOBALS['cfg']['PmaAbsoluteUri']
         . 'chk_rel.php' . $url_query . '">',

@@ -220,11 +220,7 @@ class PMA_GIS_Polygon extends PMA_GIS_Geometry
 
         $row = '<path d="';
 
-<<<<<<< HEAD
         // If the polygon doesn't have an inner polygon
-=======
-        // If the polygon doesnt have an inner polygon
->>>>>>> origin/master
         if (/*overload*/mb_strpos($polygon, "),(") === false) {
             $row .= $this->_drawPath($polygon, $scale_data);
         } else {

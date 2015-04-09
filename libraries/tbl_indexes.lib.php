@@ -144,7 +144,6 @@ function PMA_getSqlQueryForIndexCreateOrEdit($db, $table, $index, &$error)
         $sql_query .= ' (' . implode(', ', $index_fields) . ')';
     }
 
-<<<<<<< HEAD
     $keyBlockSizes = $index->getKeyBlockSize();
     if (! empty($keyBlockSizes)) {
         $sql_query .= " KEY_BLOCK_SIZE = "
@@ -170,11 +169,6 @@ function PMA_getSqlQueryForIndexCreateOrEdit($db, $table, $index, &$error)
         $sql_query .= " COMMENT '" . PMA_Util::sqlAddSlashes($comment) . "'";
     }
 
-=======
-    $sql_query .= " COMMENT '"
-        . PMA_Util::sqlAddSlashes($index->getComment())
-        . "'";
->>>>>>> origin/master
     $sql_query .= ';';
 
     return $sql_query;
@@ -307,7 +301,6 @@ function PMA_getHtmlForIndexForm($fields, $index, $form_params, $add_fields)
     $html .= '<div>'
         . '<div class="label">'
         . '<strong>'
-<<<<<<< HEAD
         . '<label for="select_index_choice">'
         . __('Index choice:')
         . PMA_Util::showMySQLDocu('ALTER_TABLE')
@@ -332,17 +325,6 @@ function PMA_getHtmlForIndexForm($fields, $index, $form_params, $add_fields)
         . '<input type="text" name="index[Key_block_size]" '
         . 'id="input_key_block_size" size="30" value="'
         . htmlspecialchars($index->getKeyBlockSize()) . '" />'
-=======
-        . '<label for="input_index_comment">'
-        . __('Comment:')
-        . '</label>'
-        . '</strong>'
-        . '</div>'
-        . '<input type="text" name="index[Index_comment]" '
-        . 'id="input_index_comment" size="30"'
-        . 'value="' . htmlspecialchars($index->getComment()) . '"'
-        . 'onfocus="this.select()" />'
->>>>>>> origin/master
         . '</div>';
 
     $html .= '<div>'
@@ -354,14 +336,7 @@ function PMA_getHtmlForIndexForm($fields, $index, $form_params, $add_fields)
         . '</label>'
         . '</strong>'
         . '</div>'
-<<<<<<< HEAD
         . $index->generateIndexTypeSelector()
-=======
-        . '<select name="index[Index_type]" id="select_index_type" '
-        . (isset($_REQUEST['create_edit_table']) ? 'disabled="disabled"' : '') . '>'
-        . $index->generateIndexSelector()
-        . '</select>'
->>>>>>> origin/master
         . '</div>';
 
     $html .= '<div>'

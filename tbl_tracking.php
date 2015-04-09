@@ -10,7 +10,6 @@
 require_once './libraries/common.inc.php';
 
 require_once './libraries/tracking.lib.php';
-<<<<<<< HEAD
 
 //Get some js files needed for Ajax requests
 $response = PMA_Response::getInstance();
@@ -18,8 +17,6 @@ $header   = $response->getHeader();
 $scripts  = $header->getScripts();
 $scripts->addFile('jquery/jquery.tablesorter.js');
 $scripts->addFile('tbl_tracking.js');
-=======
->>>>>>> origin/master
 
 define('TABLE_MAY_BE_ABSENT', true);
 require './libraries/tbl_common.inc.php';
@@ -122,24 +119,16 @@ if (isset($_REQUEST['submit_create_version'])) {
 }
 
 // Deactivate tracking
-<<<<<<< HEAD
 if (isset($_REQUEST['toggle_activation'])
     && $_REQUEST['toggle_activation'] == 'deactivate_now'
 ) {
-=======
-if (isset($_REQUEST['submit_deactivate_now'])) {
->>>>>>> origin/master
     $html .= PMA_deactivateTracking();
 }
 
 // Activate tracking
-<<<<<<< HEAD
 if (isset($_REQUEST['toggle_activation'])
     && $_REQUEST['toggle_activation'] == 'activate_now'
 ) {
-=======
-if (isset($_REQUEST['submit_activate_now'])) {
->>>>>>> origin/master
     $html .= PMA_activateTracking();
 }
 
@@ -205,15 +194,11 @@ if ($last_version > 0) {
 
 $type = PMA_Table::isView($GLOBALS['db'], $GLOBALS['table']) ? 'view' : 'table';
 $html .= PMA_getHtmlForDataDefinitionAndManipulationStatements(
-<<<<<<< HEAD
     'tbl_tracking.php' . $url_query,
     $last_version,
     $GLOBALS['db'],
     array($GLOBALS['table']),
     $type
-=======
-    $url_query, $last_version, $type
->>>>>>> origin/master
 );
 
 $html .= '<br class="clearfloat"/>';

@@ -697,15 +697,7 @@ class PMA_Tracker
             $result['identifier'] = 'DROP VIEW';
 
             $prefix  = explode('DROP VIEW ', $query);
-<<<<<<< HEAD
             $str = str_replace('IF EXISTS', '', $prefix[1]);
-=======
-            $str = /*overload*/mb_strstr($prefix[1], 'IF EXISTS');
-
-            if ($str == false ) {
-                $str = $prefix[1];
-            }
->>>>>>> origin/master
             $result['tablename'] = self::getTableName($str);
         }
 
@@ -771,15 +763,7 @@ class PMA_Tracker
             $result['identifier'] = 'DROP TABLE';
 
             $prefix  = explode('DROP TABLE ', $query);
-<<<<<<< HEAD
             $str = str_replace('IF EXISTS', '', $prefix[1]);
-=======
-            $str = /*overload*/mb_strstr($prefix[1], 'IF EXISTS');
-
-            if ($str == false ) {
-                $str = $prefix[1];
-            }
->>>>>>> origin/master
             $result['tablename'] = self::getTableName($str);
         }
 

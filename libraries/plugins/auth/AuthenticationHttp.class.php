@@ -44,7 +44,6 @@ class AuthenticationHttp extends AuthenticationPlugin
             }
         }
 
-<<<<<<< HEAD
         return $this->authForm();
     }
 
@@ -55,8 +54,6 @@ class AuthenticationHttp extends AuthenticationPlugin
      */
     public function authForm()
     {
-=======
->>>>>>> origin/master
         /* Perform logout to custom URL */
         if (! empty($_REQUEST['old_usr'])
             && ! empty($GLOBALS['cfg']['Server']['LogoutURL'])
@@ -284,14 +281,9 @@ class AuthenticationHttp extends AuthenticationPlugin
      *
      * @param string $password New password to set
      *
-<<<<<<< HEAD
      * @return void 
-=======
-     * @return array Additional URL parameters.
->>>>>>> origin/master
      */
     public function handlePasswordChange($password)
     {
-        return array('old_usr' => 'relog');
     }
 }

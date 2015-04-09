@@ -165,11 +165,7 @@ class PMA_Header
         $this->_scripts->addFile('sprintf.js');
         $this->_scripts->addFile('ajax.js');
         $this->_scripts->addFile('keyhandler.js');
-<<<<<<< HEAD
         $this->_scripts->addFile('jquery/jquery-ui-1.11.2.min.js');
-=======
-        $this->_scripts->addFile('jquery/jquery-ui-1.9.2.custom.min.js');
->>>>>>> origin/master
         $this->_scripts->addFile('jquery/jquery.cookie.js');
         $this->_scripts->addFile('jquery/jquery.mousewheel.js');
         $this->_scripts->addFile('jquery/jquery.event.drag-2.2.js');
@@ -230,11 +226,7 @@ class PMA_Header
             $GLOBALS['collation_connection'] = 'utf8_general_ci';
         }
 
-<<<<<<< HEAD
         $params = array(
-=======
-        return array(
->>>>>>> origin/master
             'common_query' => PMA_URL_getCommon(array(), 'text'),
             'opendb_url' => $GLOBALS['cfg']['DefaultTabDatabase'],
             'safari_browser' => PMA_USR_BROWSER_AGENT == 'SAFARI' ? 1 : 0,
@@ -253,12 +245,9 @@ class PMA_Header
             'pma_text_left_default_tab' => PMA_Util::getTitleForTarget(
                 $GLOBALS['cfg']['NavigationTreeDefaultTabTable']
             ),
-<<<<<<< HEAD
             'pma_text_left_default_tab2' => PMA_Util::getTitleForTarget(
                 $GLOBALS['cfg']['NavigationTreeDefaultTabTable2']
             ),
-=======
->>>>>>> origin/master
             'LimitChars' => $GLOBALS['cfg']['LimitChars'],
             'pftext' => $pftext,
             'confirm' => $GLOBALS['cfg']['Confirm'],
@@ -522,12 +511,8 @@ class PMA_Header
         if (!empty($GLOBALS['cfg']['CaptchaLoginPrivateKey'])
             && !empty($GLOBALS['cfg']['CaptchaLoginPublicKey'])
         ) {
-<<<<<<< HEAD
             $captcha_url = ' https://apis.google.com https://www.google.com/recaptcha/'
                . ' https://www.gstatic.com/recaptcha/ https://ssl.gstatic.com/ ';
-=======
-            $captcha_url = ' https://www.google.com ';
->>>>>>> origin/master
         } else {
             $captcha_url = '';
         }
@@ -648,20 +633,11 @@ class PMA_Header
         } else {
             // load jQuery's CSS prior to our theme's CSS, to let the theme
             // override jQuery's CSS
-<<<<<<< HEAD
             $retval .= '<link rel="stylesheet" type="text/css" href="'
                 . $theme_path . '/jquery/jquery-ui-1.11.2.css" />';
             $retval .= '<link rel="stylesheet" type="text/css" href="'
                 . $basedir . 'phpmyadmin.css.php?'
                 . 'nocache=' . $theme_id . $GLOBALS['text_dir'] . '" />';
-=======
-            $retval .= '<link rel="stylesheet" type="text/css" href="'
-                . $theme_path . '/jquery/jquery-ui-1.9.2.custom.css" />';
-            $retval .= '<link rel="stylesheet" type="text/css" href="'
-                . $basedir . 'phpmyadmin.css.php'
-                . $common_url . '&amp;nocache='
-                . $theme_id . $GLOBALS['text_dir'] . '" />';
->>>>>>> origin/master
         }
 
         return $retval;

@@ -54,7 +54,6 @@ $cfg['PmaNoRelation_DisableWarning'] = false;
 $cfg['SuhosinDisableWarning'] = false;
 
 /**
-<<<<<<< HEAD
  * Disable the default warning that is displayed if session.gc_maxlifetime
  * is less than `LoginCookieValidity`
  *
@@ -63,8 +62,6 @@ $cfg['SuhosinDisableWarning'] = false;
 $cfg['LoginCookieValidityDisableWarning'] = false;
 
 /**
-=======
->>>>>>> origin/master
  * Disable the default warning that is displayed if a difference between
  * the MySQL library and server is detected.
  *
@@ -326,13 +323,6 @@ $cfg['Servers'][$i]['hide_db'] = '';
  * @global string $cfg['Servers'][$i]['verbose']
  */
 $cfg['Servers'][$i]['verbose'] = '';
-
-/**
- * Zero Configuration mode.
- *
- * @global boolean $cfg['ZeroConf']
- */
-$cfg['ZeroConf'] = true;
 
 /**
  * Database used for Relation, Bookmark and PDF Features
@@ -842,15 +832,12 @@ $cfg['CaptchaLoginPrivateKey'] = '';
 
 /*******************************************************************************
  * Navigation panel setup
-<<<<<<< HEAD
  */
 
 /**
  * In the navigation panel, replaces the database tree with a selector
  *
  * @global boolean $cfg['ShowDatabasesNavigationAsTree']
-=======
->>>>>>> origin/master
  */
 $cfg['ShowDatabasesNavigationAsTree'] = true;
 
@@ -859,11 +846,7 @@ $cfg['ShowDatabasesNavigationAsTree'] = true;
  *
  * @global integer $cfg['FirstLevelNavigationItems']
  */
-<<<<<<< HEAD
 $cfg['FirstLevelNavigationItems'] = 100;
-=======
-$cfg['FirstLevelNavigationItems'] = 25;
->>>>>>> origin/master
 
 /**
  * maximum number of items displayed in navigation panel
@@ -2666,16 +2649,6 @@ $cfg['RowActionLinks'] = 'left';
 /**
  * Default sort order by primary key.
  * @global string $cfg['TablePrimaryKeyOrder']
-<<<<<<< HEAD
-=======
- */
-$cfg['TablePrimaryKeyOrder'] = 'NONE';
-
-/**
- * default display direction (horizontal|vertical|horizontalflipped)
- *
- * @global string $cfg['DefaultDisplay']
->>>>>>> origin/master
  */
 $cfg['TablePrimaryKeyOrder'] = 'NONE';
 

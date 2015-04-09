@@ -444,10 +444,6 @@ class PMA_Util
     {
         // Fixup for newly used names:
         $link = str_replace('_', '-', /*overload*/mb_strtolower($link));
-<<<<<<< HEAD
-=======
-        $anchor = str_replace('_', '-', /*overload*/mb_strtolower($anchor));
->>>>>>> origin/master
 
         if (empty($link)) {
             $link = 'index';
@@ -2477,15 +2473,9 @@ class PMA_Util
                     . '</a>';
 
                 $_url_params[$name] = $pos - $max_count;
-<<<<<<< HEAD
                 $list_navigator_html .= ' <a' . $class . $title2
                     . ' href="' . $script . PMA_URL_getCommon($_url_params) . '">'
                     . $caption2 . '</a>';
-=======
-                $list_navigator_html .= ' <a' . $class . $title2 . ' href="' . $script
-                    . PMA_URL_getCommon($_url_params) . '">' . $caption2
-                    . '</a>';
->>>>>>> origin/master
             }
 
             $list_navigator_html .= '<form action="' . basename($script)
@@ -2526,15 +2516,9 @@ class PMA_Util
                     $_url_params[$name] = $count - $max_count;
                 }
 
-<<<<<<< HEAD
                 $list_navigator_html .= ' <a' . $class . $title4
                     . ' href="' . $script . PMA_URL_getCommon($_url_params) . '" >'
                     . $caption4 . '</a>';
-=======
-                $list_navigator_html .= ' <a' . $class . $title4 . ' href="' . $script
-                    . PMA_URL_getCommon($_url_params) . '" >' . $caption4
-                    . '</a>';
->>>>>>> origin/master
             }
             $list_navigator_html .= '</div>' . "\n";
         }
@@ -4013,17 +3997,10 @@ class PMA_Util
              $i < $length;
              $i++
         ) {
-<<<<<<< HEAD
             $curr = /*overload*/mb_substr($values_string, $i, 1);
             $next = ($i == /*overload*/mb_strlen($values_string)-1)
                 ? ''
                 : /*overload*/mb_substr($values_string, $i + 1, 1);
-=======
-            $curr = $values_string[$i];
-            $next = ($i == /*overload*/mb_strlen($values_string)-1)
-                ? ''
-                : $values_string[$i+1];
->>>>>>> origin/master
 
             if (! $in_string && $curr == "'") {
                 $in_string = true;
@@ -4578,7 +4555,6 @@ class PMA_Util
 
         return array($primary, $pk_array, $indexes_info, $indexes_data);
     }
-<<<<<<< HEAD
 
     /**
      * Returns the HTML for check all check box and with selected text
@@ -4604,8 +4580,6 @@ class PMA_Util
 
         return $html;
     }
-=======
->>>>>>> origin/master
 }
 
 ?>

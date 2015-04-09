@@ -1,15 +1,9 @@
 <?php
 //============================================================+
 // File name   : tcpdf_images.php
-<<<<<<< HEAD
 // Version     : 1.0.005
 // Begin       : 2002-08-03
 // Last Update : 2014-11-15
-=======
-// Version     : 1.0.003
-// Begin       : 2002-08-03
-// Last Update : 2014-04-03
->>>>>>> origin/master
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
 // License     : GNU-LGPL v3 (http://www.gnu.org/copyleft/lesser.html)
 // -------------------------------------------------------------------
@@ -44,11 +38,7 @@
  * This is a PHP class that contains static image methods for the TCPDF class.<br>
  * @package com.tecnick.tcpdf
  * @author Nicola Asuni
-<<<<<<< HEAD
  * @version 1.0.005
-=======
- * @version 1.0.003
->>>>>>> origin/master
  */
 
 /**
@@ -56,11 +46,7 @@
  * Static image methods used by the TCPDF class.
  * @package com.tecnick.tcpdf
  * @brief PHP class for generating PDF documents without requiring external extensions.
-<<<<<<< HEAD
  * @version 1.0.005
-=======
- * @version 1.0.003
->>>>>>> origin/master
  * @author Nicola Asuni - info@tecnick.com
  */
 class TCPDF_IMAGES {

@@ -182,13 +182,10 @@ function PMA_getHtmlForCommonForm($db, $table, $columns, $cfgRelation,
     $tbl_storage_engine, $existrel, $existrel_foreign, $options_array
 ) {
     $html_output = PMA_getHtmlForCommonFormHeader($db, $table);
-    $html_output .= '<fieldset>'
-        . '<legend>' . __('Relations') . '</legend>';
 
     if ($cfgRelation['relwork']) {
         $html_output .= PMA_getHtmlForInternalRelationForm(
             $columns, $tbl_storage_engine, $existrel, $db
-<<<<<<< HEAD
         );
     }
 
@@ -205,26 +202,6 @@ function PMA_getHtmlForCommonForm($db, $table, $columns, $cfgRelation,
             array_values($columns)
         );
     }
-=======
-        );
-    }
-
-    if (PMA_Util::isForeignKeySupported($tbl_storage_engine)) {
-        $html_output .= PMA_getHtmlForForeignKeyForm(
-            $columns, $existrel_foreign,
-            $db, $tbl_storage_engine, $options_array
-        );
-    } // end if (InnoDB)
-
-    $html_output .= '</fieldset>';
-
-    if ($cfgRelation['displaywork']) {
-        $html_output .= PMA_getHtmlForDisplayFieldInfos(
-            $db, $table,
-            array_values($columns)
-        );
-    }
->>>>>>> origin/master
 
     $html_output .= PMA_getHtmlForCommonFormFooter();
 
@@ -481,15 +458,9 @@ function PMA_getHtmlForForeignKeyRow($one_key, $odd_row, $columns, $i,
     $html_output .= '<span class="formelement clearfloat">';
     $constraint_name = isset($one_key['constraint'])
         ? $one_key['constraint'] : '';
-<<<<<<< HEAD
     $html_output .= '<input type="text" name="constraint_name[' . $i . ']"'
         . ' value="' . htmlspecialchars($constraint_name) . '"'
         . ' placeholder="' . __('Constraint name') . '" />';
-=======
-    $html_output .= __('Constraint name');
-    $html_output .= '<input type="text" name="constraint_name[' . $i . ']"'
-        . ' value="' . htmlspecialchars($constraint_name) . '"/>';
->>>>>>> origin/master
     $html_output .= '</span>' . "\n";
 
     $html_output .= '<span class="formelement clearfloat">';
@@ -749,11 +720,7 @@ function PMA_sendHtmlForColumnDropdownList()
         $columnList = $table_obj->getIndexedColumns(false, false);
     }
     $columns = array();
-<<<<<<< HEAD
     foreach ($columnList as $column) {
-=======
-    foreach ($table_obj->getIndexedColumns(false, false) as $column) {
->>>>>>> origin/master
         $columns[] = htmlspecialchars($column);
     }
     $response->addJSON('columns', $columns);
@@ -858,11 +825,7 @@ function PMA_handleUpdateForDisplayField($disp, $display_field, $db, $table,
         PMA_queryAsControlUser($upd_query);
         $html_output = PMA_Util::getMessage(
             __('Display column was successfully updated.'),
-<<<<<<< HEAD
             '', 'success'
-=======
-            null, 'success'
->>>>>>> origin/master
         );
     }
     return $html_output;
@@ -915,17 +878,10 @@ function PMA_getQueryForDisplayUpdate($disp, $display_field, $db, $table,
 /**
  * Function to handle updates for internal relations
  *
-<<<<<<< HEAD
  * @param array      $destination_db          destination databases
  * @param array      $multi_edit_columns_name multi edit column names
  * @param array      $destination_table       destination tables
  * @param array      $destination_column      destination columns
-=======
- * @param string     $destination_db          destination database
- * @param string     $multi_edit_columns_name multi edit column name
- * @param string     $destination_table       destination table
- * @param string     $destination_column      destination column
->>>>>>> origin/master
  * @param array      $cfgRelation             configuration relation
  * @param string     $db                      current database
  * @param string     $table                   current table
@@ -953,11 +909,7 @@ function PMA_handleUpdatesForInternalRelations($destination_db,
     if ($updated) {
         $html_output = PMA_Util::getMessage(
             __('Internal relations were successfully updated.'),
-<<<<<<< HEAD
             '', 'success'
-=======
-            null, 'success'
->>>>>>> origin/master
         );
     }
     return $html_output;
@@ -966,19 +918,11 @@ function PMA_handleUpdatesForInternalRelations($destination_db,
 /**
  * Function to get update query for updating internal relations
  *
-<<<<<<< HEAD
  * @param array      $multi_edit_columns_name multi edit column names
  * @param string     $master_field_md5        master field md5
  * @param string     $foreign_db              foreign database
  * @param array      $destination_table       destination tables
  * @param array      $destination_column      destination columns
-=======
- * @param string     $multi_edit_columns_name multi edit column names
- * @param string     $master_field_md5        master field md5
- * @param string     $foreign_db              foreign database
- * @param string     $destination_table       destination table
- * @param string     $destination_column      destination column
->>>>>>> origin/master
  * @param array      $cfgRelation             configuration relation
  * @param string     $db                      current database
  * @param string     $table                   current table
@@ -1051,11 +995,7 @@ function PMA_getQueryForInternalRelationUpdate($multi_edit_columns_name,
 /**
  * Function to handle foreign key updates
  *
-<<<<<<< HEAD
  * @param array  $destination_foreign_db     destination foreign database
-=======
- * @param string $destination_foreign_db     destination foreign database
->>>>>>> origin/master
  * @param array  $multi_edit_columns_name    multi edit column names
  * @param array  $destination_foreign_table  destination foreign table
  * @param array  $destination_foreign_column destination foreign column
@@ -1104,17 +1044,10 @@ function PMA_handleUpdatesForForeignKeys($destination_foreign_db,
 /**
  * Function to handle update for a foreign key
  *
-<<<<<<< HEAD
  * @param array  $multi_edit_columns_name    multi edit columns names
  * @param string $master_field_md5           master field md5
  * @param array  $destination_foreign_table  destination foreign tables
  * @param array  $destination_foreign_column destination foreign columns
-=======
- * @param array  $multi_edit_columns_name    multi edit columns name
- * @param string $master_field_md5           master field md5
- * @param array  $destination_foreign_table  destination foreign table
- * @param array  $destination_foreign_column destination foreign column
->>>>>>> origin/master
  * @param array  $options_array              options array
  * @param array  $existrel_foreign           db, table, column
  * @param string $table                      current table
@@ -1175,7 +1108,6 @@ function PMA_handleUpdateForForeignKey($multi_edit_columns_name, $master_field_m
                         $existrel_foreign[$master_field_md5]['on_update'])
                         ? $existrel_foreign[$master_field_md5]['on_update']
                         : 'RESTRICT';
-<<<<<<< HEAD
 
             if ($ref_db_name != $foreign_db
                 || $existrel_foreign[$master_field_md5]['ref_table_name'] != $foreign_table
@@ -1194,26 +1126,6 @@ function PMA_handleUpdateForForeignKey($multi_edit_columns_name, $master_field_m
             // no key defined for this field(s)
             $create = true;
         }
-=======
-        }
-
-        if (! isset($existrel_foreign[$master_field_md5])) {
-            // no key defined for this field(s)
-            $create = true;
-        } elseif ($ref_db_name != $foreign_db
-            || $existrel_foreign[$master_field_md5]['ref_table_name'] != $foreign_table
-            || $existrel_foreign[$master_field_md5]['ref_index_list'] != $foreign_field
-            || $existrel_foreign[$master_field_md5]['index_list'] != $master_field
-            || $_REQUEST['constraint_name'][$master_field_md5] != $constraint_name
-            || ($_REQUEST['on_delete'][$master_field_md5] != $on_delete)
-            || ($_REQUEST['on_update'][$master_field_md5] != $on_update)
-        ) {
-            // another foreign key is already defined for this field
-            // or an option has been changed for ON DELETE or ON UPDATE
-            $drop = true;
-            $create = true;
-        } // end if... else....
->>>>>>> origin/master
     } elseif (isset($existrel_foreign[$master_field_md5])) {
         $drop = true;
     } // end if... else....

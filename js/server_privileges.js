@@ -51,21 +51,12 @@ function checkAddUser(the_form)
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('server_privileges.js', function () {
-<<<<<<< HEAD
     $(document).off("focusout", "#fieldset_add_user_login input[name='username']");
     $(document).off('click', "#fieldset_delete_user_footer #buttonGo.ajax");
     $(document).off('click', "a.edit_user_group_anchor.ajax");
     $(document).off('click', "button.mult_submit[value=export]");
     $(document).off('click', "a.export_user_anchor.ajax");
     $(document).off('click',  "#initials_table a.ajax");
-=======
-    $("#fieldset_add_user_login input[name='username']").die("focusout");
-    $("#fieldset_delete_user_footer #buttonGo.ajax").die('click');
-    $("a.edit_user_group_anchor.ajax").die('click');
-    $("button.mult_submit[value=export]").die('click');
-    $("a.export_user_anchor.ajax").die('click');
-    $("#initials_table").find("a.ajax").die('click');
->>>>>>> origin/master
     $('#checkbox_drop_users_db').unbind('click');
     $(document).off("click", ".checkall_box");
     $(document).off('change', '#checkbox_SSL_priv');
@@ -372,7 +363,6 @@ AJAX.registerOnload('server_privileges.js', function () {
         }); // end $.get
     }); // end of the paginate users table
 
-<<<<<<< HEAD
     $(document).on('change', 'input[name="ssl_type"]', function (e) {
         var $div = $('#specified_div');
         if ($('#ssl_type_specified').is(':checked')) {
@@ -394,8 +384,6 @@ AJAX.registerOnload('server_privileges.js', function () {
 
     $('#checkbox_SSL_priv').trigger('change');
 
-=======
->>>>>>> origin/master
     /*
      * Create submenu for simpler interface
      */

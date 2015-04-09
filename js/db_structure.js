@@ -22,20 +22,10 @@
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('db_structure.js', function () {
-<<<<<<< HEAD
     $(document).off('click', "a.truncate_table_anchor.ajax");
     $(document).off('click', "a.drop_table_anchor.ajax");
     $(document).off('click', '#real_end_input');
     $(document).off('click', "a.favorite_table_anchor.ajax");
-=======
-    $("span.fkc_switch").unbind('click');
-    $('#fkc_checkbox').unbind('change');
-    $("a.truncate_table_anchor.ajax").die('click');
-    $("a.drop_table_anchor.ajax").die('click');
-    $('a.drop_tracking_anchor.ajax').die('click');
-    $('#real_end_input').die('click');
-    $("a.favorite_table_anchor.ajax").die('click');
->>>>>>> origin/master
     $('a.real_row_count').off('click');
     $('a.row_count_sum').off('click');
     $('select[name=submit_mult]').unbind('change');
@@ -135,11 +125,7 @@ function PMA_adjustTotals() {
 
     // Update summary with new data
     var $summary = $("#tbl_summary_row");
-<<<<<<< HEAD
     $summary.find('.tbl_num').text(PMA_sprintf(PMA_messages.strNTables, tableSum));
-=======
-    $summary.find('.tbl_num').text(PMA_sprintf(PMA_messages.strTables, tableSum));
->>>>>>> origin/master
     $summary.find('.row_count_sum').text(strRowSum);
     $summary.find('.tbl_size').text(sizeSum + " " + byteUnits[size_magnitude]);
     $summary.find('.tbl_overhead').text(overheadSum + " " + byteUnits[overhead_magnitude]);
@@ -243,36 +229,6 @@ AJAX.registerOnload('db_structure.js', function () {
             buttons: buttonOptions
         });
     };
-<<<<<<< HEAD
-=======
-
-/**
- *  Event handler on select of "Make consistent with central list"
- */
-    $('select[name=submit_mult]').change(function(event) {
-        if($(this).val() === 'make_consistent_with_central_list') {
-            event.preventDefault();
-            event.stopPropagation();
-            jqConfirm(PMA_messages.makeConsistentMessage, function(){
-                        $('#tablesForm').submit();
-                    });
-            return false;
-        }
-    });
-     /**
-     * Event handler for 'Foreign Key Checks' disabling option
-     * in the drop table confirmation form
-     */
-    $("span.fkc_switch").click(function (event) {
-        if ($("#fkc_checkbox").prop('checked')) {
-            $("#fkc_checkbox").prop('checked', false);
-            $("#fkc_status").html(PMA_messages.strForeignKeyCheckDisabled);
-            return;
-        }
-        $("#fkc_checkbox").prop('checked', true);
-        $("#fkc_status").html(PMA_messages.strForeignKeyCheckEnabled);
-    });
->>>>>>> origin/master
 
 /**
  *  Event handler on select of "Make consistent with central list"

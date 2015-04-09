@@ -19,7 +19,6 @@ if (isset($_POST['edit_save']) || isset($_POST['add_new_column'])) {
         $orig_col_name = $_POST['orig_col_name'];
     }
     $col_default = $_POST['col_default'];
-<<<<<<< HEAD
     if ($col_default == 'NONE' && $_POST['col_default_sel'] != 'USER_DEFINED') {
         $col_default = "";
     }
@@ -27,30 +26,17 @@ if (isset($_POST['edit_save']) || isset($_POST['add_new_column'])) {
     $col_isNull = isset($_POST['col_isNull'])?1:0;
     $col_length = $_POST['col_length'];
     $col_attribute = $_POST['col_attribute'];
-=======
-    $col_extra = $_POST['col_extra'];
-    $col_isNull = isset($_POST['col_isNull'])?1:0;
-    $col_length = $_POST['col_length'];
->>>>>>> origin/master
     $col_type = $_POST['col_type'];
     $collation = $_POST['collation'];
     if (isset($orig_col_name) && $orig_col_name) {
         echo PMA_updateOneColumn(
-<<<<<<< HEAD
             $db, $orig_col_name, $col_name, $col_type,$col_attribute,
-=======
-            $db, $orig_col_name, $col_name, $col_type,
->>>>>>> origin/master
             $col_length, $col_isNull, $collation, $col_extra, $col_default
         );
         exit;
     } else {
         $tmp_msg = PMA_updateOneColumn(
-<<<<<<< HEAD
             $db, "", $col_name, $col_type,$col_attribute,
-=======
-            $db, "", $col_name, $col_type,
->>>>>>> origin/master
             $col_length, $col_isNull, $collation, $col_extra, $col_default
         );
     }
@@ -128,11 +114,7 @@ $tableheader = PMA_getCentralColumnsTableHeader(
 );
 $response->addHTML($tableheader);
 $result = PMA_getColumnsList($db, $pos, $max_rows);
-<<<<<<< HEAD
 $odd_row = true;
-=======
-$odd_row = false;
->>>>>>> origin/master
 $row_num=0;
 foreach ($result as $row) {
     $tableHtmlRow = PMA_getHTMLforCentralColumnsTableRow(

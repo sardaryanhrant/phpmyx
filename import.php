@@ -663,11 +663,7 @@ if ($timeout_passed) {
     $message = PMA_Message::error(
         __(
             'Script timeout passed, if you want to finish import,'
-<<<<<<< HEAD
             . ' please %sresubmit the same file%s and import will resume.'
-=======
-            . ' please resubmit same file and import will resume.'
->>>>>>> origin/master
         )
     );
     $message->addParam('<a href="' . $importUrl . '">', false);
@@ -708,7 +704,6 @@ if (isset($my_die)) {
 }
 
 if ($go_sql) {
-<<<<<<< HEAD
 
     if (! empty($sql_data) && ($sql_data['valid_queries'] > 1)) {
         $_SESSION['is_multi_query'] = true;
@@ -729,23 +724,10 @@ if ($go_sql) {
             null, null, null, $sql_query, null, null
         );
     }
-=======
-
-    // parse sql query
-    include_once 'libraries/parse_analyze.inc.php';
-
-    PMA_executeQueryAndSendQueryResponse(
-        $analyzed_sql_results, false, $db, $table, null, $import_text, null,
-        $analyzed_sql_results['is_affected'], null,
-        null, null, $sql_data, $goto, $pmaThemeImage, null, null, null, $sql_query,
-        null, null
-    );
->>>>>>> origin/master
 
     if (!isset($ajax_reload)) {
         $ajax_reload = array();
     }
-<<<<<<< HEAD
     if (isset($table)) {
         $ajax_reload['table_name'] = $table;
     }
@@ -754,23 +736,13 @@ if ($go_sql) {
     $response->addHTML($html_output);
     exit();
 
-=======
-    $ajax_reload['table_name'] = $table;
-
-    $response = PMA_Response::getInstance();
-    $response->addJSON('ajax_reload', $ajax_reload);
->>>>>>> origin/master
 } else if ($result) {
     // Save a Bookmark with more than one queries (if Bookmark label given).
     if (! empty($_POST['bkm_label']) && ! empty($import_text)) {
         $cfgBookmark = PMA_Bookmark_getParams();
         PMA_storeTheQueryAsBookmark(
             $db, $cfgBookmark['user'],
-<<<<<<< HEAD
             $_REQUEST['sql_query'], $_POST['bkm_label'],
-=======
-            $import_text, $_POST['bkm_label'],
->>>>>>> origin/master
             isset($_POST['bkm_replace']) ? $_POST['bkm_replace'] : null
         );
     }

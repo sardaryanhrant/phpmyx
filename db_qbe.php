@@ -87,11 +87,7 @@ if (isset($_REQUEST['submit_sql']) && ! empty($sql_query)) {
 
         PMA_executeQueryAndSendQueryResponse(
             $analyzed_sql_results, false, $_REQUEST['db'], null, false, null, null,
-<<<<<<< HEAD
             false, null, null, null, $goto, $pmaThemeImage, null, null, null,
-=======
-            false, null, null, null, null, $goto, $pmaThemeImage, null, null, null,
->>>>>>> origin/master
             $sql_query, null, null
         );
     }

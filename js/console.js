@@ -82,10 +82,7 @@ var PMA_console = {
             '<input name="is_js_confirmed" value="0">' +
             '<textarea name="sql_query"></textarea>' +
             '<input name="console_message_id" value="0">' +
-<<<<<<< HEAD
             '<input name="server" value="">' +
-=======
->>>>>>> origin/master
             '<input name="db" value="">' +
             '<input name="table" value="">' +
             '<input name="token" value="' +
@@ -146,15 +143,12 @@ var PMA_console = {
                 PMA_console.showCard('#pma_console_options');
             });
 
-<<<<<<< HEAD
             PMA_console.$consoleContent.click(function(event) {
                 if (event.target == this) {
                     PMA_consoleInput.focus();
                 }
             });
 
-=======
->>>>>>> origin/master
             $('#pma_console .mid_layer').click(function() {
                 PMA_console.hideCard($(this).parent().children('.card'));
             });
@@ -179,14 +173,11 @@ var PMA_console = {
                     PMA_console.ajaxCallback(data);
                 } catch (e) {
                     console.log("Invalid JSON!" + e.message);
-<<<<<<< HEAD
                     if(AJAX.xhr.status === 0 && AJAX.xhr.statusText !== 'abort') {
                         PMA_ajaxShowMessage($('<div />',{class:'error',html:PMA_messages.strRequestFailed+' ( '+AJAX.xhr.statusText+' )'}));
                         AJAX.active = false;
                         AJAX.xhr = null;
                     }
-=======
->>>>>>> origin/master
                 }
             });
 
@@ -221,7 +212,6 @@ var PMA_console = {
             return;
         }
         PMA_console.$requestForm.children('textarea').val(queryString);
-<<<<<<< HEAD
         PMA_console.$requestForm.children('[name=server]').attr('value', PMA_commonParams.get('server'));
         if(options && options.db) {
             PMA_console.$requestForm.children('[name=db]').val(options.db);
@@ -232,17 +222,6 @@ var PMA_console = {
             }
         } else {
             PMA_console.$requestForm.children('[name=db]').val(
-=======
-        if(options && options.db) {
-            PMA_console.$requestForm.children('[name=db]').attr('value', options.db);
-            if(options.table) {
-                PMA_console.$requestForm.children('[name=table]').attr('value', options.table);
-            } else {
-                PMA_console.$requestForm.children('[name=table]').attr('value', '');
-            }
-        } else {
-            PMA_console.$requestForm.children('[name=db]').attr('value',
->>>>>>> origin/master
                 (PMA_commonParams.get('db').length > 0 ? PMA_commonParams.get('db') : ''));
         }
         PMA_console.$requestForm.find('[name=profiling]').remove();
@@ -253,11 +232,7 @@ var PMA_console = {
             return;
         }
         PMA_console.$requestForm.children('[name=console_message_id]')
-<<<<<<< HEAD
             .val(PMA_consoleMessages.appendQuery({sql_query: queryString}).message_id);
-=======
-            .attr('value', PMA_consoleMessages.appendQuery({sql_query: queryString}).message_id);
->>>>>>> origin/master
         PMA_console.$requestForm.trigger('submit');
         PMA_consoleInput.clear();
     },
@@ -319,17 +294,10 @@ var PMA_console = {
         PMA_console.$consoleContent.animate({'margin-bottom': 0},
             'fast', 'easeOutQuart', function() {
                 $(window).trigger('resize');
-<<<<<<< HEAD
                 if(inputFocus) {
                     PMA_consoleInput.focus();
                 }
             });
-=======
-            });
-        if(inputFocus) {
-            PMA_consoleInput.focus();
-        }
->>>>>>> origin/master
     },
     /**
      * Change console to SQL information mode
@@ -520,7 +488,6 @@ var PMA_consoleInput = {
      */
     _codemirror: false,
     /**
-<<<<<<< HEAD
      * @var int, count for history navigation, 0 for current input
      * @access private
      */
@@ -531,8 +498,6 @@ var PMA_consoleInput = {
      */
     _historyPreserveCurrent: null,
     /**
-=======
->>>>>>> origin/master
      * Used for console input initialize
      *
      * @return void
@@ -555,12 +520,9 @@ var PMA_consoleInput = {
                 hintOptions: {"completeSingle": false, "completeOnSingleClick": true}
             });
             PMA_consoleInput._inputs.console.on("inputRead", codemirrorAutocompleteOnInputRead);
-<<<<<<< HEAD
             PMA_consoleInput._inputs.console.on("keydown", function(instance, event) {
                 PMA_consoleInput._historyNavigate(event);
             });
-=======
->>>>>>> origin/master
             if ($('#pma_bookmarks').length !== 0) {
                 PMA_consoleInput._inputs.bookmark = CodeMirror($('#pma_console .bookmark_add_input')[0], {
                     theme: 'pma',
@@ -573,12 +535,8 @@ var PMA_consoleInput = {
             }
         } else {
             PMA_consoleInput._inputs.console =
-<<<<<<< HEAD
                 $('<textarea>').appendTo('#pma_console .console_query_input')
                     .on('keydown', PMA_consoleInput._historyNavigate);
-=======
-                $('<textarea>').appendTo('#pma_console .console_query_input');
->>>>>>> origin/master
             if ($('#pma_bookmarks').length !== 0) {
                 PMA_consoleInput._inputs.bookmark =
                     $('<textarea>').appendTo('#pma_console .bookmark_add_input');
@@ -586,7 +544,6 @@ var PMA_consoleInput = {
         }
         $('#pma_console .console_query_input').keydown(PMA_consoleInput._keydown);
     },
-<<<<<<< HEAD
     _historyNavigate: function(event) {
         if (event.keyCode == 38 || event.keyCode == 40) {
             var upPermitted = false;
@@ -643,11 +600,6 @@ var PMA_consoleInput = {
     /**
      * Mousedown event handler for bind to input
      * Shortcut is Ctrl+Enter key
-=======
-    /**
-     * Mousedown event handler for bind to input
-     * Shortcut is ESC key
->>>>>>> origin/master
      *
      * @return void
      */
@@ -771,7 +723,6 @@ var PMA_consoleMessages = {
         $('#pma_console .content .console_message_container .message.hide').removeClass('hide');
     },
     /**
-<<<<<<< HEAD
      * Used for getting a perticular history query
      *
      * @param int nthLast get nth query message from latest, i.e 1st is last
@@ -788,8 +739,6 @@ var PMA_consoleMessages = {
         }
     },
     /**
-=======
->>>>>>> origin/master
      * Used for log new message
      *
      * @param string msgString Message to show
@@ -911,10 +860,7 @@ var PMA_consoleMessages = {
             if(confirm(PMA_messages.strConsoleDeleteBookmarkConfirm + '\n' + $message.find('.bookmark_label').text())) {
                 $.post('import.php',
                     {token: PMA_commonParams.get('token'),
-<<<<<<< HEAD
                     server: PMA_commonParams.get('server'),
-=======
->>>>>>> origin/master
                     action_bookmark: 2,
                     ajax_request: true,
                     id_bookmark: $message.attr('bookmarkid')},
@@ -1018,16 +964,11 @@ var PMA_consoleBookmarks = {
         }
     },
     refresh: function () {
-<<<<<<< HEAD
         $.get('import.php',
             {ajax_request: true,
             token: PMA_commonParams.get('token'),
             server: PMA_commonParams.get('server'),
             console_bookmark_refresh: 'refresh'},
-=======
-        $.get('import.php?console_bookmark_refresh=refresh&token=' + PMA_commonParams.get('token'),
-            {'ajax_request': true},
->>>>>>> origin/master
             function(data) {
                 if(data.console_message_bookmark) {
                     $('#pma_bookmarks .content.bookmark').html(data.console_message_bookmark);
@@ -1064,10 +1005,7 @@ var PMA_consoleBookmarks = {
                 ajax_request: true,
                 console_bookmark_add: 'true',
                 label: $('#pma_bookmarks .card.add [name=label]').val(),
-<<<<<<< HEAD
                 server: PMA_commonParams.get('server'),
-=======
->>>>>>> origin/master
                 db: $('#pma_bookmarks .card.add [name=targetdb]').val(),
                 bookmark_query: PMA_consoleInput.getText('bookmark'),
                 shared: $('#pma_bookmarks .card.add [name=shared]').prop('checked')},

@@ -343,12 +343,8 @@ function PMA_getHtmlForCheckAllTables($pmaThemeImage, $text_dir,
         $html_output .= '<option value="copy_tbl_change_prefix" >'
             . __('Copy table with prefix') . '</option>' . "\n";
         if (isset($GLOBALS['cfgRelation']['central_columnswork'])
-<<<<<<< HEAD
             && $GLOBALS['cfgRelation']['central_columnswork']
         ) {
-=======
-        && $GLOBALS['cfgRelation']['central_columnswork']) {
->>>>>>> origin/master
             $html_output .= '<option value="sync_unique_columns_central_list" >'
                 . __('Add columns to central list') . '</option>' . "\n";
             $html_output .= '<option value="delete_unique_columns_central_list" >'
@@ -1077,13 +1073,9 @@ function PMA_getServerSlaveStatus($server_slave_status, $truename)
     if ((strlen($searchTable) > 0) || strlen($searchDb) > 0) {
         $ignored = true;
     }
-<<<<<<< HEAD
     foreach (
         $GLOBALS['replication_info']['slave']['Wild_Ignore_Table'] as $db_table
         ) {
-=======
-    foreach ($GLOBALS['replication_info']['slave']['Wild_Ignore_Table'] as $db_table) {
->>>>>>> origin/master
         $table_part = PMA_extractDbOrTable($db_table, 'table');
         $pattern = "@^"
             . /*overload*/mb_substr($table_part, 0, -1)
@@ -1630,21 +1622,6 @@ function PMA_getHtmlForOptionalActionLinks($url_query, $tbl_is_view,
         . '</a>';
 
     if (! $tbl_is_view && ! $db_is_system_schema) {
-<<<<<<< HEAD
-=======
-        // if internal relations are available, or foreign keys are supported
-        // ($tbl_storage_engine comes from libraries/tbl_info.inc.php
-
-        if ($cfgRelation['relwork']
-            || PMA_Util::isForeignKeySupported($tbl_storage_engine)
-        ) {
-            $html_output .= '<a href="tbl_relation.php' . $url_query . '">'
-                . PMA_Util::getIcon(
-                    'b_relations.png', __('Relation view'), true
-                )
-                . '</a>';
-        }
->>>>>>> origin/master
         if (!PMA_DRIZZLE) {
             $html_output .= '<a href="sql.php' . $url_query
                 . '&amp;session_max_rows=all&amp;sql_query=' . urlencode(
@@ -1670,7 +1647,6 @@ function PMA_getHtmlForOptionalActionLinks($url_query, $tbl_is_view,
         $html_output .= '<a href="normalization.php' . $url_query . '">'
             . PMA_Util::getIcon('normalize.png', __('Improve table structure'), true)
             . '</a>';
-<<<<<<< HEAD
     }
 
     if ($tbl_is_view && ! $db_is_system_schema) {
@@ -1679,8 +1655,6 @@ function PMA_getHtmlForOptionalActionLinks($url_query, $tbl_is_view,
                 . PMA_Util::getIcon('eye.png', __('Track view'), true)
                 . '</a>';
         }
-=======
->>>>>>> origin/master
     }
 
     return $html_output;
@@ -1972,7 +1946,6 @@ function PMA_getHtmlForActionRowInStructureTable($type, $tbl_storage_engine,
     ) {
         $html_output .= $titles['No' . $action];
     } else {
-<<<<<<< HEAD
         $html_output .= '<a rel="samepage" class="ajax add_key';
         if ($hasLinkClass) {
             $html_output .= ' add_primary_key_anchor"';
@@ -1987,15 +1960,6 @@ function PMA_getHtmlForActionRowInStructureTable($type, $tbl_storage_engine,
         }
         $html_output .= ' href="tbl_structure.php' . $url_query
             . '&amp;add_key=1&amp;sql_query='
-=======
-        $html_output .= '<a rel="samepage" '
-            . ($hasLinkClass ? 'class="ajax add_primary_key_anchor" ' :
-               ($action=='Index' ? 'class="ajax add_index_anchor"' :
-                ($action=='Unique' ? 'class="ajax add_unique_anchor"' : ' ')
-               )
-              )
-            . ' href="sql.php' . $url_query . '&amp;sql_query='
->>>>>>> origin/master
             . urlencode(
                 'ALTER TABLE ' . PMA_Util::backquote($GLOBALS['table'])
                 . ($isPrimary ? ($primary ? ' DROP PRIMARY KEY,' : '') : '')
@@ -2038,14 +2002,9 @@ function PMA_getHtmlForFullTextAction($tbl_storage_engine, $type, $url_query,
         && (/*overload*/mb_strpos($type, 'text') !== false
         || /*overload*/mb_strpos($type, 'char') !== false)
     ) {
-<<<<<<< HEAD
         $html_output .= '<a rel="samepage" class="ajax add_key add_fulltext_anchor" '
             . 'href="tbl_structure.php' . $url_query
             . '&amp;add_key=1&amp;sql_query='
-=======
-        $html_output .= '<a rel="samepage" href="sql.php' . $url_query
-            . '&amp;sql_query='
->>>>>>> origin/master
             . urlencode(
                 'ALTER TABLE ' . PMA_Util::backquote($GLOBALS['table'])
                 . ' ADD FULLTEXT(' . PMA_Util::backquote($row['Field'])
@@ -2163,23 +2122,14 @@ function PMA_getHtmlForActionsInTableStructure($type, $tbl_storage_engine,
         );
     }
     $html_output .= PMA_getHtmlForDistinctValueAction($url_query, $row, $titles);
-<<<<<<< HEAD
     if (isset($GLOBALS['cfgRelation']['central_columnswork'])
-=======
-    if (isset($GLOBALS['cfgRelation']['central_columnswork']) 
->>>>>>> origin/master
         && $GLOBALS['cfgRelation']['central_columnswork']
     ) {
         $html_output .= '<li class="browse nowrap">';
         if ($isInCentralColumns) {
             $html_output .=
-<<<<<<< HEAD
                 '<a href="#" onclick=$("input:checkbox").prop("checked",false);'
                 . '$("#checkbox_row_' . $rownum . '").prop("checked",true);'
-=======
-                '<a href="#" onclick=$("input:checkbox").removeAttr("checked");'
-                . '$("#checkbox_row_' . $rownum . '").attr("checked","checked");'
->>>>>>> origin/master
                 . '$("button[value=remove_from_central_columns]").click();>'
             . PMA_Util::getIcon(
                 'centralColumns_delete.png',
@@ -2188,13 +2138,8 @@ function PMA_getHtmlForActionsInTableStructure($type, $tbl_storage_engine,
             . '</a>';
         } else {
             $html_output .=
-<<<<<<< HEAD
                 '<a href="#" onclick=$("input:checkbox").prop("checked",false);'
                 . '$("#checkbox_row_' . $rownum . '").prop("checked",true);'
-=======
-                '<a href="#" onclick=$("input:checkbox").removeAttr("checked");'
-                . '$("#checkbox_row_' . $rownum . '").attr("checked","checked");'
->>>>>>> origin/master
                 . '$("button[value=add_to_central_columns]").click();>'
             . PMA_Util::getIcon(
                 'centralColumns_add.png',
@@ -3275,7 +3220,6 @@ function PMA_possiblyShowCreateTableDialog($db, $db_is_system_schema, $response)
         $response->addHTML($content);
     } // end if (Create Table dialog)
 }
-<<<<<<< HEAD
 
 /**
  * Returns the HTML for secondary levels tabs of the table structure page
@@ -3327,6 +3271,4 @@ function PMA_getStructureSubTabs()
 
     return $subtabs;
 }
-=======
->>>>>>> origin/master
 ?>

@@ -41,11 +41,7 @@ function PMA_centralColumnsGetParams()
 }
 
 /**
-<<<<<<< HEAD
  * get $num columns of given database from central columns list
-=======
- * get $num columns of given database from central columnslist
->>>>>>> origin/master
  * starting at offset $from
  *
  * @param string $db   selected database
@@ -70,20 +66,13 @@ function PMA_getColumnsList($db, $from=0, $num=25)
             . 'WHERE db_name = \'' . $db . '\';';
     } else {
         $query = 'SELECT * FROM ' . PMA_Util::backquote($central_list_table) . ' '
-<<<<<<< HEAD
             . 'WHERE db_name = \'' . $db . '\' '
-=======
-            . 'WHERE db_name = \'' . $db . '\''
->>>>>>> origin/master
             . 'LIMIT ' . $from . ', ' . $num . ';';
     }
     $has_list = (array) $GLOBALS['dbi']->fetchResult(
         $query, null, null, $GLOBALS['controllink']
     );
-<<<<<<< HEAD
     PMA_handleColumnExtra($has_list);
-=======
->>>>>>> origin/master
     return $has_list;
 }
 
@@ -101,16 +90,11 @@ function PMA_getCentralColumnsCount($db)
         return 0;
     }
     $pmadb = $cfgCentralColumns['db'];
-<<<<<<< HEAD
     $GLOBALS['dbi']->selectDb($pmadb, $GLOBALS['controllink']);
-=======
-    $GLOBALS['dbi']->selectDb($pmadb);
->>>>>>> origin/master
     $central_list_table = $cfgCentralColumns['table'];
     $query = 'SELECT count(db_name) FROM ' .
                PMA_Util::backquote($central_list_table) . ' '
             . 'WHERE db_name = \'' . $db . '\';';
-<<<<<<< HEAD
     $res = $GLOBALS['dbi']->fetchResult(
         $query, null, null, $GLOBALS['controllink']
     );
@@ -119,10 +103,6 @@ function PMA_getCentralColumnsCount($db)
     } else {
         return 0;
     }
-=======
-    $res = $GLOBALS['dbi']->fetchResult($query);
-    return $res[0];
->>>>>>> origin/master
 }
 /**
  * return the existing columns in central list among the given list of columns
@@ -146,29 +126,19 @@ function PMA_findExistingColNames($db, $cols, $allFields=false)
     if ($allFields) {
         $query = 'SELECT * FROM ' . PMA_Util::backquote($central_list_table) . ' '
             . 'WHERE db_name = \'' . $db . '\' AND col_name IN (' . $cols . ');';
-<<<<<<< HEAD
         $has_list = (array) $GLOBALS['dbi']->fetchResult(
             $query, null, null, $GLOBALS['controllink']
         );
         PMA_handleColumnExtra($has_list);
-=======
->>>>>>> origin/master
     } else {
         $query = 'SELECT col_name FROM '
             . PMA_Util::backquote($central_list_table) . ' '
             . 'WHERE db_name = \'' . $db . '\' AND col_name IN (' . $cols . ');';
-<<<<<<< HEAD
         $has_list = (array) $GLOBALS['dbi']->fetchResult(
             $query, null, null, $GLOBALS['controllink']
         );
     }
 
-=======
-    }
-    $has_list = (array) $GLOBALS['dbi']->fetchResult(
-        $query, null, null, $GLOBALS['controllink']
-    );
->>>>>>> origin/master
     return $has_list;
 }
 
@@ -204,7 +174,6 @@ function PMA_getInsertQuery($column, $def, $db, $central_list_table)
 {
     $type = "";
     $length = 0;
-<<<<<<< HEAD
     $attribute = "";
     if (isset($def['Type'])) {
         $extracted_columnspec = PMA_Util::extractColumnSpec($def['Type']);
@@ -215,13 +184,6 @@ function PMA_getInsertQuery($column, $def, $db, $central_list_table)
     if (isset($def['Attribute'])) {
         $attribute = $def['Attribute'];
     };
-=======
-    if (isset($def['Type'])) {
-        $extracted_columnspec = PMA_Util::extractColumnSpec($def['Type']);
-        $type = $extracted_columnspec['type'];
-        $length = $extracted_columnspec['spec_in_brackets'];
-    }
->>>>>>> origin/master
     $collation = isset($def['Collation'])?$def['Collation']:"";
     $isNull = ($def['Null'] == "NO")?0:1;
     $extra = isset($def['Extra'])?$def['Extra']:"";
@@ -234,13 +196,8 @@ function PMA_getInsertQuery($column, $def, $db, $central_list_table)
     . '\'' . PMA_Util::sqlAddSlashes($length) . '\',\''
     . PMA_Util::sqlAddSlashes($collation) . '\','
     . '\'' . PMA_Util::sqlAddSlashes($isNull) . '\','
-<<<<<<< HEAD
     . '\'' . implode(',', array($extra, $attribute))
     . '\',\'' . PMA_Util::sqlAddSlashes($default) . '\');';
-=======
-    . '\'' . PMA_Util::sqlAddSlashes($extra) . '\',\''
-    . PMA_Util::sqlAddSlashes($default) . '\');';
->>>>>>> origin/master
     return $insQuery;
 }
 
@@ -464,20 +421,14 @@ function PMA_makeConsistentWithList($db, $selected_tables)
                 if ($column['col_length']) {
                     $query .= '(' . $column['col_length'] . ')';
                 }
-<<<<<<< HEAD
 
                 $query .= ' ' . $column['col_attribute'];
-=======
->>>>>>> origin/master
                 if ($column['col_isNull']) {
                     $query .= ' NULL';
                 } else {
                     $query .= ' NOT NULL';
                 }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
                 $query .= ' ' . $column['col_extra'];
                 if ($column['col_default']) {
                     if ($column['col_default'] != 'CURRENT_TIMESTAMP') {
@@ -551,10 +502,7 @@ function PMA_getCentralColumnsFromTable($db, $table, $allFields=false)
  * @param string $orig_col_name original column name before edit
  * @param string $col_name      new column name
  * @param string $col_type      new column type
-<<<<<<< HEAD
  * @param string $col_attribute new column attribute
-=======
->>>>>>> origin/master
  * @param string $col_length    new column length
  * @param int    $col_isNull    value 1 if new column isNull is true, 0 otherwise
  * @param string $collation     new column collation
@@ -564,11 +512,7 @@ function PMA_getCentralColumnsFromTable($db, $table, $allFields=false)
  * @return true|PMA_Message
  */
 function PMA_updateOneColumn($db, $orig_col_name, $col_name, $col_type,
-<<<<<<< HEAD
     $col_attribute,$col_length, $col_isNull, $collation, $col_extra, $col_default
-=======
-    $col_length, $col_isNull, $collation, $col_extra, $col_default
->>>>>>> origin/master
 ) {
     $cfgCentralColumns = PMA_centralColumnsGetParams();
     if (empty($cfgCentralColumns)) {
@@ -585,28 +529,17 @@ function PMA_updateOneColumn($db, $orig_col_name, $col_name, $col_type,
         $def['Collation'] = $collation;
         $def['Null'] = $col_isNull?__('YES'):__('NO');
         $def['Extra'] = $col_extra;
-<<<<<<< HEAD
         $def['Attribute'] = $col_attribute;
-=======
->>>>>>> origin/master
         $def['Default'] = $col_default;
         $query = PMA_getInsertQuery($col_name, $def, $db, $centralTable);
     } else {
         $query = 'UPDATE ' . PMA_Util::backquote($centralTable)
                 . ' SET col_type = \'' . PMA_Util::sqlAddSlashes($col_type) . '\''
-<<<<<<< HEAD
                 . ', col_name = \'' . PMA_Util::sqlAddSlashes($col_name) . '\''
                 . ', col_length = \'' . PMA_Util::sqlAddSlashes($col_length) . '\''
                 . ', col_isNull = ' . $col_isNull
                 . ', col_collation = \'' . PMA_Util::sqlAddSlashes($collation) . '\''
                 . ', col_extra = \'' . implode(',', array($col_extra, $col_attribute)) . '\''
-=======
-                . ',col_name = \'' . PMA_Util::sqlAddSlashes($col_name) . '\''
-                . ', col_length = \'' . PMA_Util::sqlAddSlashes($col_length) . '\''
-                . ', col_isNull = ' . $col_isNull
-                . ', col_collation = \'' . PMA_Util::sqlAddSlashes($collation) . '\''
-                . ', col_extra = \'' . PMA_Util::sqlAddSlashes($col_extra) . '\''
->>>>>>> origin/master
                 . ', col_default = \'' . PMA_Util::sqlAddSlashes($col_default) . '\''
                 . ' WHERE db_name = \'' . PMA_Util::sqlAddSlashes($db) . '\' '
                 . 'AND col_name = \'' . PMA_Util::sqlAddSlashes($orig_col_name)
@@ -708,12 +641,8 @@ function PMA_getCentralColumnsTableHeader($class='', $title='', $actionCount=0)
 {
     $action = '';
     if ($actionCount > 0) {
-<<<<<<< HEAD
         $action .= '<th class="column_action" colspan="' . $actionCount . '">'
             . __('Action') . '</th>';
-=======
-        $action .= '<th colspan="' . $actionCount . '">' . __('Action') . '</th>';
->>>>>>> origin/master
     }
     $tableheader = '<thead>';
     $tableheader .= '<tr>'
@@ -727,11 +656,8 @@ function PMA_getCentralColumnsTableHeader($class='', $title='', $actionCount=0)
         . __('Length/Values') . '<div class="sorticon"></div></th>'
         . '<th class="' . $class . '" title="' . $title . '" data-column="collation"'
         . '>' . __('Collation') . '<div class="sorticon"></div></th>'
-<<<<<<< HEAD
         . '<th class="' . $class . '" title="' . $title . '" data-column="attribute">'
         . __('Attribute') . '<div class="sorticon"></div></th>'
-=======
->>>>>>> origin/master
         . '<th class="' . $class . '" title="' . $title . '" data-column="isnull">'
         . __('Null') . '<div class="sorticon"></div></th>'
         . '<th class="' . $class . '" title="' . $title . '" data-column="extra">'
@@ -893,7 +819,6 @@ function PMA_getHTMLforCentralColumnsTableRow($row, $odd_row, $row_num, $db)
         )
         . '</td>';
     $tableHtml .=
-<<<<<<< HEAD
         '<td class="nowrap" name="col_attribute">'
         . '<span>' .
         ($row['col_attribute']
@@ -908,12 +833,6 @@ function PMA_getHTMLforCentralColumnsTableRow($row, $odd_row, $row_num, $db)
         . '<span>' . ($row['col_isNull'] ? __('Yes') : __('No'))
         . '</span>'
         . PMA_getHtmlForColumnNull($row_num, 5, 0, array('Null'=>$row['col_isNull']))
-=======
-        '<td class="nowrap" name="col_isNull">'
-        . '<span>' . ($row['col_isNull'] ? __('Yes') : __('No'))
-        . '</span>'
-        . PMA_getHtmlForColumnNull($row_num, 4, 0, array('Null'=>$row['col_isNull']))
->>>>>>> origin/master
         . '</td>';
 
     $tableHtml .=
@@ -921,12 +840,7 @@ function PMA_getHTMLforCentralColumnsTableRow($row, $odd_row, $row_num, $db)
         . htmlspecialchars($row['col_extra']) . '</span>'
         . '<select name="col_extra"><option value=""></option>'
         . '<option value="auto_increment">' . __('auto_increment') . '</option>'
-<<<<<<< HEAD
         . '</select>'
-=======
-        . '<option value="on update CURRENT_TIMESTAMP">'
-        . __('on update CURRENT_TIMESTAMP') . '</option></select>'
->>>>>>> origin/master
         . '</td>';
     $meta = array();
     if (!isset($row['col_default']) || $row['col_default'] == '') {
@@ -946,11 +860,7 @@ function PMA_getHTMLforCentralColumnsTableRow($row, $odd_row, $row_num, $db)
         ? htmlspecialchars($row['col_default']) : 'None')
         . '</span>'
         . PMA_getHtmlForColumnDefault(
-<<<<<<< HEAD
             $row_num, 6, 0, /*overload*/mb_strtoupper($row['col_type']), '', $meta
-=======
-            $row_num, 5, 0, /*overload*/mb_strtoupper($row['col_type']), '', $meta
->>>>>>> origin/master
         )
         . '</td>';
     $tableHtml .= '</tr>';
@@ -987,30 +897,21 @@ function PMA_getCentralColumnsListRaw($db, $table)
         }
         $cols = trim($cols, ',');
         $query = 'SELECT * FROM ' . PMA_Util::backquote($centralTable) . ' '
-<<<<<<< HEAD
             . 'WHERE db_name = \'' . $db . '\'';
         if ($cols) {
             $query .= ' AND col_name NOT IN (' . $cols . ')';
         }
         $query .= ';';
-=======
-                . 'WHERE db_name = \'' . $db . '\' '
-                . 'AND col_name NOT IN (' . $cols . ');';
->>>>>>> origin/master
     }
     $GLOBALS['dbi']->selectDb($cfgCentralColumns['db'], $GLOBALS['controllink']);
     $columns_list = (array)$GLOBALS['dbi']->fetchResult(
         $query, null, null, $GLOBALS['controllink']
     );
-<<<<<<< HEAD
     PMA_handleColumnExtra($columns_list);
-=======
->>>>>>> origin/master
     return json_encode($columns_list);
 }
 
 /**
-<<<<<<< HEAD
  * Column `col_extra` is used to store both extra and attributes for a column.
  * This method separates them.
  *
@@ -1042,8 +943,6 @@ function PMA_handleColumnExtra(&$columns_list)
 }
 
 /**
-=======
->>>>>>> origin/master
  * build html for adding a new user defined column to central list
  *
  * @param string $db current database
@@ -1079,16 +978,11 @@ function PMA_getHTMLforAddNewColumn($db)
             0, 3, 0, array()
         )
         . '</td>'
-<<<<<<< HEAD
         . '<td class="nowrap" name="col_attribute">'
         . PMA_getHtmlForColumnAttribute(0, 4, 0, array(), array(), false, null)
         . '</td>'
         . '<td class="nowrap" name="col_isNull">'
         . PMA_getHtmlForColumnNull(0, 5, 0, array())
-=======
-        . '<td class="nowrap" name="col_isNull">'
-        . PMA_getHtmlForColumnNull(0, 4, 0, array())
->>>>>>> origin/master
         . '</td>'
         . '<td class="nowrap" name="col_extra">'
         . '<select name="col_extra"><option value="">'
@@ -1097,11 +991,7 @@ function PMA_getHTMLforAddNewColumn($db)
         . __('on update CURRENT_TIMESTAMP') . '</option></select>'
         . '</td>'
         . '<td class="nowrap" name="col_default">'
-<<<<<<< HEAD
         . PMA_getHtmlForColumnDefault(0, 6, 0, '', '', array())
-=======
-        . PMA_getHtmlForColumnDefault(0, 5, 0, '', '', array())
->>>>>>> origin/master
         . '</td>'
         . ' <td>'
         . '<input id="add_column_save" type="submit" '

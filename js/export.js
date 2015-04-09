@@ -210,11 +210,7 @@ AJAX.registerOnload('export.js', function () {
  */
 function toggle_quick_or_custom()
 {
-<<<<<<< HEAD
     if ($("input[name='quick_or_custom']").length === 0 // custom_no_form option
-=======
-    if ($("input[name='quick_or_custom']").length == 0 // custom_no_form option
->>>>>>> origin/master
         || $("#radio_custom_export").prop("checked") // custom
     ) {
         $("#databases_and_tables").show();
@@ -259,94 +255,9 @@ function check_time_out(time_limit)
             }
         });
     }, time_limit * 1000);
-<<<<<<< HEAD
-=======
 
 }
->>>>>>> origin/master
 
-/**
- * Handler for Database/table alias select
- *
- * @param event object the event object
- *
- * @return void
- */
-function aliasSelectHandler(event) {
-    var sel = event.data.sel;
-    var type = event.data.type;
-    var inputId = $(this).val();
-    var $label = $(this).next('label');
-    $('input#' + $label.attr('for')).addClass('hide');
-    $('input#' + inputId).removeClass('hide');
-    $label.attr('for', inputId);
-    $('#alias_modal ' + sel + '[id$=' + type + ']:visible').addClass('hide');
-    var $inputWrapper = $('#alias_modal ' + sel + '#' + inputId + type);
-    $inputWrapper.removeClass('hide');
-    if (type === '_cols' && $inputWrapper.length > 0) {
-        var outer = $inputWrapper[0].outerHTML;
-        // Replace opening tags
-        var regex = /<dummy_inp/gi;
-        var newTag = outer.replace(regex, '<input');
-        // Replace closing tags
-        regex = /<\/dummy_inp/gi;
-        newTag = newTag.replace(regex, '</input');
-        // Assign replacement
-        $inputWrapper.replaceWith(newTag);
-    } else if (type === '_tables') {
-        $('.table_alias_select:visible').change();
-    }
-    $("#alias_modal").dialog("option", "position", "center");
-}
-
-/**
- * Handler for Alias dialog box
- *
- * @param event object the event object
- *
- * @return void
- */
-function createAliasModal(event) {
-    event.preventDefault();
-    var dlgButtons = {};
-    dlgButtons[PMA_messages.strResetAll] = function() {
-        $(this).find('input[type="text"]').val('');
-    };
-    dlgButtons[PMA_messages.strReset] = function() {
-        $(this).find('input[type="text"]:visible').val('');
-    };
-    dlgButtons[PMA_messages.strSaveAndClose] = function() {
-        $(this).dialog("close");
-        $('#alias_modal').parent().appendTo($('form[name="dump"]'));
-    };
-    $('#alias_modal').dialog({
-        width: Math.min($(window).width() - 100, 700),
-        modal: true,
-        dialogClass: "alias-dialog",
-        buttons: dlgButtons,
-        create: function() {
-            $(this).css('maxHeight', $(window).height() - 150);
-            $('.alias-dialog .ui-dialog-titlebar-close').remove();
-        },
-        close: function() {
-            var isEmpty = true;
-            $(this).find('input[type="text"]').each(function() {
-                // trim input fields on close
-                $(this).val($(this).val().trim());
-                // check if non empty field present
-                if ($(this).val()) {
-                    isEmpty = false;
-                }
-            });
-            $('input#btn_alias_config').attr('checked', !isEmpty);
-        },
-        position: 'center'
-    });
-    // Call change event of .table_alias_select
-    $('.table_alias_select:visible').trigger('change');
-}
-
-<<<<<<< HEAD
 /**
  * Handler for Database/table alias select
  *
@@ -438,8 +349,6 @@ function createAliasModal(event) {
     $('.table_alias_select:visible').trigger('change');
 }
 
-=======
->>>>>>> origin/master
 AJAX.registerOnload('export.js', function () {
     $("input[type='radio'][name='quick_or_custom']").change(toggle_quick_or_custom);
 

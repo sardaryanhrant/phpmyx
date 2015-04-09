@@ -8,11 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-<<<<<<< HEAD
     <title>Configuration &mdash; phpMyAdmin 4.4.1.1 documentation</title>
-=======
-    <title>Configuration &mdash; phpMyAdmin 4.3.9 documentation</title>
->>>>>>> origin/master
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -20,11 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-<<<<<<< HEAD
         VERSION:     '4.4.1.1',
-=======
-        VERSION:     '4.3.9',
->>>>>>> origin/master
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -34,11 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="copyright" title="Copyright" href="copyright.html" />
-<<<<<<< HEAD
     <link rel="top" title="phpMyAdmin 4.4.1.1 documentation" href="index.html" />
-=======
-    <link rel="top" title="phpMyAdmin 4.3.9 documentation" href="index.html" />
->>>>>>> origin/master
     <link rel="next" title="User Guide" href="user.html" />
     <link rel="prev" title="Installation" href="setup.html" /> 
   </head>
@@ -55,11 +43,7 @@
         <li class="right" >
           <a href="setup.html" title="Installation"
              accesskey="P">previous</a> |</li>
-<<<<<<< HEAD
         <li><a href="index.html">phpMyAdmin 4.4.1.1 documentation</a> &raquo;</li> 
-=======
-        <li><a href="index.html">phpMyAdmin 4.3.9 documentation</a> &raquo;</li> 
->>>>>>> origin/master
       </ul>
     </div>  
 
@@ -1020,11 +1004,7 @@ table is necessary for previous transformations and the new input-oriented
 transformation system to work. phpMyAdmin will upgrade it automatically
 for you by analyzing your current column_info table structure.
 However, if something goes wrong with the auto-upgrade then you can
-<<<<<<< HEAD
 use the SQL script found in <tt class="docutils literal"><span class="pre">./sql/upgrade_column_info_4_3_0+.sql</span></tt>
-=======
-use the SQL script found in <tt class="docutils literal"><span class="pre">./examples/upgrade_column_info_4_3_0+.sql</span></tt>
->>>>>>> origin/master
 to upgrade it manually.</p>
 <p>To allow the usage of this functionality:</p>
 <ul>
@@ -1045,11 +1025,7 @@ remember that the Variable in <tt class="file docutils literal"><span class="pre
 </div>
 </li>
 <li><p class="first">to update your PRE-4.3.0 Column_info table manually use this
-<<<<<<< HEAD
 <tt class="docutils literal"><span class="pre">./sql/upgrade_column_info_4_3_0+.sql</span></tt> SQL script.</p>
-=======
-<tt class="docutils literal"><span class="pre">./examples/upgrade_column_info_4_3_0+.sql</span></tt> SQL script.</p>
->>>>>>> origin/master
 </li>
 </ul>
 <div class="admonition note">
@@ -1415,7 +1391,6 @@ is is unavailable, until the end of session.</p>
 <li>set up <span class="target" id="index-49"></span><a class="reference internal" href="#cfg_Servers_pmadb"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['pmadb']</span></tt></a> and the phpMyAdmin configuration storage</li>
 <li>put the table name in <span class="target" id="index-50"></span><a class="reference internal" href="#cfg_Servers_userconfig"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['userconfig']</span></tt></a></li>
 </ul>
-<<<<<<< HEAD
 </dd></dl>
 
 <dl class="option">
@@ -1438,8 +1413,6 @@ is is unavailable, until the end of session.</p>
 (referring to tables which no longer exist). We only keep this number of newest
 rows in <span class="target" id="index-53"></span><a class="reference internal" href="#cfg_Servers_table_uiprefs"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['table_uiprefs']</span></tt></a> and automatically
 delete older rows.</p>
-=======
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -1455,21 +1428,11 @@ delete older rows.</p>
 </tr>
 </tbody>
 </table>
-<<<<<<< HEAD
 <p>Sets the time zone used by phpMyAdmin. Leave blank to use the time zone of your
 database server. Possible values are explained at
 <a class="reference external" href="http://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html">http://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html</a></p>
 <p>This is useful when your database server uses a time zone which is different from the
 time zone you want to use in phpMyAdmin.</p>
-=======
-<p>Maximum number of rows saved in
-<span class="target" id="index-51"></span><a class="reference internal" href="#cfg_Servers_table_uiprefs"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['table_uiprefs']</span></tt></a> table.</p>
-<p>When tables are dropped or renamed,
-<span class="target" id="index-52"></span><a class="reference internal" href="#cfg_Servers_table_uiprefs"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['table_uiprefs']</span></tt></a> may contain invalid data
-(referring to tables which no longer exist). We only keep this number of newest
-rows in <span class="target" id="index-53"></span><a class="reference internal" href="#cfg_Servers_table_uiprefs"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['table_uiprefs']</span></tt></a> and automatically
-delete older rows.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -2379,11 +2342,7 @@ with a delimiter character.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">integer</td>
 </tr>
-<<<<<<< HEAD
 <tr class="field-even field"><th class="field-name">Default value:</th><td class="field-body">100</td>
-=======
-<tr class="field-even field"><th class="field-name">Default value:</th><td class="field-body">25</td>
->>>>>>> origin/master
 </tr>
 </tbody>
 </table>
@@ -2422,11 +2381,7 @@ page of the navigation tree.</p>
 </tbody>
 </table>
 <p>Defines whether to group the databases based on a common prefix
-<<<<<<< HEAD
 in their name <span class="target" id="index-64"></span><a class="reference internal" href="#cfg_NavigationTreeDbSeparator"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['NavigationTreeDbSeparator']</span></tt></a>.</p>
-=======
-in their name <span class="target" id="index-62"></span><a class="reference internal" href="#cfg_NavigationTreeDbSeparator"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['NavigationTreeDbSeparator']</span></tt></a>.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -2520,11 +2475,7 @@ create phpMyAdmin configuration storage in the current database
 or use the existing one, if already present.</p>
 <p>This setting has no effect if the phpMyAdmin configuration storage database
 is properly created and the related configuration directives (such as
-<<<<<<< HEAD
 <span class="target" id="index-65"></span><a class="reference internal" href="#cfg_Servers_pmadb"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['pmadb']</span></tt></a> and so on) are configured.</p>
-=======
-<span class="target" id="index-63"></span><a class="reference internal" href="#cfg_Servers_pmadb"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['pmadb']</span></tt></a> and so on) are configured.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -2771,11 +2722,7 @@ for Berkeley DB tables.</p>
 </table>
 <p>Defines whether to display detailed server information on main page.
 You can additionally hide more information by using
-<<<<<<< HEAD
 <span class="target" id="index-66"></span><a class="reference internal" href="#cfg_Servers_verbose"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['verbose']</span></tt></a>.</p>
-=======
-<span class="target" id="index-64"></span><a class="reference internal" href="#cfg_Servers_verbose"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['verbose']</span></tt></a>.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -3004,7 +2951,6 @@ TIMESTAMP, ascending order else- by default.</p>
 <dl class="option">
 <dt id="cfg_GridEditing">
 <tt class="descname">$cfg['GridEditing']</tt><a class="headerlink" href="#cfg_GridEditing" title="Permalink to this definition">¶</a></dt>
-<<<<<<< HEAD
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3022,8 +2968,6 @@ editing. Can be deactivated with the <tt class="docutils literal"><span class="p
 <dl class="option">
 <dt id="cfg_RelationalDisplay">
 <tt class="descname">$cfg['RelationalDisplay']</tt><a class="headerlink" href="#cfg_RelationalDisplay" title="Permalink to this definition">¶</a></dt>
-=======
->>>>>>> origin/master
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3148,11 +3092,7 @@ edit/insert mode. The user can toggle this setting from the interface.</p>
 </table>
 <p>If there are fewer items than this in the set of foreign keys, then a
 drop-down box of foreign keys is presented, in the style described by
-<<<<<<< HEAD
 the <span class="target" id="index-67"></span><a class="reference internal" href="#cfg_ForeignKeyDropdownOrder"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['ForeignKeyDropdownOrder']</span></tt></a> setting.</p>
-=======
-the <span class="target" id="index-65"></span><a class="reference internal" href="#cfg_ForeignKeyDropdownOrder"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['ForeignKeyDropdownOrder']</span></tt></a> setting.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -3442,11 +3382,7 @@ values:</p>
 </tbody>
 </table>
 <p>Default page size to use when creating PDF pages. Valid values are any
-<<<<<<< HEAD
 listed in <span class="target" id="index-68"></span><a class="reference internal" href="#cfg_PDFPageSizes"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['PDFPageSizes']</span></tt></a>.</p>
-=======
-listed in <span class="target" id="index-66"></span><a class="reference internal" href="#cfg_PDFPageSizes"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['PDFPageSizes']</span></tt></a>.</p>
->>>>>>> origin/master
 </dd></dl>
 
 </div>
@@ -3550,11 +3486,7 @@ recode)</li>
 <p>Enabled charset conversion activates a pull-down menu in the Export
 and Import pages, to choose the character set when exporting a file.
 The default value in this menu comes from
-<<<<<<< HEAD
 <span class="target" id="index-69"></span><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Export']['charset']</span></tt> and <span class="target" id="index-70"></span><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Import']['charset']</span></tt>.</p>
-=======
-<span class="target" id="index-67"></span><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Export']['charset']</span></tt> and <span class="target" id="index-68"></span><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Import']['charset']</span></tt>.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -3634,11 +3566,7 @@ buffering.</p>
 </tbody>
 </table>
 <p>Lists proxies and HTTP headers which are trusted for
-<<<<<<< HEAD
 <span class="target" id="index-71"></span><a class="reference internal" href="#cfg_Servers_AllowDeny_order"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['order']</span></tt></a>. This list is by
-=======
-<span class="target" id="index-69"></span><a class="reference internal" href="#cfg_Servers_AllowDeny_order"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['order']</span></tt></a>. This list is by
->>>>>>> origin/master
 default empty, you need to fill in some trusted proxy servers if you
 want to use rules for IP addresses behind proxy.</p>
 <p>The following example specifies that phpMyAdmin should trust a
@@ -3647,11 +3575,7 @@ HTTP_X_FORWARDED_FOR (<tt class="docutils literal"><span class="pre">X</span> <s
 <div class="highlight-php"><div class="highlight"><pre><span class="nv">$cfg</span><span class="p">[</span><span class="s1">&#39;TrustedProxies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;1.2.3.4&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;HTTP_X_FORWARDED_FOR&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<<<<<<< HEAD
 <p>The <span class="target" id="index-72"></span><a class="reference internal" href="#cfg_Servers_AllowDeny_rules"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['rules']</span></tt></a> directive uses the
-=======
-<p>The <span class="target" id="index-70"></span><a class="reference internal" href="#cfg_Servers_AllowDeny_rules"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['rules']</span></tt></a> directive uses the
->>>>>>> origin/master
 client&#8217;s IP address as usual.</p>
 </dd></dl>
 
@@ -4114,30 +4038,6 @@ are parsed as &#8220;top&#8221; and &#8220;bottom&#8221; with vertical display m
 </dd></dl>
 
 <dl class="option">
-<<<<<<< HEAD
-=======
-<dt id="cfg_DefaultDisplay">
-<tt class="descname">$cfg['DefaultDisplay']</tt><a class="headerlink" href="#cfg_DefaultDisplay" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Default value:</th><td class="field-body"><tt class="docutils literal"><span class="pre">'horizontal'</span></tt></td>
-</tr>
-</tbody>
-</table>
-<p>There are 3 display modes: horizontal, horizontalflipped and vertical.
-Define which one is displayed by default. The first mode displays each
-row on a horizontal line, the second rotates the headers by 90
-degrees, so you can use descriptive headers even though columns only
-contain small values and still print them out. The vertical mode sorts
-each row on a vertical lineup.</p>
-</dd></dl>
-
-<dl class="option">
->>>>>>> origin/master
 <dt id="cfg_RememberSorting">
 <tt class="descname">$cfg['RememberSorting']</tt><a class="headerlink" href="#cfg_RememberSorting" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -4156,27 +4056,6 @@ each row on a vertical lineup.</p>
 <dl class="option">
 <dt id="cfg_TablePrimaryKeyOrder">
 <tt class="descname">$cfg['TablePrimaryKeyOrder']</tt><a class="headerlink" href="#cfg_TablePrimaryKeyOrder" title="Permalink to this definition">¶</a></dt>
-<<<<<<< HEAD
-=======
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Default value:</th><td class="field-body"><tt class="docutils literal"><span class="pre">'NONE'</span></tt></td>
-</tr>
-</tbody>
-</table>
-<p>This defines the default sort order for the tables, having a primary key,
-when there is no sort order defines externally.
-Acceptable values : [&#8216;NONE&#8217;, &#8216;ASC&#8217;, &#8216;DESC&#8217;]</p>
-</dd></dl>
-
-<dl class="option">
-<dt id="cfg_HeaderFlipType">
-<tt class="descname">$cfg['HeaderFlipType']</tt><a class="headerlink" href="#cfg_HeaderFlipType" title="Permalink to this definition">¶</a></dt>
->>>>>>> origin/master
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -4352,11 +4231,7 @@ emphasized (*2) for <a class="reference internal" href="glossary.html#term-sql">
 textareas and (*1.25) for <a class="reference internal" href="glossary.html#term-sql"><em class="xref std std-term">SQL</em></a>
 textareas inside the query window.</p>
 <p>The Char* values are used for CHAR
-<<<<<<< HEAD
 and VARCHAR editing (if configured via <span class="target" id="index-73"></span><a class="reference internal" href="#cfg_CharEditing"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['CharEditing']</span></tt></a>).</p>
-=======
-and VARCHAR editing (if configured via <span class="target" id="index-71"></span><a class="reference internal" href="#cfg_CharEditing"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['CharEditing']</span></tt></a>).</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -4615,15 +4490,9 @@ reading and writing data in this directory.</p>
 </tr>
 </tbody>
 </table>
-<<<<<<< HEAD
 <p>If <span class="target" id="index-74"></span><a class="reference internal" href="#cfg_QueryHistoryDB"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryDB']</span></tt></a> is set to <tt class="docutils literal"><span class="pre">true</span></tt>, all your
 Queries are logged to a table, which has to be created by you (see
 <span class="target" id="index-75"></span><a class="reference internal" href="#cfg_Servers_history"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['history']</span></tt></a>). If set to false, all your
-=======
-<p>If <span class="target" id="index-72"></span><a class="reference internal" href="#cfg_QueryHistoryDB"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryDB']</span></tt></a> is set to <tt class="docutils literal"><span class="pre">true</span></tt>, all your
-Queries are logged to a table, which has to be created by you (see
-<span class="target" id="index-73"></span><a class="reference internal" href="#cfg_Servers_history"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['Servers'][$i]['history']</span></tt></a>). If set to false, all your
->>>>>>> origin/master
 queries will be appended to the form, but only as long as your window is
 opened they remain saved.</p>
 <p>When using the JavaScript based query window, it will always get updated
@@ -4637,15 +4506,9 @@ you first have to look in. The checkbox will get automatically checked
 whenever you change the contents of the textarea. Please uncheck the button
 whenever you definitely want the query window to get updated even though
 you have made alterations.</p>
-<<<<<<< HEAD
 <p>If <span class="target" id="index-76"></span><a class="reference internal" href="#cfg_QueryHistoryDB"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryDB']</span></tt></a> is set to <tt class="docutils literal"><span class="pre">true</span></tt> you can
 specify the amount of saved history items using
 <span class="target" id="index-77"></span><a class="reference internal" href="#cfg_QueryHistoryMax"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryMax']</span></tt></a>.</p>
-=======
-<p>If <span class="target" id="index-74"></span><a class="reference internal" href="#cfg_QueryHistoryDB"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryDB']</span></tt></a> is set to <tt class="docutils literal"><span class="pre">true</span></tt> you can
-specify the amount of saved history items using
-<span class="target" id="index-75"></span><a class="reference internal" href="#cfg_QueryHistoryMax"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['QueryHistoryMax']</span></tt></a>.</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -4887,11 +4750,7 @@ containing all the themes.</p>
 </tr>
 </tbody>
 </table>
-<<<<<<< HEAD
 <p>The default theme (a subdirectory under <span class="target" id="index-78"></span><a class="reference internal" href="#cfg_ThemePath"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['ThemePath']</span></tt></a>).</p>
-=======
-<p>The default theme (a subdirectory under <span class="target" id="index-76"></span><a class="reference internal" href="#cfg_ThemePath"><tt class="xref config config-option docutils literal"><span class="pre">$cfg['ThemePath']</span></tt></a>).</p>
->>>>>>> origin/master
 </dd></dl>
 
 <dl class="option">
@@ -5121,11 +4980,7 @@ segment. Value can be either of <tt class="docutils literal"><span class="pre">'
         <li class="right" >
           <a href="setup.html" title="Installation"
              >previous</a> |</li>
-<<<<<<< HEAD
         <li><a href="index.html">phpMyAdmin 4.4.1.1 documentation</a> &raquo;</li> 
-=======
-        <li><a href="index.html">phpMyAdmin 4.3.9 documentation</a> &raquo;</li> 
->>>>>>> origin/master
       </ul>
     </div>
     <div class="footer">

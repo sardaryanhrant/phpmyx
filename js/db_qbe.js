@@ -53,11 +53,7 @@ AJAX.registerOnload('db_qbe.js', function () {
     /**
      * Ajax event handlers for 'Delete bookmark'
      */
-<<<<<<< HEAD
     $(document).on('click', "#deleteSearch", function (event) {
-=======
-    $("#deleteSearch").live('click', function (event) {
->>>>>>> origin/master
         var question = PMA_sprintf(PMA_messages.strConfirmDeleteQBESearch, $("#searchId option:selected").text());
         if (!confirm(question)) {
             return false;

@@ -126,7 +126,6 @@ function PMA_getHtmlForServerProcesslist()
         $sql_query = $show_full_sql
             ? 'SHOW FULL PROCESSLIST'
             : 'SHOW PROCESSLIST';
-<<<<<<< HEAD
         if ( (! empty($_REQUEST['order_by_field'])
                 && ! empty($_REQUEST['sort_order']) )
             || (! empty($_REQUEST['showExecuting']) )
@@ -140,14 +139,6 @@ function PMA_getHtmlForServerProcesslist()
             $sql_query .= ' ORDER BY '
                 . PMA_Util::backquote($_REQUEST['order_by_field'])
                 . ' ' . $_REQUEST['sort_order'];
-=======
-        if (! empty($_REQUEST['order_by_field'])
-            && ! empty($_REQUEST['sort_order'])
-        ) {
-            $sql_query = 'SELECT * FROM `INFORMATION_SCHEMA`.`PROCESSLIST` '
-                . 'ORDER BY `'
-                . $_REQUEST['order_by_field'] . '` ' . $_REQUEST['sort_order'];
->>>>>>> origin/master
         }
     }
 
@@ -169,19 +160,6 @@ function PMA_getHtmlForServerProcesslist()
             $column['sort_order'] = 'DESC';
         }
 
-<<<<<<< HEAD
-=======
-        if ($is_sorted) {
-            if ($_REQUEST['sort_order'] == 'ASC') {
-                $asc_display_style = 'inline';
-                $desc_display_style = 'none';
-            } elseif ($_REQUEST['sort_order'] == 'DESC') {
-                $desc_display_style = 'inline';
-                $asc_display_style = 'none';
-            }
-        }
-
->>>>>>> origin/master
         $retval .= '<th>';
         $columnUrl = PMA_URL_getCommon($column);
         $retval .= '<a href="server_status_processes.php' . $columnUrl . '" ';
@@ -194,15 +172,12 @@ function PMA_getHtmlForServerProcesslist()
         $retval .= $column['column_name'];
 
         if ($is_sorted) {
-<<<<<<< HEAD
             $asc_display_style = 'inline';
             $desc_display_style = 'none';
             if ($_REQUEST['sort_order'] === 'DESC') {
                 $desc_display_style = 'inline';
                 $asc_display_style = 'none';
             }
-=======
->>>>>>> origin/master
             $retval .= '<img class="icon ic_s_desc soimg" alt="'
                 . __('Descending') . '" title="" src="themes/dot.gif" '
                 . 'style="display: ' . $desc_display_style . '" />';
@@ -251,7 +226,6 @@ function PMA_getHtmlForServerProcesslist()
 }
 
 /**
-<<<<<<< HEAD
  * Returns the html for the list filter
  *
  * @return string
@@ -286,8 +260,6 @@ function PMA_getHtmlForProcessListFilter()
 }
 
 /**
-=======
->>>>>>> origin/master
  * Prints Every Item of Server Process
  *
  * @param Array $process       data of Every Item of Server Process
@@ -300,13 +272,9 @@ function PMA_getHtmlForServerProcessItem($process, $odd_row, $show_full_sql)
 {
     // Array keys need to modify due to the way it has used
     // to display column values
-<<<<<<< HEAD
     if ( (! empty($_REQUEST['order_by_field']) && ! empty($_REQUEST['sort_order']) )
         || (! empty($_REQUEST['showExecuting']))
     ) {
-=======
-    if (! empty($_REQUEST['order_by_field']) && ! empty($_REQUEST['sort_order']) ) {
->>>>>>> origin/master
         foreach (array_keys($process) as $key) {
             $new_key = ucfirst(/*overload*/mb_strtolower($key));
             if ($new_key !== $key) {

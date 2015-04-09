@@ -26,7 +26,6 @@
     return CodeMirror.resolveMode(mode).keywords;
   }
 
-<<<<<<< HEAD
   function getText(item) {
     return typeof item == "string" ? item : item.text;
   }
@@ -47,11 +46,6 @@
   function match(string, word) {
     var len = string.length;
     var sub = getText(word).substr(0, len);
-=======
-  function match(string, word) {
-    var len = string.length;
-    var sub = word.substr(0, len);
->>>>>>> origin/master
     return string.toUpperCase() === sub.toUpperCase();
   }
 
@@ -67,7 +61,6 @@
     }
   }
 
-<<<<<<< HEAD
   function cleanName(name) {
     // Get rid name from backticks(`) and preceding dot(.)
     if (name.charAt(0) == ".") {
@@ -143,57 +136,6 @@
     }
 
     return start;
-=======
-  function nameCompletion(result, editor) {
-    var cur = editor.getCursor();
-    var token = editor.getTokenAt(cur);
-    var useBacktick = (token.string.charAt(0) == "`");
-    var string = token.string.substr(1);
-    var prevToken = editor.getTokenAt(Pos(cur.line, token.start));
-    if (token.string.charAt(0) == "." || prevToken.string == "."){
-      //Suggest colunm names
-      if (prevToken.string == ".") {
-        var prevToken = editor.getTokenAt(Pos(cur.line, token.start - 1));
-      }
-      var table = prevToken.string;
-      //Check if backtick is used in table name. If yes, use it for columns too.
-      var useBacktickTable = false;
-      if (table.match(/`/g)) {
-        useBacktickTable = true;
-        table = table.replace(/`/g, "");
-      }
-      //Check if table is available. If not, find table by Alias
-      if (!tables.hasOwnProperty(table))
-        table = findTableByAlias(table, editor);
-      var columns = tables[table];
-      if (!columns) return;
-
-      if (useBacktick) {
-        addMatches(result, string, columns, function(w) {return "`" + w + "`";});
-      }
-      else if(useBacktickTable) {
-        addMatches(result, string, columns, function(w) {return ".`" + w + "`";});
-      }
-      else {
-        addMatches(result, string, columns, function(w) {return "." + w;});
-      }
-    }
-    else {
-      //Suggest table names or colums in defaultTable
-      while (token.start && string.charAt(0) == ".") {
-        token = editor.getTokenAt(Pos(cur.line, token.start - 1));
-        string = token.string + string;
-      }
-      if (useBacktick) {
-        addMatches(result, string, tables, function(w) {return "`" + w + "`";});
-        addMatches(result, string, defaultTable, function(w) {return "`" + w + "`";});
-      }
-      else {
-        addMatches(result, string, tables, function(w) {return w;});
-        addMatches(result, string, defaultTable, function(w) {return w;});
-      }
-    }
->>>>>>> origin/master
   }
 
   function eachWord(lineText, f) {
@@ -253,19 +195,10 @@
       var lineText = query[i];
       eachWord(lineText, function(word) {
         var wordUpperCase = word.toUpperCase();
-<<<<<<< HEAD
         if (wordUpperCase === aliasUpperCase && getItem(tables, previousWord))
           table = previousWord;
         if (wordUpperCase !== CONS.ALIAS_KEYWORD)
           previousWord = word;
-=======
-        if (wordUpperCase === aliasUpperCase && tables.hasOwnProperty(previousWord)) {
-            table = previousWord;
-        }
-        if (wordUpperCase !== CONS.ALIAS_KEYWORD) {
-          previousWord = word;
-        }
->>>>>>> origin/master
       });
       if (table) break;
     }
@@ -275,7 +208,6 @@
   CodeMirror.registerHelper("hint", "sql", function(editor, options) {
     tables = (options && options.tables) || {};
     var defaultTableName = options && options.defaultTable;
-<<<<<<< HEAD
     defaultTable = defaultTableName && getItem(tables, defaultTableName);
     keywords = keywords || getKeywords(editor);
 
@@ -295,14 +227,6 @@
       token.string = token.string.slice(0, cur.ch - token.start);
     }
 
-=======
-    defaultTable = (defaultTableName && tables[defaultTableName] || []);
-    keywords = keywords || getKeywords(editor);
-
-    var cur = editor.getCursor();
-    var result = [];
-    var token = editor.getTokenAt(cur), start, end, search;
->>>>>>> origin/master
     if (token.string.match(/^[.`\w@]\w*$/)) {
       search = token.string;
       start = token.start;
@@ -312,11 +236,7 @@
       search = "";
     }
     if (search.charAt(0) == "." || search.charAt(0) == "`") {
-<<<<<<< HEAD
       start = nameCompletion(cur, token, result, editor);
-=======
-      nameCompletion(result, editor);
->>>>>>> origin/master
     } else {
       addMatches(result, search, tables, function(w) {return w;});
       addMatches(result, search, defaultTable, function(w) {return w;});

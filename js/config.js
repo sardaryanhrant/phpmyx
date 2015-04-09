@@ -697,11 +697,7 @@ AJAX.registerOnload('config.js', function () {
             savePrefsToLocalStorage($form);
         } else if ($form.attr('name') == 'prefs_import' && $('#import_local_storage')[0].checked) {
             // set 'json' input and submit form
-<<<<<<< HEAD
             $form.find('input[name=json]').val(window.localStorage.config);
-=======
-            form.find('input[name=json]').val(window.localStorage.config);
->>>>>>> origin/master
         }
     });
 
@@ -776,13 +772,8 @@ function updatePrefsDate()
 function offerPrefsAutoimport()
 {
     var has_config = (window.localStorage || false) && (window.localStorage.config || false);
-<<<<<<< HEAD
     var $cnt = $('#prefs_autoload');
     if (!$cnt.length || !has_config) {
-=======
-    var cnt = $('#prefs_autoload');
-    if (!cnt.length || !has_config) {
->>>>>>> origin/master
         return;
     }
     $cnt.find('a').click(function (e) {
@@ -796,13 +787,8 @@ function offerPrefsAutoimport()
             });
             return;
         }
-<<<<<<< HEAD
         $cnt.find('input[name=json]').val(window.localStorage.config);
         $cnt.find('form').submit();
-=======
-        cnt.find('input[name=json]').val(window.localStorage.config);
-        cnt.find('form').submit();
->>>>>>> origin/master
     });
     $cnt.show();
 }

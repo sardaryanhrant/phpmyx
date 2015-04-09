@@ -50,10 +50,7 @@ $js_messages['strDropUserGroupWarning'] = __('Do you really want to delete user 
 $js_messages['strConfirmDeleteQBESearch'] = __('Do you really want to delete the search "%s"?');
 $js_messages['strConfirmNavigation'] = __('You have unsaved changes; are you sure you want to leave this page?');
 $js_messages['strDropUserWarning'] = __('Do you really want to revoke the selected user(s) ?');
-<<<<<<< HEAD
 $js_messages['strDeleteCentralColumnWarning'] = __('Do you really want to delete this central column?');
-=======
->>>>>>> origin/master
 
 /* For modal dialog buttons */
 $js_messages['strSaveAndClose'] = __('Save & Close');
@@ -309,10 +306,7 @@ $js_messages['strShowQueryBox'] = __('Show query box');
 $js_messages['strEdit'] = __('Edit');
 $js_messages['strNotValidRowNumber'] = __('%d is not valid row number.');
 $js_messages['strBrowseForeignValues'] = __('Browse foreign values');
-<<<<<<< HEAD
 $js_messages['strNoAutoSavedQuery'] = __('No auto-saved query');
-=======
->>>>>>> origin/master
 
 /* For Central list of columns */
 $js_messages['pickColumn'] = __('Pick');
@@ -491,7 +485,6 @@ $js_messages['strHidePanel'] = __('Hide Panel');
 $js_messages['strUnhideNavItem'] = __('Show hidden navigation tree items.');
 $js_messages['linkWithMain'] = __('Link with main panel');
 $js_messages['unlinkWithMain'] = __('Unlink from main panel');
-<<<<<<< HEAD
 $js_messages['strHoverDbFastFilter'] = __('To filter all databases on server, press Enter after a search term');
 $js_messages['strHoverFastFilter'] = __('To filter all %s in database, press Enter after a search term');
 $js_messages['strTables'] = __('tables');
@@ -499,9 +492,6 @@ $js_messages['strViews'] = __('views');
 $js_messages['strProcedures'] = __('procedures');
 $js_messages['strEvents'] = __('events');
 $js_messages['strFunctions'] = __('functions');
-=======
-$js_messages['strHoverFastFilter'] = __('To search all databases on server, press Enter after a search term');
->>>>>>> origin/master
 
 /* microhistory */
 $js_messages['strInvalidPage'] = __('The requested page was not found in the history, it may have expired.');

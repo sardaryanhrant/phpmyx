@@ -165,10 +165,7 @@ $forms['Sql_queries']['Sql_box'] = array('SQLQuery' => array(
     'ShowAsPHP',
     'Refresh'));
 $forms['Navi_panel']['Navi_panel'] = array(
-<<<<<<< HEAD
     'ShowDatabasesNavigationAsTree',
-=======
->>>>>>> origin/master
     'NavigationLinkWithMainPanel',
     'NavigationDisplayLogo',
     'NavigationLogoLink',
@@ -177,11 +174,7 @@ $forms['Navi_panel']['Navi_panel'] = array(
     'FirstLevelNavigationItems',
     'MaxNavigationItems',
     'NavigationTreeEnableGrouping',
-<<<<<<< HEAD
     'NavigationTreeEnableExpansion',
-=======
-    'NavigationTreeDisableDatabaseExpansion',
->>>>>>> origin/master
     'NavigationTreeDisplayItemFilterMinimum',
     'NumRecentTables',
     'NumFavoriteTables'
@@ -222,13 +215,8 @@ $forms['Main_panel']['Browse'] = array(
     'LimitChars',
     'RowActionLinks',
     'TablePrimaryKeyOrder',
-<<<<<<< HEAD
     'RememberSorting',
     'RelationalDisplay');
-=======
-    'DefaultDisplay',
-    'RememberSorting');
->>>>>>> origin/master
 $forms['Main_panel']['Edit'] = array(
     'ProtectBinary',
     'ShowFunctionFields',

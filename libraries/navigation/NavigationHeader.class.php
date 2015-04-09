@@ -176,7 +176,6 @@ class PMA_NavigationHeader
             false,
             'documentation'
         );
-<<<<<<< HEAD
         $retval .= PMA_Util::getNavigationLink(
             PMA_Util::getMySQLDocuURL('', ''),
             $showText,
@@ -187,22 +186,6 @@ class PMA_NavigationHeader
             false,
             'mysql_doc'
         );
-=======
-        if ($showIcon) {
-            $retval .= PMA_Util::showMySQLDocu('', true);
-        }
-        if ($showText) {
-            // PMA_showMySQLDocu always spits out an icon,
-            // we just replace it with some perl regexp.
-            $link = preg_replace(
-                '/<img[^>]+>/i',
-                __('Documentation'),
-                PMA_Util::showMySQLDocu('', true)
-            );
-            $retval .= $link;
-            $retval .= '<br />';
-        }
->>>>>>> origin/master
         $retval .= PMA_Util::getNavigationLink(
             '#',
             $showText,

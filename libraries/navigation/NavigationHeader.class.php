@@ -176,6 +176,18 @@ class PMA_NavigationHeader
             false,
             'documentation'
         );
+<<<<<<< HEAD
+        $retval .= PMA_Util::getNavigationLink(
+            PMA_Util::getMySQLDocuURL('', ''),
+            $showText,
+            __('Documentation'),
+            $showIcon,
+            'b_sqlhelp.png',
+            '',
+            false,
+            'mysql_doc'
+        );
+=======
         if ($showIcon) {
             $retval .= PMA_Util::showMySQLDocu('', true);
         }
@@ -190,6 +202,7 @@ class PMA_NavigationHeader
             $retval .= $link;
             $retval .= '<br />';
         }
+>>>>>>> origin/master
         $retval .= PMA_Util::getNavigationLink(
             '#',
             $showText,

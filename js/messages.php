@@ -37,7 +37,11 @@ $js_messages['strDoYouReally'] = __('Do you really want to execute "%s"?');
 $js_messages['strDropDatabaseStrongWarning'] = __('You are about to DESTROY a complete database!');
 $js_messages['strDropTableStrongWarning'] = __('You are about to DESTROY a complete table!');
 $js_messages['strTruncateTableStrongWarning'] = __('You are about to TRUNCATE a complete table!');
-$js_messages['strDeleteTrackingData'] = __('Delete tracking data for this table');
+$js_messages['strDeleteTrackingData'] = __('Delete tracking data for this table?');
+$js_messages['strDeleteTrackingDataMultiple'] = __('Delete tracking data for these tables?');
+$js_messages['strDeleteTrackingVersion'] = __('Delete tracking data for this version?');
+$js_messages['strDeleteTrackingVersionMultiple'] = __('Delete tracking data for these versions?');
+$js_messages['strDeletingTrackingEntry'] = __('Delete entry from tracking report?');
 $js_messages['strDeletingTrackingData'] = __('Deleting tracking data');
 $js_messages['strDroppingPrimaryKeyIndex'] = __('Dropping Primary Key/Index');
 $js_messages['strDroppingForeignKey'] = __('Dropping Foreign key.');
@@ -46,6 +50,10 @@ $js_messages['strDropUserGroupWarning'] = __('Do you really want to delete user 
 $js_messages['strConfirmDeleteQBESearch'] = __('Do you really want to delete the search "%s"?');
 $js_messages['strConfirmNavigation'] = __('You have unsaved changes; are you sure you want to leave this page?');
 $js_messages['strDropUserWarning'] = __('Do you really want to revoke the selected user(s) ?');
+<<<<<<< HEAD
+$js_messages['strDeleteCentralColumnWarning'] = __('Do you really want to delete this central column?');
+=======
+>>>>>>> origin/master
 
 /* For modal dialog buttons */
 $js_messages['strSaveAndClose'] = __('Save & Close');
@@ -134,7 +142,7 @@ $js_messages['strGiB'] = __('GiB');
 $js_messages['strTiB'] = __('TiB');
 $js_messages['strPiB'] = __('PiB');
 $js_messages['strEiB'] = __('EiB');
-$js_messages['strTables'] = __('%d table(s)');
+$js_messages['strNTables'] = __('%d table(s)');
 
 /* l10n: Questions is the name of a MySQL Status variable */
 $js_messages['strQuestions'] = __('Questions');
@@ -242,6 +250,8 @@ $js_messages['strJustification'] = __('Justification');
 $js_messages['strFormula'] = __('Used variable / formula');
 $js_messages['strTest'] = __('Test');
 
+/* For query editor */
+$js_messages['strFormatting'] = __('Formatting SQL...');
 
 /* For inline query editing */
 $js_messages['strGo'] = __('Go');
@@ -251,6 +261,7 @@ $js_messages['strCancel'] = __('Cancel');
 $js_messages['strLoading'] = __('Loading…');
 $js_messages['strAbortedRequest'] = __('Request Aborted!!');
 $js_messages['strProcessingRequest'] = __('Processing Request');
+$js_messages['strRequestFailed'] = __('Request Failed!!');
 $js_messages['strErrorProcessingRequest'] = __('Error in Processing Request');
 $js_messages['strErrorCode'] = __('Error code: %s');
 $js_messages['strErrorText'] = __('Error text: %s');
@@ -298,6 +309,10 @@ $js_messages['strShowQueryBox'] = __('Show query box');
 $js_messages['strEdit'] = __('Edit');
 $js_messages['strNotValidRowNumber'] = __('%d is not valid row number.');
 $js_messages['strBrowseForeignValues'] = __('Browse foreign values');
+<<<<<<< HEAD
+$js_messages['strNoAutoSavedQuery'] = __('No auto-saved query');
+=======
+>>>>>>> origin/master
 
 /* For Central list of columns */
 $js_messages['pickColumn'] = __('Pick');
@@ -391,6 +406,12 @@ $js_messages['strYes'] = __('Yes');
 $js_messages['strCopyEncryptionKey'] = __('Do you want to copy encryption key?');
 $js_messages['strEncryptionKey'] = __('Encryption key');
 
+/* For Lock symbol Tooltip */
+$js_messages['strLockToolTip'] = __(
+    'Indicates that you have made changes to this page;'
+    . ' you will be prompted for confirmation before abandoning changes'
+);
+
 /* Designer (js/pmd/move.js) */
 $js_messages['strSelectReferencedKey'] = __('Select referenced key');
 $js_messages['strSelectForeignKey'] = __('Select Foreign Key');
@@ -455,7 +476,6 @@ default:
 $js_messages['strGoToLink'] = __('Go to link:');
 $js_messages['strColNameCopyTitle'] = __('Copy column name.');
 $js_messages['strColNameCopyText'] = __('Right-click the column name to copy it to your clipboard.');
-$js_messages['strShowDataRowLink'] = __('Show data row(s).');
 
 /* password generation */
 $js_messages['strGeneratePassword'] = __('Generate password');
@@ -471,7 +491,17 @@ $js_messages['strHidePanel'] = __('Hide Panel');
 $js_messages['strUnhideNavItem'] = __('Show hidden navigation tree items.');
 $js_messages['linkWithMain'] = __('Link with main panel');
 $js_messages['unlinkWithMain'] = __('Unlink from main panel');
+<<<<<<< HEAD
+$js_messages['strHoverDbFastFilter'] = __('To filter all databases on server, press Enter after a search term');
+$js_messages['strHoverFastFilter'] = __('To filter all %s in database, press Enter after a search term');
+$js_messages['strTables'] = __('tables');
+$js_messages['strViews'] = __('views');
+$js_messages['strProcedures'] = __('procedures');
+$js_messages['strEvents'] = __('events');
+$js_messages['strFunctions'] = __('functions');
+=======
 $js_messages['strHoverFastFilter'] = __('To search all databases on server, press Enter after a search term');
+>>>>>>> origin/master
 
 /* microhistory */
 $js_messages['strInvalidPage'] = __('The requested page was not found in the history, it may have expired.');

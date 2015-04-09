@@ -83,6 +83,8 @@ class Table_Stats_Eps extends TableStats
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Displays an error on missing coordinates
      *
      * @return void
@@ -100,6 +102,7 @@ class Table_Stats_Eps extends TableStats
     }
 
     /**
+>>>>>>> origin/master
      * Sets the width of the table
      *
      * @param string  $font     The font name

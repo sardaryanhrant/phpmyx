@@ -21,6 +21,8 @@ require_once 'libraries/bookmark.lib.php';
 class PMA_Console
 {
     /**
+<<<<<<< HEAD
+=======
      * PMA_Scripts instance
      *
      * @access private
@@ -28,6 +30,7 @@ class PMA_Console
      */
     private $_scripts;
     /**
+>>>>>>> origin/master
      * Whether to display anything
      *
      * @access private
@@ -41,7 +44,10 @@ class PMA_Console
     public function __construct()
     {
         $this->_isEnabled = true;
+<<<<<<< HEAD
+=======
         $this->_scripts   = new PMA_Scripts();
+>>>>>>> origin/master
     }
 
     /**
@@ -148,6 +154,19 @@ class PMA_Console
     }
 
     /**
+<<<<<<< HEAD
+     * Returns the list of JS scripts required by console
+     *
+     * @return array list of scripts
+     */
+    public function getScripts()
+    {
+        return array('console.js');
+    }
+
+    /**
+=======
+>>>>>>> origin/master
      * Renders the console
      *
      * @access public
@@ -158,6 +177,8 @@ class PMA_Console
         $output  = '';
         if ((! $this->_isAjax) && $this->_isEnabled) {
             $cfgBookmark = PMA_Bookmark_getParams();
+<<<<<<< HEAD
+=======
             if ($GLOBALS['cfg']['CodemirrorEnable']) {
                 $this->_scripts->addFile('codemirror/lib/codemirror.js');
                 $this->_scripts->addFile('codemirror/mode/sql/sql.js');
@@ -167,6 +188,7 @@ class PMA_Console
             }
             $this->_scripts->addFile('console.js');
             $output .= $this->_scripts->getDisplay();
+>>>>>>> origin/master
             $output .= '<div id="pma_console_container"><div id="pma_console">';
 
             // The templates, use sprintf() to output them

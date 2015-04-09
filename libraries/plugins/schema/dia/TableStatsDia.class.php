@@ -70,6 +70,8 @@ class Table_Stats_Dia extends TableStats
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Displays an error on missing coordinates
      *
      * @return void
@@ -88,13 +90,18 @@ class Table_Stats_Dia extends TableStats
 
 
     /**
+>>>>>>> origin/master
      * Do draw the table
      *
      * Tables are generated using object type Database - Table
      * primary fields are underlined in tables. Dia object
      * is used to generate the XML of Dia Document. Database Table
      * Object and their attributes are involved in the combination
+<<<<<<< HEAD
+     * of displaying Database - Table on Dia Document.
+=======
      * of displaing Database - Table on Dia Document.
+>>>>>>> origin/master
      *
      * @param boolean $showColor Whether to show color for tables text or not
      * if showColor is true then an array of $listOfColors will be used to choose

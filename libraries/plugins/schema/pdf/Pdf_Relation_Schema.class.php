@@ -584,7 +584,11 @@ class PMA_Pdf_Relation_Schema extends PMA_Export_Relation_Schema
                             $one_table,
                             $one_field,
                             $one_key['ref_table_name'],
+<<<<<<< HEAD:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
+                            $one_key['ref_index_list'][$index]
+=======
                             $rel['foreign_field'][$index]
+>>>>>>> origin/master:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
                         );
                     }
                 }
@@ -924,6 +928,8 @@ class PMA_Pdf_Relation_Schema extends PMA_Export_Relation_Schema
                 : '';
 
             /**
+<<<<<<< HEAD:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
+=======
              * Gets table keys and retains them
              */
             $indexes = $GLOBALS['dbi']->getTableIndexes($GLOBALS['db'], $table);
@@ -931,6 +937,7 @@ class PMA_Pdf_Relation_Schema extends PMA_Export_Relation_Schema
                 = PMA_Util::processIndexData($indexes);
 
             /**
+>>>>>>> origin/master:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
              * Gets fields properties
              */
             $columns = $GLOBALS['dbi']->getColumns($GLOBALS['db'], $table);
@@ -1025,19 +1032,42 @@ class PMA_Pdf_Relation_Schema extends PMA_Export_Relation_Schema
                 $pdf->Bookmark($field_name, 1, -1);
                 $pdf->SetLink($pdf->PMA_links['doc'][$table][$field_name], -1);
                 $foreigner = PMA_searchColumnInForeigners($res_rel, $field_name);
+<<<<<<< HEAD:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
+
+                $linksTo = '';
+                if ($foreigner) {
+                    $linksTo = '-> ';
+                    if ($foreigner['foreign_db'] != $GLOBALS['db']) {
+                        $linksTo .= $foreigner['foreign_db'] . '.';
+                    }
+                    $linksTo .= $foreigner['foreign_table']
+                        . '.' . $foreigner['foreign_field'];
+
+                    if (isset($foreigner['on_update'])) { // not set for internal
+                        $linksTo .= "\n" . 'ON UPDATE ' . $foreigner['on_update'];
+                        $linksTo .= "\n" . 'ON DELETE ' . $foreigner['on_delete'];
+                    }
+                }
+
+=======
+>>>>>>> origin/master:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
                 $pdf_row = array(
                     $field_name,
                     $type,
                     $attribute,
-                    ($row['Null'] == '' || $row['Null'] == 'NO')
-                    ? __('No')
-                    : __('Yes'),
+                    (($row['Null'] == '' || $row['Null'] == 'NO')
+                        ? __('No')
+                        : __('Yes')),
                     (isset($row['Default']) ? $row['Default'] : ''),
                     $row['Extra'],
+<<<<<<< HEAD:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
+                    $linksTo,
+=======
                     ($foreigner
                         ? $foreigner['foreign_table'] . ' -> '
                             . $foreigner['foreign_field']
                         : ''),
+>>>>>>> origin/master:libraries/plugins/schema/pdf/Pdf_Relation_Schema.class.php
                     (isset($comments[$field_name])
                         ? $comments[$field_name]
                         : ''),

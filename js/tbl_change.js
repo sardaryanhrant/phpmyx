@@ -163,6 +163,19 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
     var new_salt_box = "<br><input type=text name=salt[multi_edit][" + multi_edit + "][" + urlField + "]" +
         " id=salt_" + target.id + " placeholder='" + PMA_messages.strEncryptionKey + "'>";
 
+<<<<<<< HEAD
+    //If encrypting or decrypting functions that take salt as input is selected append the new textbox for salt
+    if (target.value === 'AES_ENCRYPT' ||
+            target.value === 'AES_DECRYPT' ||
+            target.value === 'DES_ENCRYPT' ||
+            target.value === 'DES_DECRYPT' ||
+            target.value === 'ENCRYPT') {
+        if (!($("#salt_" + target.id).length)) {
+            $this_input.after(new_salt_box);
+        }
+    } else {
+        //Remove the textbox for salt
+=======
     //If AES_ENCRYPT is Selected then append the new textbox for salt
     if (target.value === 'AES_DECRYPT' || target.value === 'AES_ENCRYPT') {
         if (!($("#salt_" + target.id).length)) {
@@ -181,8 +194,24 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
     } else {
         $('#' + target.id).removeClass('invalid_value');
         //The value of the select is no longer AES_ENCRYPT, remove the textbox for salt
+>>>>>>> origin/master
         $('#salt_' + target.id).prev('br').remove();
         $("#salt_" + target.id).remove();
+    }
+
+    if (target.value === 'AES_DECRYPT' || target.value === 'AES_ENCRYPT') {
+        if ($this_input.data('type') !== 'HEX') {
+            $('#' + target.id).addClass('invalid_value');
+            return false;
+        }
+    } else if(target.value === 'MD5' &&
+        typeof $this_input.data('maxlength') !== 'undefined' &&
+        $this_input.data('maxlength') < 32
+    ) {
+        $('#' + target.id).addClass('invalid_value');
+        return false;
+    } else {
+        $('#' + target.id).removeClass('invalid_value');
     }
 
     // Unchecks the corresponding "NULL" control
@@ -242,6 +271,7 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
             var min = $this_input.attr('min');
             var max = $this_input.attr('max');
             var value = $this_input.val();
+<<<<<<< HEAD
             $this_input.removeClass("invalid_value");
             if (isNaN(value) || BigInts.compare(value, min) < 0 ||
                 BigInts.compare(value, max) > 0
@@ -254,6 +284,20 @@ function verificationsAfterFieldChange(urlField, multi_edit, theType)
             var len = $this_input.val().length;
             var maxlen = $this_input.data('maxlength');
             $this_input.removeClass("invalid_value");
+=======
+            $this_input.removeClass("invalid_value");
+            if (isNaN(value) || BigInts.compare(value, min) < 0 ||
+                BigInts.compare(value, max) > 0
+            ) {
+                $this_input.addClass("invalid_value");
+                return false;
+            }
+            //validation for CHAR types
+        } else if ($this_input.data('type') === 'CHAR') {
+            var len = $this_input.val().length;
+            var maxlen = $this_input.data('maxlength');
+            $this_input.removeClass("invalid_value");
+>>>>>>> origin/master
             if (typeof maxlen !== 'undefined' && len > maxlen) {
                 $this_input.addClass("invalid_value");
                 return false;
@@ -297,7 +341,15 @@ function applyFunctionToAllRows(currId, functionName, copySalt, salt, targetRows
         }).attr("selected","selected");
 
         // Handle salt field.
+<<<<<<< HEAD
+        if (functionName === 'AES_ENCRYPT' ||
+                functionName === 'AES_DECRYPT' ||
+                functionName === 'DES_ENCRYPT' ||
+                functionName === 'DES_DECRYPT' ||
+                functionName === 'ENCRYPT') {
+=======
         if (functionName === 'AES_ENCRYPT' || functionName === 'AES_DECRYPT') {
+>>>>>>> origin/master
             if ($("#salt_" + targetSelectList.attr("id")).length === 0) {
                 // Get hash value.
                 var hashed_value = targetSelectList.attr("name").match(/\[multi\_edit\]\[\d\]\[(.*)\]/);
@@ -308,7 +360,11 @@ function applyFunctionToAllRows(currId, functionName, copySalt, salt, targetRows
             }
 
             if (copySalt) {
+<<<<<<< HEAD
+                $("#salt_" + targetSelectList.attr("id")).val(salt);
+=======
                 $("#salt_" + targetSelectList.attr("id")).attr("value", salt);
+>>>>>>> origin/master
             }
         } else {
             var id = targetSelectList.attr("id");
@@ -324,12 +380,12 @@ function applyFunctionToAllRows(currId, functionName, copySalt, salt, targetRows
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('tbl_change.js', function () {
-    $('span.open_gis_editor').die('click');
-    $("input[name='gis_data[save]']").die('click');
-    $('input.checkbox_null').die('click');
+    $(document).off('click', 'span.open_gis_editor');
+    $(document).off('click', "input[name='gis_data[save]']");
+    $(document).off('click', 'input.checkbox_null');
     $('select[name="submit_type"]').unbind('change');
-    $("#insert_rows").die('change');
-    $("select[name*='funcs']").die('click');
+    $(document).off('change', "#insert_rows");
+    $(document).off('click', "select[name*='funcs']");
 });
 
 /**
@@ -342,7 +398,7 @@ AJAX.registerTeardown('tbl_change.js', function () {
 AJAX.registerOnload('tbl_change.js', function () {
     $.datepicker.initialized = false;
 
-    $('span.open_gis_editor').live('click', function (event) {
+    $(document).on('click', 'span.open_gis_editor', function (event) {
         event.preventDefault();
 
         var $span = $(this);
@@ -368,7 +424,7 @@ AJAX.registerOnload('tbl_change.js', function () {
     /**
      * Uncheck the null checkbox as geometry data is placed on the input field
      */
-    $("input[name='gis_data[save]']").live('click', function (event) {
+    $(document).on('click', "input[name='gis_data[save]']", function (event) {
         var input_name = $('form#gis_data_editor_form').find("input[name='input_name']").val();
         var $null_checkbox = $("input[name='" + input_name + "']").parents('tr').find('.checkbox_null');
         $null_checkbox.prop('checked', false);
@@ -380,7 +436,7 @@ AJAX.registerOnload('tbl_change.js', function () {
      * "Continue insertion" are handled in the "Continue insertion" code
      *
      */
-    $('input.checkbox_null').live('click', function (e) {
+    $(document).on('click', 'input.checkbox_null', function (e) {
         nullify(
             // use hidden fields populated by tbl_change.php
             $(this).siblings('.nullify_code').val(),
@@ -424,7 +480,7 @@ AJAX.registerOnload('tbl_change.js', function () {
     /**
      * Continue Insertion form
      */
-    $("#insert_rows").live('change', function (event) {
+    $(document).on('change', "#insert_rows", function (event) {
         event.preventDefault();
         /**
          * @var columnCount   Number of number of columns table has.
@@ -621,14 +677,14 @@ AJAX.registerOnload('tbl_change.js', function () {
             while (curr_rows > target_rows) {
                 $("input[id^=insert_ignore]:last")
                 .nextUntil("fieldset")
-                .andSelf()
+                .addBack()
                 .remove();
                 curr_rows--;
             }
         }
+        // Add all the required datepickers back
+        addDateTimePicker();
     });
-    // Add all the required datepickers back
-    addDateTimePicker();
 
     /**
      * @var $function_option_dialog object holds dialog for selected function options.
@@ -641,7 +697,7 @@ AJAX.registerOnload('tbl_change.js', function () {
         PMA_messages.strFunctionHint
     );
 
-    $("select[name*='funcs']").live('click', function (event) {
+    $(document).on('click', "select[name*='funcs']", function (event) {
         if (! event.shiftKey) {
             return false;
         }
@@ -655,7 +711,11 @@ AJAX.registerOnload('tbl_change.js', function () {
         var salt;
         var copySalt = false;
 
-        if (functionName === 'AES_ENCRYPT' || functionName === 'AES_DECRYPT') {
+        if (functionName === 'AES_ENCRYPT' ||
+                functionName === 'AES_DECRYPT' ||
+                functionName === 'DES_ENCRYPT' ||
+                functionName === 'DES_DECRYPT' ||
+                functionName === 'ENCRYPT') {
             // Dialog title.
             var title = functionName;
             // Dialog buttons functions.

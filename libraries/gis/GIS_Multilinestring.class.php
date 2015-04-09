@@ -373,7 +373,11 @@ class PMA_GIS_Multilinestring extends PMA_GIS_Geometry
             17,
             /*overload*/mb_strlen($wkt) - 19
         );
+<<<<<<< HEAD
+        // Separate each linestring
+=======
         // Seperate each linestring
+>>>>>>> origin/master
         $linestirngs = explode("),(", $multilinestirng);
         $params[$index]['MULTILINESTRING']['no_of_lines'] = count($linestirngs);
 

@@ -58,7 +58,8 @@ $forms['Servers']['Server_config'] = array('Servers' => array(1 => array(
     'AllowNoPassword',
     'DisableIS',
     'AllowDeny/order',
-    'AllowDeny/rules')));
+    'AllowDeny/rules',
+    'SessionTimeZone')));
 $forms['Servers']['Server_pmadb'] = array('Servers' => array(1 => array(
     'pmadb' => 'phpmyadmin',
     'controlhost',
@@ -107,6 +108,7 @@ $forms['Features']['Security'] = array(
     'TrustedProxies',
     'AllowUserDropDatabase',
     'AllowArbitraryServer',
+    'ArbitraryServerRegexp',
     'LoginCookieRecall',
     'LoginCookieValidity',
     'LoginCookieStore',
@@ -121,7 +123,8 @@ $forms['Features']['Page_titles'] = array(
 $forms['Features']['Warnings'] = array(
     'ServerLibraryDifference_DisableWarning',
     'PmaNoRelation_DisableWarning',
-    'SuhosinDisableWarning');
+    'SuhosinDisableWarning',
+    'LoginCookieValidityDisableWarning');
 $forms['Features']['Developer'] = array(
     'UserprefsDeveloperTab',
     'DBG/sql');
@@ -162,6 +165,10 @@ $forms['Sql_queries']['Sql_box'] = array('SQLQuery' => array(
     'ShowAsPHP',
     'Refresh'));
 $forms['Navi_panel']['Navi_panel'] = array(
+<<<<<<< HEAD
+    'ShowDatabasesNavigationAsTree',
+=======
+>>>>>>> origin/master
     'NavigationLinkWithMainPanel',
     'NavigationDisplayLogo',
     'NavigationLogoLink',
@@ -170,7 +177,11 @@ $forms['Navi_panel']['Navi_panel'] = array(
     'FirstLevelNavigationItems',
     'MaxNavigationItems',
     'NavigationTreeEnableGrouping',
+<<<<<<< HEAD
+    'NavigationTreeEnableExpansion',
+=======
     'NavigationTreeDisableDatabaseExpansion',
+>>>>>>> origin/master
     'NavigationTreeDisplayItemFilterMinimum',
     'NumRecentTables',
     'NumFavoriteTables'
@@ -182,6 +193,7 @@ $forms['Navi_panel']['Navi_databases'] = array(
     'NavigationTreeDbSeparator');
 $forms['Navi_panel']['Navi_tables'] = array(
     'NavigationTreeDefaultTabTable',
+    'NavigationTreeDefaultTabTable2',
     'NavigationTreeTableSeparator',
     'NavigationTreeTableLevel',
 );
@@ -206,13 +218,17 @@ $forms['Main_panel']['Browse'] = array(
     'BrowseMarkerEnable',
     'GridEditing',
     'SaveCellsAtOnce',
-    'ShowDisplayDirection',
     'RepeatCells',
     'LimitChars',
     'RowActionLinks',
     'TablePrimaryKeyOrder',
+<<<<<<< HEAD
+    'RememberSorting',
+    'RelationalDisplay');
+=======
     'DefaultDisplay',
     'RememberSorting');
+>>>>>>> origin/master
 $forms['Main_panel']['Edit'] = array(
     'ProtectBinary',
     'ShowFunctionFields',

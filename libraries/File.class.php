@@ -617,9 +617,12 @@ class PMA_File
                 if (! empty($result['error'])) {
                     $this->_error_message = PMA_Message::rawError($result['error']);
                     return false;
+<<<<<<< HEAD
+=======
                 } else {
                     /* TODO: This is not used anywhere */
                     $this->content_uncompressed = $result['data'];
+>>>>>>> origin/master
                 }
                 unset($result);
             } else {

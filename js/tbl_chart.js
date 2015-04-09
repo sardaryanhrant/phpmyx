@@ -279,7 +279,7 @@ AJAX.registerOnload('tbl_chart.js', function () {
         if (type == 'bar' || type == 'column' || type == 'area') {
             $('span.barStacked').show();
         } else {
-            $('input[name="barStacked"]').attr('checked', false);
+            $('input[name="barStacked"]').prop('checked', false);
             $.extend(true, currentSettings, {stackSeries : false});
             $('span.barStacked').hide();
         }
@@ -292,6 +292,17 @@ AJAX.registerOnload('tbl_chart.js', function () {
         var $valueColumn  = $('select[name="chartValueColumn"]');
         var $chartSeries  = $('select[name="chartSeries"]');
         if ($(this).is(':checked')) {
+<<<<<<< HEAD
+            $seriesColumn.prop('disabled', false);
+            $valueColumn.prop('disabled', false);
+            $chartSeries.prop('disabled', true);
+            currentSettings.seriesColumn = parseInt($seriesColumn.val(), 10);
+            currentSettings.valueColumn = parseInt($valueColumn.val(), 10);
+        } else {
+            $seriesColumn.prop('disabled', true);
+            $valueColumn.prop('disabled', true);
+            $chartSeries.prop('disabled', false);
+=======
             $seriesColumn.attr('disabled', false);
             $valueColumn.attr('disabled', false);
             $chartSeries.attr('disabled', true);
@@ -301,6 +312,7 @@ AJAX.registerOnload('tbl_chart.js', function () {
             $seriesColumn.attr('disabled', true);
             $valueColumn.attr('disabled', true);
             $chartSeries.attr('disabled', false);
+>>>>>>> origin/master
             currentSettings.seriesColumn = null;
             currentSettings.valueColumn = null;
         }
@@ -394,7 +406,7 @@ AJAX.registerOnload('tbl_chart.js', function () {
  * Ajax Event handler for 'Go' button click
  *
  */
-$("#tblchartform").live('submit', function (event) {
+$(document).on('submit', "#tblchartform", function (event) {
     if (!checkFormElementInRange(this, 'session_max_rows', PMA_messages.strNotValidRowNumber, 1) ||
         !checkFormElementInRange(this, 'pos', PMA_messages.strNotValidRowNumber, 0 - 1)
     ) {

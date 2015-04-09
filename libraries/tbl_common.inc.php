@@ -45,6 +45,8 @@ $err_url   = $cfg['DefaultTabTable'] . PMA_URL_getCommon($url_params);
  */
 require_once './libraries/db_table_exists.lib.php';
 
+<<<<<<< HEAD
+=======
 if (PMA_Tracker::isActive()
     && PMA_Tracker::isTracked($GLOBALS["db"], $GLOBALS["table"])
     && ! isset($_REQUEST['submit_deactivate_now'])
@@ -62,4 +64,5 @@ if (PMA_Tracker::isActive()
     PMA_Response::getInstance()->addHTML($msg->getDisplay());
 }
 
+>>>>>>> origin/master
 ?>

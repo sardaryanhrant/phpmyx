@@ -50,7 +50,7 @@ class PMA_GIS_Multipolygon extends PMA_GIS_Geometry
      *
      * @param string $spatial spatial data of a row
      *
-     * @return array an array containing the min, max values for x and y cordinates
+     * @return array an array containing the min, max values for x and y coordinates
      * @access public
      */
     public function scaleRow($spatial)
@@ -253,11 +253,15 @@ class PMA_GIS_Multipolygon extends PMA_GIS_Geometry
         foreach ($polygons as $polygon) {
             $row .= '<path d="';
 
+<<<<<<< HEAD
+            // If the polygon doesn't have an inner polygon
+=======
             // If the polygon doesnt have an inner polygon
+>>>>>>> origin/master
             if (/*overload*/mb_strpos($polygon, "),(") === false) {
                 $row .= $this->_drawPath($polygon, $scale_data);
             } else {
-                // Seperate outer and inner polygons
+                // Separate outer and inner polygons
                 $parts = explode("),(", $polygon);
                 $outer = $parts[0];
                 $inner = array_slice($parts, 1);
@@ -530,7 +534,11 @@ class PMA_GIS_Multipolygon extends PMA_GIS_Geometry
 
         $k = 0;
         foreach ($polygons as $polygon) {
+<<<<<<< HEAD
+            // If the polygon doesn't have an inner polygon
+=======
             // If the polygon doesnt have an inner polygon
+>>>>>>> origin/master
             if (/*overload*/mb_strpos($polygon, "),(") === false) {
                 $param_row[$k]['no_of_lines'] = 1;
                 $points_arr = $this->extractPoints($polygon, null);

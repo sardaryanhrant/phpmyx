@@ -50,7 +50,7 @@ class PMA_GIS_Point extends PMA_GIS_Geometry
      *
      * @param string $spatial spatial data of a row
      *
-     * @return array an array containing the min, max values for x and y cordinates
+     * @return array an array containing the min, max values for x and y coordinates
      * @access public
      */
     public function scaleRow($spatial)
@@ -248,7 +248,7 @@ class PMA_GIS_Point extends PMA_GIS_Geometry
      *
      * @param array  $gis_data GIS data
      * @param int    $index    Index into the parameter object
-     * @param string $empty    Point deos not adhere to this parameter
+     * @param string $empty    Point does not adhere to this parameter
      *
      * @return string WKT with the set of parameters passed by the GIS editor
      * @access public

@@ -894,9 +894,6 @@ function PMA_analyzeTable(&$table)
         $types[$i] = NONE;
     }
 
-    /* Temp vars */
-    $curr_type = NONE;
-
     /* If the passed array is not of the correct form, do not process it */
     if (!is_array($table)
         || is_array($table[TBL_NAME])
@@ -1487,11 +1484,19 @@ function PMA_getMatchedRows($analyzed_sql_results = array())
 function PMA_getSimulatedUpdateQuery($analyzed_sql_results)
 {
     $where_clause = '';
+<<<<<<< HEAD
+    $extra_where_clause = array();
+=======
     $extra_where_clause = '';
+>>>>>>> origin/master
     $target_cols = array();
 
     $prev_term = '';
     $i = 0;
+<<<<<<< HEAD
+    $in_function = 0;
+=======
+>>>>>>> origin/master
     foreach ($analyzed_sql_results['parsed_sql'] as $key => $term) {
         if (! isset($get_set_expr)
             && preg_match(
@@ -1511,6 +1516,26 @@ function PMA_getSimulatedUpdateQuery($analyzed_sql_results)
             ) {
                 break;
             }
+<<<<<<< HEAD
+            if(!$in_function){
+                if ($term['type'] == 'punct_listsep') {
+                    $extra_where_clause[] = ' OR ';
+                } else if ($term['type'] == 'punct') {
+                    $extra_where_clause[] = ' <> ';
+                } else if($term['type'] == 'alpha_functionName') {
+                    array_pop($extra_where_clause);
+                    array_pop($extra_where_clause);
+                } else {
+                    $extra_where_clause[] = $term['data'];
+                }
+            }
+            else if($term['type'] == 'punct_bracket_close_round') {
+                $in_function--;
+            }
+
+            if($term['type'] == 'alpha_functionName') {
+                $in_function++;
+=======
 
             if ($term['type'] == 'punct_listsep') {
                 $extra_where_clause .= ' OR ';
@@ -1518,12 +1543,19 @@ function PMA_getSimulatedUpdateQuery($analyzed_sql_results)
                 $extra_where_clause .= ' <> ';
             } else {
                 $extra_where_clause .= $term['data'];
+>>>>>>> origin/master
             }
 
             // Get columns in SET expression.
             if ($prev_term != 'punct') {
                 if ($term['type'] != 'punct_listsep'
                     && $term['type'] != 'punct'
+<<<<<<< HEAD
+                    && $term['type'] != 'punct_bracket_open_round'
+                    && $term['type'] != 'punct_bracket_close_round'
+                    && !$in_function
+=======
+>>>>>>> origin/master
                     && isset($term['data'])
                 ) {
                     if (isset($target_cols[$i])) {
@@ -1547,8 +1579,13 @@ function PMA_getSimulatedUpdateQuery($analyzed_sql_results)
 
     // Get WHERE clause.
     $where_clause .= $analyzed_sql_results['analyzed_sql'][0]['where_clause'];
+<<<<<<< HEAD
+    if (empty($where_clause)) {
+        $where_clause = (!empty($extra_where_clause) && $extra_where_clause[0]) ? implode(' ',$extra_where_clause) : '1';
+=======
     if (empty($where_clause) && empty($extra_where_clause)) {
         $where_clause = '1';
+>>>>>>> origin/master
     }
 
     $matched_row_query = 'SELECT '

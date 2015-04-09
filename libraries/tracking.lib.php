@@ -45,23 +45,45 @@ function PMA_filterTracking(
  *
  * @param string $url_query    url query
  * @param int    $last_version last version
+<<<<<<< HEAD:libraries/tracking.lib.php
+ * @param string $db           database
+ * @param array  $selected     selected tables
+=======
+>>>>>>> origin/master:libraries/tracking.lib.php
  * @param string $type         type of the table; table, view or both
  *
  * @return string
  */
 function PMA_getHtmlForDataDefinitionAndManipulationStatements($url_query,
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $last_version, $db, $selected, $type = 'both'
+) {
+    $html  = '<div id="div_create_version">';
+    $html .= '<form method="post" action="' . $url_query . '">';
+    $html .= PMA_URL_getHiddenInputs($db);
+    foreach ($selected as $selected_table) {
+        $html .= '<input type="hidden" name="selected[]"'
+            . ' value="' . htmlspecialchars($selected_table) . '" />';
+    }
+
+=======
     $last_version, $type = 'both'
 ) {
     $html = '<div id="div_create_version">';
     $html .= '<form method="post" action="tbl_tracking.php' . $url_query . '">';
     $html .= PMA_URL_getHiddenInputs($GLOBALS['db'], $GLOBALS['table']);
+>>>>>>> origin/master:libraries/tracking.lib.php
     $html .= '<fieldset>';
     $html .= '<legend>';
-    $html .= sprintf(
-        __('Create version %1$s of %2$s'),
-        ($last_version + 1),
-        htmlspecialchars($GLOBALS['db'] . '.' . $GLOBALS['table'])
-    );
+    if (count($selected) == 1) {
+        $html .= sprintf(
+            __('Create version %1$s of %2$s'),
+            ($last_version + 1),
+            htmlspecialchars($db . '.' . $selected[0])
+        );
+    } else {
+        $html .= sprintf(__('Create version %1$s'), ($last_version + 1));
+    }
     $html .= '</legend>';
     $html .= '<input type="hidden" name="version" value="' . ($last_version + 1)
         . '" />';
@@ -93,25 +115,45 @@ function PMA_getHtmlForDataDefinitionAndManipulationStatements($url_query,
                 'DROP TABLE'
             ) !== false ? ' checked="checked"' : '')
             . ' /> DROP TABLE<br/>';
+<<<<<<< HEAD:libraries/tracking.lib.php
+    }
+    if ($type == 'both') {
+        $html .= '<br/>';
+    }
+    if ($type == 'both' || $type == 'view') {
+=======
     } elseif ($type == 'both' || $type == 'view') {
+>>>>>>> origin/master:libraries/tracking.lib.php
         $html .= '<input type="checkbox" name="alter_view" value="true"'
             . (/*overload*/mb_stripos(
                 $GLOBALS['cfg']['Server']['tracking_default_statements'],
                 'ALTER VIEW'
             ) !== false ? ' checked="checked"' : '')
             . ' /> ALTER VIEW<br/>';
-        $html .= '<input type="checkbox" name="drop_view" value="true"'
-            . (/*overload*/mb_stripos(
-                $GLOBALS['cfg']['Server']['tracking_default_statements'],
-                'DROP VIEW'
-            ) !== false ? ' checked="checked"' : '')
-            . ' /> DROP VIEW<br/>';
+<<<<<<< HEAD:libraries/tracking.lib.php
         $html .= '<input type="checkbox" name="create_view" value="true"'
             . (/*overload*/mb_stripos(
                 $GLOBALS['cfg']['Server']['tracking_default_statements'],
                 'CREATE VIEW'
             ) !== false ? ' checked="checked"' : '')
             . ' /> CREATE VIEW<br/>';
+=======
+>>>>>>> origin/master:libraries/tracking.lib.php
+        $html .= '<input type="checkbox" name="drop_view" value="true"'
+            . (/*overload*/mb_stripos(
+                $GLOBALS['cfg']['Server']['tracking_default_statements'],
+                'DROP VIEW'
+            ) !== false ? ' checked="checked"' : '')
+            . ' /> DROP VIEW<br/>';
+<<<<<<< HEAD:libraries/tracking.lib.php
+=======
+        $html .= '<input type="checkbox" name="create_view" value="true"'
+            . (/*overload*/mb_stripos(
+                $GLOBALS['cfg']['Server']['tracking_default_statements'],
+                'CREATE VIEW'
+            ) !== false ? ' checked="checked"' : '')
+            . ' /> CREATE VIEW<br/>';
+>>>>>>> origin/master:libraries/tracking.lib.php
     }
     $html .= '<br/>';
 
@@ -185,17 +227,29 @@ function PMA_getHtmlForActivateDeactivateTracking(
     switch($action) {
     case 'activate':
         $legend = __('Activate tracking for %s');
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $value = "activate_now";
+=======
         $hidden = "submit_activate_now";
+>>>>>>> origin/master:libraries/tracking.lib.php
         $button = __('Activate now');
         break;
     case 'deactivate':
         $legend = __('Deactivate tracking for %s');
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $value = "deactivate_now";
+=======
         $hidden = "submit_deactivate_now";
+>>>>>>> origin/master:libraries/tracking.lib.php
         $button = __('Deactivate now');
         break;
     default:
         $legend = '';
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $value = '';
+=======
         $hidden = '';
+>>>>>>> origin/master:libraries/tracking.lib.php
         $button = '';
     }
 
@@ -205,7 +259,11 @@ function PMA_getHtmlForActivateDeactivateTracking(
     );
     $html .= '</legend>';
     $html .= '<input type="hidden" name="version" value="' . $last_version . '" />';
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $html .= '<input type="hidden" name="toggle_activation" value="' . $value . '" />';
+=======
     $html .= '<input type="hidden" name="' . $hidden . '" value="1" />';
+>>>>>>> origin/master:libraries/tracking.lib.php
     $html .= '<input type="submit" value="' . $button . '" />';
     $html .= '</fieldset>';
     $html .= '</form>';
@@ -235,27 +293,37 @@ function PMA_getListOfVersionsOfTable()
 /**
  * Function to get html for displaying last version number
  *
- * @param array  $sql_result   sql result
- * @param int    $last_version last version
- * @param array  $url_params   url parameters
- * @param string $url_query    url query
+ * @param array  $sql_result    sql result
+ * @param int    $last_version  last version
+ * @param array  $url_params    url parameters
+ * @param string $url_query     url query
+ * @param string $pmaThemeImage path to theme's image folder
+ * @param string $text_dir      text direction
  *
  * @return string
  */
-function PMA_getHtmlForTableVersionDetails($sql_result, $last_version, $url_params,
-    $url_query
+function PMA_getHtmlForTableVersionDetails(
+    $sql_result, $last_version, $url_params,
+    $url_query, $pmaThemeImage, $text_dir
 ) {
     $tracking_active = false;
 
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $html  = '<form method="post" action="tbl_tracking.php" name="versionsForm"'
+        . ' id="versionsForm" class="ajax">';
+    $html .= PMA_URL_getHiddenInputs($GLOBALS['db'], $GLOBALS['table']);
+    $html .= '<table id="versions" class="data">';
+=======
     $html = '<table id="versions" class="data">';
+>>>>>>> origin/master:libraries/tracking.lib.php
     $html .= '<thead>';
     $html .= '<tr>';
-    $html .= '<th>' . __('Database') . '</th>';
-    $html .= '<th>' . __('Table') . '</th>';
+    $html .= '<th></th>';
     $html .= '<th>' . __('Version') . '</th>';
     $html .= '<th>' . __('Created') . '</th>';
     $html .= '<th>' . __('Updated') . '</th>';
     $html .= '<th>' . __('Status') . '</th>';
+    $html .= '<th>' . __('Action') . '</th>';
     $html .= '<th>' . __('Show') . '</th>';
     $html .= '</tr>';
     $html .= '</thead>';
@@ -263,6 +331,10 @@ function PMA_getHtmlForTableVersionDetails($sql_result, $last_version, $url_para
 
     $style = 'odd';
     $GLOBALS['dbi']->dataSeek($sql_result, 0);
+    $delete = PMA_Util::getIcon('b_drop.png', __('Delete version'));
+    $report = PMA_Util::getIcon('b_report.png', __('Tracking report'));
+    $structure = PMA_Util::getIcon('b_props.png', __('Structure snapshot'));
+
     while ($version = $GLOBALS['dbi']->fetchArray($sql_result)) {
         if ($version['version'] == $last_version) {
             if ($version['tracking_active'] == 1) {
@@ -271,28 +343,44 @@ function PMA_getHtmlForTableVersionDetails($sql_result, $last_version, $url_para
                 $tracking_active = false;
             }
         }
+        $delete_link = 'tbl_tracking.php' . $url_query . '&amp;version='
+            . htmlspecialchars($version['version'])
+            . '&amp;submit_delete_version=true';
+        $checkbox_id = 'selected_versions_' . htmlspecialchars($version['version']);
+
         $html .= '<tr class="noclick ' . $style . '">';
-        $html .= '<td>' . htmlspecialchars($version['db_name']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($version['table_name']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($version['version']) . '</td>';
+        $html .= '<td class="center">';
+        $html .= '<input type="checkbox" name="selected_versions[]"'
+            . ' class="checkall" id="' . $checkbox_id . '"'
+            . ' value="' . htmlspecialchars($version['version']) . '"/>';
+        $html .= '</td>';
+        $html .= '<th class="floatright">';
+        $html .= '<label for="' . $checkbox_id . '">'
+            . htmlspecialchars($version['version']) . '</label>';
+        $html .= '</th>';
         $html .= '<td>' . htmlspecialchars($version['date_created']) . '</td>';
         $html .= '<td>' . htmlspecialchars($version['date_updated']) . '</td>';
         $html .= '<td>' . PMA_getVersionStatus($version) . '</td>';
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $html .= '<td><a class="delete_version_anchor ajax"'
+            . ' href="' . $delete_link . '" >' . $delete . '</a></td>';
+=======
+>>>>>>> origin/master:libraries/tracking.lib.php
         $html .= '<td><a href="tbl_tracking.php';
         $html .= PMA_URL_getCommon(
             $url_params + array(
                 'report' => 'true', 'version' => $version['version']
             )
         );
-        $html .= '">' . __('Tracking report') . '</a>';
-        $html .= '&nbsp;|&nbsp;';
+        $html .= '">' . $report . '</a>';
+        $html .= '&nbsp;&nbsp;';
         $html .= '<a href="tbl_tracking.php';
         $html .= PMA_URL_getCommon(
             $url_params + array(
                 'snapshot' => 'true', 'version' => $version['version']
             )
         );
-        $html .= '">' . __('Structure snapshot') . '</a>';
+        $html .= '">' . $structure . '</a>';
         $html .= '</td>';
         $html .= '</tr>';
 
@@ -305,6 +393,14 @@ function PMA_getHtmlForTableVersionDetails($sql_result, $last_version, $url_para
 
     $html .= '</tbody>';
     $html .= '</table>';
+
+    $html .= PMA_Util::getWithSelected($pmaThemeImage, $text_dir, "versionsForm");
+    $html .= PMA_Util::getButtonOrImage(
+        'submit_mult', 'mult_submit', 'submit_mult_delete_version',
+        __('Delete version'), 'b_drop.png', 'delete_version'
+    );
+
+    $html .= '</form>';
 
     if ($tracking_active) {
         $html .= PMA_getHtmlForActivateDeactivateTracking(
@@ -364,7 +460,11 @@ function PMA_getSQLResultForSelectableTables()
 function PMA_getHtmlForSelectableTables($selectable_tables_sql_result, $url_query)
 {
     $html = '<form method="post" action="tbl_tracking.php' . $url_query . '">';
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $html .= '<select name="table" class="autosubmit">';
+=======
     $html .= '<select name="table">';
+>>>>>>> origin/master:libraries/tracking.lib.php
     while ($entries = $GLOBALS['dbi']->fetchArray($selectable_tables_sql_result)) {
         if (PMA_Tracker::isTracked($entries['db_name'], $entries['table_name'])) {
             $status = ' (' . __('active') . ')';
@@ -383,7 +483,6 @@ function PMA_getHtmlForSelectableTables($selectable_tables_sql_result, $url_quer
     }
     $html .= '</select>';
     $html .= '<input type="hidden" name="show_versions_submit" value="1" />';
-    $html .= '<input type="submit" value="' . __('Show versions') . '" />';
     $html .= '</form>';
 
     return $html;
@@ -669,13 +768,22 @@ function PMA_getHtmlForOneStatement($entry, $filter_users,
         && (in_array('*', $filter_users) || $filtered_user)
     ) {
         $html = '<tr class="noclick ' . $style . '">';
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $html .= '<td class="right"><small>' . $line_number . '</small></td>';
+=======
         $html .= '<td><small>' . $line_number . '</small></td>';
+>>>>>>> origin/master:libraries/tracking.lib.php
         $html .= '<td><small>'
             . htmlspecialchars($entry['date']) . '</small></td>';
         $html .= '<td><small>'
             . htmlspecialchars($entry['username']) . '</small></td>';
         $html .= '<td>' . $statement . '</td>';
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $html .= '<td class="nowrap"><a  class="delete_entry_anchor ajax"'
+            . ' href="tbl_tracking.php'
+=======
         $html .= '<td class="nowrap"><a href="tbl_tracking.php'
+>>>>>>> origin/master:libraries/tracking.lib.php
             . PMA_URL_getCommon(
                 $url_params + array(
                     'report' => 'true',
@@ -743,7 +851,11 @@ function PMA_getHtmlForDataStatements($data, $filter_users,
     $html .= '<th width="100">' . __('Date') . '</th>';
     $html .= '<th width="60">' . __('Username') . '</th>';
     $html .= '<th>' . $header_message . '</th>';
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $html .= '<th>' . __('Action') . '</th>';
+=======
     $html .= '<th>' . __('Delete') . '</th>';
+>>>>>>> origin/master:libraries/tracking.lib.php
     $html .= '</tr>';
     $html .= '</thead>';
     $html .= '<tbody>';
@@ -987,11 +1099,28 @@ function PMA_deleteTrackingReportRows(&$data)
     $html = '';
     if (isset($_REQUEST['delete_ddlog'])) {
         // Delete ddlog row data
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $html .= PMA_deleteFromTrackingReportLog(
+            $data,
+            'ddlog',
+            'DDL',
+            __('Tracking data definition successfully deleted')
+        );
+=======
         $html .= PMA_handleDeleteDataDefinitionsLog($data);
+>>>>>>> origin/master:libraries/tracking.lib.php
     }
 
     if (isset($_REQUEST['delete_dmlog'])) {
         // Delete dmlog row data
+<<<<<<< HEAD:libraries/tracking.lib.php
+        $html .= PMA_deleteFromTrackingReportLog(
+            $data,
+            'dmlog',
+            'DML',
+            __('Tracking data manipulation successfully deleted')
+        );
+=======
         $html .= PMA_handleDeleteDataManipulationLog($data);
     }
     return $html;
@@ -1025,34 +1154,43 @@ function PMA_handleDeleteDataDefinitionsLog(&$data)
             $msg = PMA_Message::rawError(__('Query error'));
         }
         $html .= $msg->getDisplay();
+>>>>>>> origin/master:libraries/tracking.lib.php
     }
     return $html;
 }
 
 /**
- * Function to handle the delete of fmlog rows
+ * Function to delete from a tracking report log
  *
- * @param array &$data tracked data
+ * @param array  &$data     tracked data
+ * @param string $which_log ddlog|dmlog
+ * @param string $type      DDL|DML
+ * @param string $message   success message
  *
  * @return string HTML for the message
  */
-function PMA_handleDeleteDataManipulationLog(&$data)
+function PMA_deleteFromTrackingReportLog(&$data, $which_log, $type, $message)
 {
     $html = '';
+<<<<<<< HEAD:libraries/tracking.lib.php
+    $delete_id = $_REQUEST['delete_' . $which_log];
+=======
     $delete_id = $_REQUEST['delete_dmlog'];
+>>>>>>> origin/master:libraries/tracking.lib.php
 
-    // Only in case of valable id
+    // Only in case of valid id
     if ($delete_id == (int)$delete_id) {
-        unset($data['dmlog'][$delete_id]);
+        unset($data[$which_log][$delete_id]);
 
         $successfullyDeleted = PMA_Tracker::changeTrackingData(
-            $_REQUEST['db'], $_REQUEST['table'],
-            $_REQUEST['version'], 'DML', $data['dmlog']
+            $_REQUEST['db'],
+            $_REQUEST['table'],
+            $_REQUEST['version'],
+            $type,
+            $data[$which_log]
         );
         if ($successfullyDeleted) {
-            $msg = PMA_Message::success(
-                __('Tracking data manipulation successfully deleted')
-            );
+            $msg = PMA_Message::success($message);
         } else {
             $msg = PMA_Message::rawError(__('Query error'));
         }
@@ -1090,6 +1228,10 @@ function PMA_exportAsSQLDump($entries)
         __('SQL statements exported. Please copy the dump or execute it.')
     );
     $html .= $msg->getDisplay();
+<<<<<<< HEAD:libraries/tracking.lib.php
+
+=======
+>>>>>>> origin/master:libraries/tracking.lib.php
     $db_temp = $GLOBALS['db'];
     $table_temp = $GLOBALS['table'];
 
@@ -1257,6 +1399,35 @@ function PMA_getTrackingSet()
 }
 
 /**
+ * Deletes a tracking version
+ *
+ * @param string $version tracking version
+ *
+ * @return string HTML of the success message
+ */
+function PMA_deleteTrackingVersion($version)
+{
+    $html = '';
+    $versionDeleted = PMA_Tracker::deleteTracking(
+        $GLOBALS['db'],
+        $GLOBALS['table'],
+        $version
+    );
+    if ($versionDeleted) {
+        $msg = PMA_Message::success(
+            sprintf(
+                __('Version %1$s of %2$s was deleted.'),
+                htmlspecialchars($version),
+                htmlspecialchars($GLOBALS['db'] . '.' . $GLOBALS['table'])
+            )
+        );
+        $html .= $msg->getDisplay();
+    }
+
+    return $html;
+}
+
+/**
  * Function to create the tracking version
  *
  * @return string HTML of the success message
@@ -1282,6 +1453,33 @@ function PMA_createTrackingVersion()
             )
         );
         $html .= $msg->getDisplay();
+<<<<<<< HEAD:libraries/tracking.lib.php
+    }
+
+    return $html;
+}
+
+/**
+ * Create tracking version for multiple tables
+ *
+ * @param array $selected list of selected tables
+ *
+ * @return void
+ */
+function PMA_createTrackingForMultipleTables($selected)
+{
+    $tracking_set = PMA_getTrackingSet();
+
+    foreach ($selected as $selected_table) {
+        PMA_Tracker::createVersion(
+            $GLOBALS['db'],
+            $selected_table,
+            $_REQUEST['version'],
+            $tracking_set,
+            PMA_Table::isView($GLOBALS['db'], $selected_table)
+        );
+=======
+>>>>>>> origin/master:libraries/tracking.lib.php
     }
 
     return $html;

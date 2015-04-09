@@ -84,6 +84,8 @@ class Table_Stats_Pdf extends TableStats
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Displays an error on missing coordinates
      *
      * @return void
@@ -101,6 +103,7 @@ class Table_Stats_Pdf extends TableStats
     }
 
     /**
+>>>>>>> origin/master
      * Returns title of the current table,
      * title can have the dimensions of the table
      *

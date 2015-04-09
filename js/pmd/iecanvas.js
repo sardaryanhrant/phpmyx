@@ -4,7 +4,11 @@
  */
 
 function isCanvasSupported() {
+<<<<<<< HEAD
+    var el = document.createElement("canvas");
+=======
     var el = document.getElementById("canvas");
+>>>>>>> origin/master
     return !!(el.getContext && el.getContext("2d"));
 }
 

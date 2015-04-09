@@ -433,10 +433,17 @@ class ImportSql extends ImportPlugin
                 $this->_addData(preg_replace("/\r($|[^\n])/", "\n$1", $newData));
                 unset($newData);
             }
+<<<<<<< HEAD
 
             //Find quotes, comments, delimiter definition or delimiter itself.
             $delimiterFound = $this->_findDelimiterPosition();
 
+=======
+
+            //Find quotes, comments, delimiter definition or delimiter itself.
+            $delimiterFound = $this->_findDelimiterPosition();
+
+>>>>>>> origin/master
             //If no delimiter found, restart and get more data.
             if (false === $delimiterFound) {
                 continue;
@@ -465,6 +472,20 @@ class ImportSql extends ImportPlugin
             );
         }
 
+<<<<<<< HEAD
+        if (! $timeout_passed) {
+            //Commit any possible data in buffers
+            PMA_importRunQuery(
+                $this->_stringFctToUse['substr'](
+                    $this->_data,
+                    $this->_queryBeginPosition
+                ), //Query to execute
+                $this->_data,
+                false,
+                $sql_data
+            );
+        }
+=======
         //Commit any possible data in buffers
         PMA_importRunQuery(
             $this->_stringFctToUse['substr'](
@@ -475,11 +496,13 @@ class ImportSql extends ImportPlugin
             false,
             $sql_data
         );
+>>>>>>> origin/master
         PMA_importRunQuery('', '', false, $sql_data);
     }
 
     /**
      * Handle compatibility options
+<<<<<<< HEAD
      *
      * @param PMA_DatabaseInterface $dbi     Database interface
      * @param array                 $request Request array
@@ -562,6 +585,90 @@ class ImportSql extends ImportPlugin
                 $this->_delimiterPosition
             );
         }
+=======
+     *
+     * @param PMA_DatabaseInterface $dbi     Database interface
+     * @param array                 $request Request array
+     *
+     * @return void
+     */
+    private function _setSQLMode($dbi, $request)
+    {
+        $sql_modes = array();
+        if (isset($request['sql_compatibility'])
+            && 'NONE' != $request['sql_compatibility']
+        ) {
+            $sql_modes[] = $request['sql_compatibility'];
+        }
+        if (isset($request['sql_no_auto_value_on_zero'])) {
+            $sql_modes[] = 'NO_AUTO_VALUE_ON_ZERO';
+        }
+        if (count($sql_modes) > 0) {
+            $dbi->tryQuery(
+                'SET SQL_MODE="' . implode(',', $sql_modes) . '"'
+            );
+        }
+    }
+
+    /**
+     * Look for special chars: comment, string or DELIMITER
+     *
+     * @param array $matches Special chars found in data
+     *
+     * @return array matches
+     */
+    private function _searchSpecialChars(
+        $matches
+    ) {
+        //Don't look for a string/comment/"DELIMITER" if not found previously
+        //or if it's still after current position.
+        if (null === $this->_firstSearchChar
+            || (false !== $this->_firstSearchChar
+            && $this->_firstSearchChar < $this->_delimiterPosition)
+        ) {
+            $bFind = preg_match(
+                '/(\'|"|#|-- |\/\*|`|(?i)(?<![A-Z0-9_])'
+                . $this->_delimiterKeyword . ')/',
+                $this->_stringFctToUse['substr'](
+                    $this->_data,
+                    $this->_delimiterPosition
+                ),
+                $matches,
+                PREG_OFFSET_CAPTURE
+            );
+
+            if (1 === $bFind) {
+                $this->_firstSearchChar = $matches[1][1] + $this->_delimiterPosition;
+            } else {
+                $this->_firstSearchChar = false;
+            }
+        }
+        return $matches;
+    }
+
+    /**
+     * Look for SQL delimiter
+     *
+     * @param int $firstSqlDelimiter First found char position
+     *
+     * @return int
+     */
+    private function _searchSqlDelimiter($firstSqlDelimiter)
+    {
+        //Don't look for the SQL delimiter if not found previously
+        //or if it's still after current position.
+        if (null === $firstSqlDelimiter
+            || (false !== $firstSqlDelimiter
+            && $firstSqlDelimiter < $this->_delimiterPosition)
+        ) {
+            // the cost of doing this one with preg_match() would be too high
+            $firstSqlDelimiter = $this->_stringFctToUse['strpos'](
+                $this->_data,
+                $this->_delimiter,
+                $this->_delimiterPosition
+            );
+        }
+>>>>>>> origin/master
 
         return $firstSqlDelimiter;
     }

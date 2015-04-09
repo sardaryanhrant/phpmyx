@@ -137,9 +137,15 @@ function PMA_changePassword($password, $message, $change_password_message)
         $password, $sql_query, $hashing_function
     );
 
+<<<<<<< HEAD
+    $auth_plugin->handlePasswordChange($password);
+    PMA_getChangePassMessage($change_password_message, $sql_query);
+    PMA_changePassDisplayPage($message, $sql_query);
+=======
     $url_params = $auth_plugin->handlePasswordChange($password);
     PMA_getChangePassMessage($change_password_message, $sql_query);
     PMA_changePassDisplayPage($message, $sql_query, $url_params);
+>>>>>>> origin/master
 }
 
 /**

@@ -155,14 +155,18 @@ AJAX.registerOnload('sql.js', function () {
         var $link = $(this);
         $link.PMA_confirm(question, $link.attr('href'), function (url) {
             $msgbox = PMA_ajaxShowMessage();
-            $.get(url, {'ajax_request': true, 'is_js_confirmed': true}, function (data) {
-                if (data.success) {
-                    PMA_ajaxShowMessage(data.message);
-                    $link.closest('tr').remove();
-                } else {
-                    PMA_ajaxShowMessage(data.error, false);
-                }
-            });
+            if ($link.hasClass('formLinkSubmit')) {
+                submitFormLink($link);
+            } else {
+                $.get(url, {'ajax_request': true, 'is_js_confirmed': true}, function (data) {
+                    if (data.success) {
+                        PMA_ajaxShowMessage(data.message);
+                        $link.closest('tr').remove();
+                    } else {
+                        PMA_ajaxShowMessage(data.error, false);
+                    }
+                });
+            }
         });
     });
 
@@ -472,6 +476,7 @@ AJAX.registerOnload('sql.js', function () {
         function submitShowAllForm() {
             var submitData = $form.serialize() + '&ajax_request=true&ajax_page_request=true';
             PMA_ajaxShowMessage();
+            AJAX.source = $form;
             $.post($form.attr('action'), submitData, AJAX.responseHandler);
         }
     });
@@ -612,6 +617,7 @@ function browseForeignDialog($this_a)
         $dialog = $('<div>').append(data.message).dialog({
             title: PMA_messages.strBrowseForeignValues,
             width: Math.min($(window).width() - 100, 700),
+            maxHeight: $(window).height() - 100,
             dialogClass: 'browse_foreign_modal',
             close: function (ev, ui) {
                 // remove event handlers attached to elements related to dialog
@@ -621,14 +627,12 @@ function browseForeignDialog($this_a)
                 // remove dialog itself
                 $(this).remove();
             },
-            create: function () {
-                $(this).css('maxHeight', $(window).height() - 100);
-            },
             modal: true
         });
     }).done(function () {
         var showAll = false;
-        $(tableId).on('click', 'td a.foreign_value', function () {
+        $(tableId).on('click', 'td a.foreign_value', function (e) {
+            e.preventDefault();
             var $input = $this_a.prev('input[type=text]');
             // Check if input exists or get CEdit edit_box
             if ($input.length === 0 ) {

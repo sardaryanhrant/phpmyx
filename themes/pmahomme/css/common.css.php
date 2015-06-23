@@ -531,23 +531,6 @@ fieldset .formelement {
     white-space: nowrap;
 }
 
-@media all and (min-width: 1600px) {
-    fieldset .formelement {
-        clear: none;
-    }
-    #foreign_keys.relationalTable td:first-child + td {
-        width: 25%;
-    }
-    #foreign_keys.relationalTable td:first-child + td select {
-        width: auto;
-        margin-right: 1%;
-    }
-    #foreign_keys.relationalTable {
-        width: 100%;
-    }
-
-}
-
 /* revert for Gecko */
 fieldset div[class=formelement] {
     white-space: normal;
@@ -581,36 +564,30 @@ table tr.even {
     text-align: <?php echo $left; ?>;
 }
 
-<?php if ($GLOBALS['cfg']['BrowseMarkerEnable']) { ?>
-    /* marked table rows */
-    td.marked,
-    table tr.marked td,
-    table tr.marked th,
-    table tr.marked {
+/* marked table rows */
+td.marked:not(.nomarker),
+table tr.marked:not(.nomarker) td,
+table tr.marked:not(.nomarker) th,
+table tr.marked:not(.nomarker) {
     <?php echo $_SESSION['PMA_Theme']->getCssGradient('ced6df', 'b6c6d7'); ?>
     color: <?php echo $GLOBALS['cfg']['BrowseMarkerColor']; ?>;
-    }
-    <?php
-} ?>
+}
 
-<?php if ($GLOBALS['cfg']['BrowsePointerEnable']) { ?>
-    /* hovered items */
-    .odd:hover,
-    .even:hover,
-    .hover {
+/* hovered items */
+.odd:not(.nopointer):hover,
+.even:not(.nopointer):hover,
+.hover:not(.nopointer) {
     <?php echo $_SESSION['PMA_Theme']->getCssGradient('ced6df', 'b6c6d7'); ?>
     color: <?php echo $GLOBALS['cfg']['BrowsePointerColor']; ?>;
-    }
+}
 
-    /* hovered table rows */
-    table tr.odd:hover th,
-    table tr.even:hover th,
-    table tr.hover th {
+/* hovered table rows */
+table tr.odd:not(.nopointer):hover th,
+table tr.even:not(.nopointer):hover th,
+table tr.hover:not(.nopointer) th {
     <?php echo $_SESSION['PMA_Theme']->getCssGradient('ced6df', 'b6c6d7'); ?>
     color: <?php echo $GLOBALS['cfg']['BrowsePointerColor']; ?>;
-    }
-    <?php
-} ?>
+}
 
 /**
  * marks table rows/cells if the db field is in a where condition
@@ -1167,7 +1144,7 @@ div#tablestatistics table {
     position: fixed;
     padding: .25em .25em .2em;
     top: 0;
-    z-index: 900;
+    z-index: 99;
     background: #888;
 }
 
@@ -2861,6 +2838,7 @@ fieldset .disabled-field td {
 .cEdit .edit_box {
     overflow: hidden;
     padding: 0;
+    margin: 0;
 }
 
 .cEdit .edit_box_posting {
@@ -2871,11 +2849,6 @@ fieldset .disabled-field td {
 .cEdit .edit_area_loading {
     background: #FFF url(<?php echo $_SESSION['PMA_Theme']->getImgPath('ajax_clock_small.gif');?>) no-repeat center;
     height: 10em;
-}
-
-.cEdit .edit_area_right {
-    position: absolute;
-    right: 0;
 }
 
 .cEdit .goto_link {

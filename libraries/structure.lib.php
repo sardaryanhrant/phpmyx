@@ -1577,6 +1577,13 @@ function PMA_getHtmlForEditView($url_params)
         . " AND TABLE_NAME='" . PMA_Util::sqlAddSlashes($GLOBALS['table']) . "';";
     $item = $GLOBALS['dbi']->fetchSingleRow($query);
 
+    $query = "SHOW CREATE TABLE " . PMA_Util::backquote($GLOBALS['db'])
+        . "." . PMA_Util::backquote($GLOBALS['table']);
+    $createView = $GLOBALS['dbi']->fetchValue($query, 0, 'Create View');
+    // get algorithm from $createView of the form CREATE ALGORITHM=<ALGORITHM> DE...
+    $parts = explode(" ", substr($createView, 17));
+    $item['ALGORITHM'] = $parts[0];
+
     $view = array(
         'operation' => 'alter',
         'definer' => $item['DEFINER'],
@@ -1584,6 +1591,7 @@ function PMA_getHtmlForEditView($url_params)
         'name' => $GLOBALS['table'],
         'as' => $item['VIEW_DEFINITION'],
         'with' => $item['CHECK_OPTION'],
+        'algorithm' => $item['ALGORITHM'],
     );
     $url  = 'view_create.php' . PMA_URL_getCommon($url_params) . '&amp;';
     $url .= implode(
@@ -1704,10 +1712,21 @@ function PMA_getHtmlForAddColumn($columns_list)
             . 'value="first" data-pos = "first">'
             . __('at beginning of table')
             . '</option>';
+    $cols_count = count($columns_list);
     foreach ($columns_list as $one_column_name) {
-        $column_selector .= '<option '
-            . 'value="' . htmlspecialchars($one_column_name) . '">'
-            . sprintf(__('after %s'), htmlspecialchars($one_column_name))
+        //by default select the last column (add column at the end of the table)
+        if (--$cols_count == 0) {
+            $column_selector .= '<option '
+                . 'value="' . htmlspecialchars($one_column_name)
+                . '" selected="selected">';
+        } else {
+            $column_selector .= '<option '
+                . 'value="' . htmlspecialchars($one_column_name) . '">';
+        }
+        $column_selector .= sprintf(
+            __('after %s'),
+            htmlspecialchars($one_column_name)
+        )
             . '</option>';
     }
     $column_selector .= '</select>';
@@ -1865,6 +1884,7 @@ function getHtmlForRowStatsTable($showtable, $tbl_collation,
     }
     if (!$is_innodb
         && isset($showtable['Data_length'])
+        && isset($showtable['Rows'])
         && $showtable['Rows'] > 0
         && $mergetable == false
     ) {

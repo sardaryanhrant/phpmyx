@@ -35,6 +35,11 @@ var codemirror_editor = false;
 var codemirror_inline_editor = false;
 
 /**
+ * @var sql_autocomplete_in_progress bool shows if Table/Column name autocomplete AJAX is in progress
+ */
+var sql_autocomplete_in_progress = false;
+
+/**
  * @var sql_autocomplete object containing list of columns in each table
  */
 var sql_autocomplete = false;
@@ -276,7 +281,8 @@ function PMA_current_version(data)
                 /* Security update */
                 htmlClass = 'error';
             }
-            $('#maincontainer').after('<div class="' + htmlClass + '">' + message + '</div>');
+            $('#newer_version_notice').remove();
+            $('#maincontainer').after('<div id="newer_version_notice" class="' + htmlClass + '">' + message + '</div>');
         }
         if (latest === current) {
             version_information_message = ' (' + PMA_messages.strUpToDate + ')';
@@ -1114,19 +1120,24 @@ function addDateTimePicker() {
     if ($.timepicker !== undefined) {
         $('input.timefield, input.datefield, input.datetimefield').each(function () {
 
-            no_decimals = $(this).parent().attr('data-decimals');
+            var decimals = $(this).parent().attr('data-decimals');
+            var type = $(this).parent().attr('data-type');
+
             var showMillisec = false;
             var showMicrosec = false;
             var timeFormat = 'HH:mm:ss';
             // check for decimal places of seconds
-            if (($(this).parent().attr('data-decimals') > 0) && ($(this).parent().attr('data-type').indexOf('time') != -1)){
-                showMillisec = true;
-                timeFormat = 'HH:mm:ss.lc';
-                if ($(this).parent().attr('data-decimals') > 3) {
+            if (decimals > 0 && type.indexOf('time') != -1){
+                if (decimals > 3) {
+                    showMillisec = true;
                     showMicrosec = true;
+                    timeFormat = 'HH:mm:ss.lc';
+                } else {
+                    showMillisec = true;
+                    timeFormat = 'HH:mm:ss.l';
                 }
             }
-            PMA_addDatepicker($(this), $(this).parent().attr('data-type'), {
+            PMA_addDatepicker($(this), type, {
                 showMillisec: showMillisec,
                 showMicrosec: showMicrosec,
                 timeFormat: timeFormat
@@ -1727,11 +1738,15 @@ AJAX.registerOnload('functions.js', function () {
  * "inputRead" event handler for CodeMirror SQL query editors for autocompletion
  */
 function codemirrorAutocompleteOnInputRead(instance) {
-    if (!instance.options.hintOptions.tables || !sql_autocomplete){
+    if (!sql_autocomplete_in_progress
+        && (!instance.options.hintOptions.tables || !sql_autocomplete)) {
+
         if (!sql_autocomplete) {
             // Reset after teardown
             instance.options.hintOptions.tables = false;
             instance.options.hintOptions.defaultTable = '';
+
+            sql_autocomplete_in_progress = true;
 
             var href = 'db_sql_autocomplete.php';
             var params = {
@@ -1746,12 +1761,12 @@ function codemirrorAutocompleteOnInputRead(instance) {
                 data: params,
                 success: function (data) {
                     if (data.success) {
-                        sql_autocomplete = $.parseJSON(data.tables);
+                        var tables = $.parseJSON(data.tables);
                         sql_autocomplete_default_table = PMA_commonParams.get('table');
-                        var result = [];
-                        for (var table in sql_autocomplete) {
-                            if (sql_autocomplete.hasOwnProperty(table)) {
-                                var columns = sql_autocomplete[table];
+                        sql_autocomplete = [];
+                        for (var table in tables) {
+                            if (tables.hasOwnProperty(table)) {
+                                var columns = tables[table];
                                 table = {
                                     text: table,
                                     columns: []
@@ -1771,11 +1786,14 @@ function codemirrorAutocompleteOnInputRead(instance) {
                                     }
                                 }
                             }
-                            result.push(table);
+                            sql_autocomplete.push(table);
                         }
-                        instance.options.hintOptions.tables = result;
+                        instance.options.hintOptions.tables = sql_autocomplete;
                         instance.options.hintOptions.defaultTable = sql_autocomplete_default_table;
                     }
+                },
+                complete: function () {
+                    sql_autocomplete_in_progress = false;
                 }
             });
         }
@@ -2062,7 +2080,7 @@ function PMA_ajaxShowMessage(message, timeout)
     // Create a parent element for the AJAX messages, if necessary
     if ($('#loading_parent').length === 0) {
         $('<div id="loading_parent"></div>')
-        .prependTo("body");
+        .prependTo("#page_content");
     }
     // Update message count to create distinct message elements every time
     ajax_message_count++;
@@ -2489,10 +2507,7 @@ function PMA_SQLPrettyPrint(string)
 
 jQuery.fn.PMA_confirm = function (question, url, callbackFn) {
     var confirmState = PMA_commonParams.get('confirm');
-    // when the Confirm directive is set to false in config.inc.php
-    // and not changed in user prefs, confirmState is ""
-    // when it's unticked in user prefs, confirmState is 1
-    if (confirmState === "" || confirmState === "1") {
+    if (! confirmState) {
         // user does not want to confirm
         if ($.isFunction(callbackFn)) {
             callbackFn.call(this, url);
@@ -2691,7 +2706,7 @@ AJAX.registerOnload('functions.js', function () {
                         // Redirect to table structure page on creation of new table
                         var params_12 = 'ajax_request=true&ajax_page_request=true';
                         params_12 += AJAX.cache.menus.getRequestParam();
-                        tblStruct_url = 'tbl_structure.php?db='+ data._params.db + '&token='+data._params.token +'&goto=db_structure.php&table='+data._params.table+'';
+                        tblStruct_url = 'tbl_structure.php?server=' + data._params.server + '&db='+ data._params.db + '&token='+data._params.token +'&goto=db_structure.php&table='+data._params.table+'';
                         $.get(tblStruct_url, params_12, AJAX.responseHandler);
                     } else {
                         PMA_ajaxShowMessage(
@@ -2727,6 +2742,7 @@ AJAX.registerOnload('functions.js', function () {
                 $("#page_content").html(data.message);
                 PMA_highlightSQL($('#page_content'));
                 PMA_verifyColumnsProperties();
+                PMA_hideShowConnection($('.create_table_form select[name=tbl_storage_engine]'));
                 PMA_ajaxRemoveMessage($msgbox);
             } else {
                 PMA_ajaxShowMessage(data.error);
@@ -3196,6 +3212,7 @@ AJAX.registerOnload('functions.js', function () {
         var params = {
             'ajax_request' : true,
             'token' : PMA_commonParams.get('token'),
+            'server' : PMA_commonParams.get('server'),
             'db' : PMA_commonParams.get('db'),
             'cur_table' : PMA_commonParams.get('table'),
             'getColumnList':true
@@ -3530,7 +3547,11 @@ function showIndexEditDialog($outer)
     $('#index_columns td').each(function () {
         $(this).css("width", $(this).width() + 'px');
     });
-    $('#index_columns tbody').sortable();
+    $('#index_columns tbody').sortable({
+        axis: 'y',
+        containment: $("#index_columns tbody"),
+        tolerance: 'pointer'
+    });
     PMA_showHints($outer);
     PMA_init_slider();
     // Add a slider for selecting how many columns to add to the index
@@ -3815,13 +3836,10 @@ AJAX.registerOnload('functions.js', function () {
      * Enables the text generated by PMA_Util::linkOrButton() to be clickable
      */
     $(document).on('click', 'a.formLinkSubmit', function (e) {
-
-        if ($(this).attr('href').indexOf('=') != -1) {
-            var data = $(this).attr('href').substr($(this).attr('href').indexOf('#') + 1).split('=', 2);
-            $(this).parents('form').append('<input type="hidden" name="' + data[0] + '" value="' + data[1] + '"/>');
+        if (! $(this).hasClass('requireConfirm')) {
+            submitFormLink($(this));
+            return false;
         }
-        $(this).parents('form').submit();
-        return false;
     });
 
     if ($('#update_recent_tables').length) {
@@ -3858,6 +3876,20 @@ AJAX.registerOnload('functions.js', function () {
     }
 }); // end of $()
 
+/**
+ * Submits the form placed in place of a link due to the excessive url length
+ *
+ * @param $link anchor
+ * @returns {Boolean}
+ */
+function submitFormLink($link)
+{
+    if ($link.attr('href').indexOf('=') != -1) {
+        var data = $link.attr('href').substr($link.attr('href').indexOf('#') + 1).split('=', 2);
+        $link.parents('form').append('<input type="hidden" name="' + data[0] + '" value="' + data[1] + '"/>');
+    }
+    $link.parents('form').submit();
+}
 
 /**
  * Initializes slider effect.
@@ -4037,7 +4069,18 @@ AJAX.registerTeardown('functions.js', function () {
         codemirror_editor = false;
     }
 });
-
+AJAX.registerOnload('functions.js', function () {
+    // initializes all lock-page elements lock-id and
+    // val-hash data property
+    $('#page_content form.lock-page textarea, ' +
+            '#page_content form.lock-page input[type="text"]').each(function (i) {
+        $(this).data('lock-id', i);
+        // val-hash is the hash of default value of the field
+        // so that it can be compared with new value hash
+        // to check whether field was modified or not.
+        $(this).data('val-hash', AJAX.hash($(this).val()));
+    });
+});
 /**
  * jQuery plugin to cancel selection in HTML code.
  */

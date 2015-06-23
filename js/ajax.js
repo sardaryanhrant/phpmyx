@@ -306,6 +306,7 @@ var AJAX = {
         }
         if (typeof data.success != 'undefined' && data.success) {
             $table_clone = false;
+            $('html, body').animate({scrollTop: 0}, 'fast');
             PMA_ajaxRemoveMessage(AJAX.$msgbox);
 
             if (data._redirect) {
@@ -431,16 +432,6 @@ var AJAX = {
                     AJAX._callback.call();
                 }
                 AJAX._callback = function () {};
-            });
-            // initializes all lock-page elements lock-id and
-            // val-hash data property
-            $('#page_content form.lock-page textarea, ' +
-            '#page_content form.lock-page input[type="text"]').each(function(i){
-                $(this).data('lock-id', i);
-                // val-hash is the hash of default value of the field
-                // so that it can be compared with new value hash
-                // to check whether field was modified or not.
-                $(this).data('val-hash', AJAX.hash($(this).val()));
             });
         } else {
             PMA_ajaxShowMessage(data.error, false);

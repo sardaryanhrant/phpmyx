@@ -23,7 +23,7 @@
  * Your phpMyAdmin URL.
  *
  * Complete the variable below with the full URL ie
- *    http://www.your_web.net/path_to_your_phpMyAdmin_directory/
+ *    https://example.com/path_to_your_phpMyAdmin_directory/
  *
  * It must contain characters that are valid for a URL, and the path is
  * case sensitive on some Web servers, for example Unix-based servers.
@@ -60,14 +60,6 @@ $cfg['SuhosinDisableWarning'] = false;
  * @global boolean $cfg['LoginCookieValidityDisableWarning']
  */
 $cfg['LoginCookieValidityDisableWarning'] = false;
-
-/**
- * Disable the default warning that is displayed if a difference between
- * the MySQL library and server is detected.
- *
- * @global boolean $cfg['['ServerLibraryDifference_DisableWarning']']
- */
-$cfg['ServerLibraryDifference_DisableWarning'] = false;
 
 /**
  * Disable the default warning about MySQL reserved words in column names
@@ -181,11 +173,15 @@ $cfg['Servers'][$i]['ssl_ca_path'] = null;
 $cfg['Servers'][$i]['ssl_ciphers'] = null;
 
 /**
- * How to connect to MySQL server ('tcp' or 'socket')
+ * MySQL 5.6 or later triggers the mysqlnd driver in PHP to validate the
+ * peer_name of the SSL certifcate
+ * For most self-signed certificates this is a problem. Setting this to false
+ * will disable the check and allow the connection (PHP 5.6.16 or later)
  *
- * @global string $cfg['Servers'][$i]['connect_type']
+ * @link https://bugs.php.net/68344
+ * @global string $cfg['Servers'][$i]['ssl_verify']
  */
-$cfg['Servers'][$i]['connect_type'] = 'tcp';
+$cfg['Servers'][$i]['ssl_verify'] = true;
 
 /**
  * Use compressed protocol for the MySQL connection
@@ -245,14 +241,6 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 $cfg['Servers'][$i]['auth_http_realm'] = '';
 
 /**
- * File containing Swekey ids and login names (see /contrib);
- * leave empty to deactivate Swekey hardware authentication
- *
- * @global string $cfg['Servers'][$i]['auth_swekey_config']
- */
-$cfg['Servers'][$i]['auth_swekey_config'] = '';
-
-/**
  * MySQL user
  *
  * @global string $cfg['Servers'][$i]['user']
@@ -274,6 +262,14 @@ $cfg['Servers'][$i]['password'] = '';
 $cfg['Servers'][$i]['SignonSession'] = '';
 
 /**
+ * Cookie params to match session to use for 'signon' authentication method
+ * It should be an associative array matching result of session_get_cookie_params() in other system
+ *
+ * @global array $cfg['Servers'][$i]['SignonCookieParams']
+ */
+$cfg['Servers'][$i]['SignonCookieParams'] = array();
+
+/**
  * PHP script to use for 'signon' authentication method
  *
  * @global string $cfg['Servers'][$i]['SignonScript']
@@ -293,13 +289,6 @@ $cfg['Servers'][$i]['SignonURL'] = '';
  * @global string $cfg['Servers'][$i]['LogoutURL']
  */
 $cfg['Servers'][$i]['LogoutURL'] = '';
-
-/**
- * Whether to try to connect without password
- *
- * @global boolean $cfg['Servers'][$i]['nopassword']
- */
-$cfg['Servers'][$i]['nopassword'] = false;
 
 /**
  * If set to a db-name, only this db is displayed in navigation panel
@@ -514,7 +503,7 @@ $cfg['Servers'][$i]['MaxTableUiprefs'] = 100;
 
 /**
  * Sets the time zone used by phpMyAdmin. Possible values are explained at
- * http://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html
+ * https://dev.mysql.com/doc/refman/5.7/en/time-zone-support.html
  *
  * @global string $cfg['Servers'][$i]['SessionTimeZone'] = ''
  */
@@ -549,10 +538,10 @@ $cfg['Servers'][$i]['AllowDeny']['order'] = '';
 $cfg['Servers'][$i]['AllowDeny']['rules'] = array();
 
 /**
- * Disable use of INFORMATION_SCHEMA. Is always 'false' for Drizzle.
+ * Disable use of INFORMATION_SCHEMA.
  *
  * @see https://sourceforge.net/p/phpmyadmin/bugs/2606/
- * @see http://bugs.mysql.com/19588
+ * @see https://bugs.mysql.com/19588
  * @global boolean $cfg['Servers'][$i]['DisableIS']
  */
 $cfg['Servers'][$i]['DisableIS'] = false;
@@ -699,13 +688,6 @@ $cfg['OBGzip'] = 'auto';
 $cfg['PersistentConnections'] = false;
 
 /**
- * whether to force using HTTPS
- *
- * @global boolean $cfg['ForceSSL']
- */
-$cfg['ForceSSL'] = false;
-
-/**
  * maximum execution time in seconds (0 for no limit)
  *
  * @global integer $cfg['ExecTimeLimit']
@@ -730,7 +712,6 @@ $cfg['MemoryLimit'] = '-1';
 
 /**
  * mark used tables, make possible to show locked tables (since MySQL 3.23.30)
- * Is ignored for Drizzle.
  *
  * @global boolean $cfg['SkipLockedTables']
  */
@@ -1095,6 +1076,12 @@ $cfg['ShowCreateDb'] = true;
  * Database structure
  */
 
+/** show charset column in database structure (true|false)?
+ *
+ * @global boolean $cfg['ShowDbStructureCharset']
+ */
+$cfg['ShowDbStructureCharset'] = false;
+
 /**
  * show comment column in database structure (true|false)?
  *
@@ -1129,6 +1116,13 @@ $cfg['ShowDbStructureLastCheck'] = false;
  * @global boolean $cfg['HideStructureActions']
  */
 $cfg['HideStructureActions'] = true;
+
+/**
+ * Show column comments in table structure view (true|false)?
+ *
+ * @global boolean $cfg['ShowColumnComments']
+ */
+$cfg['ShowColumnComments'] = true;
 
 
 /*******************************************************************************
@@ -1391,7 +1385,7 @@ $cfg['RowActionType'] = 'both';
 $cfg['Export'] = array();
 
 /**
- * codegen/csv/excel/htmlexcel/htmlword/latex/ods/odt/pdf/sql/texytext/xls/xml/yaml
+ * codegen/csv/excel/htmlexcel/htmlword/latex/ods/odt/pdf/sql/texytext/xml/yaml
  *
  * @global string $cfg['Export']['format']
  */
@@ -1610,48 +1604,6 @@ $cfg['Export']['texytext_null'] = 'NULL';
 /**
  *
  *
- * @global boolean $cfg['Export']['xls_columns']
- */
-$cfg['Export']['xls_columns'] = false;
-
-/**
- *
- *
- * @global string $cfg['Export']['xls_structure_or_data']
- */
-$cfg['Export']['xls_structure_or_data'] = 'data';
-
-/**
- *
- *
- * @global string $cfg['Export']['xls_null']
- */
-$cfg['Export']['xls_null'] = 'NULL';
-
-/**
- *
- *
- * @global boolean $cfg['Export']['xlsx_columns']
- */
-$cfg['Export']['xlsx_columns'] = false;
-
-/**
- *
- *
- * @global string $cfg['Export']['xlsx_structure_or_data']
- */
-$cfg['Export']['xlsx_structure_or_data'] = 'data';
-
-/**
- *
- *
- * @global string $cfg['Export']['xlsx_null']
- */
-$cfg['Export']['xlsx_null'] = 'NULL';
-
-/**
- *
- *
  * @global boolean $cfg['Export']['csv_columns']
  */
 $cfg['Export']['csv_columns'] = false;
@@ -1710,7 +1662,7 @@ $cfg['Export']['csv_removeCRLF'] = false;
  *
  * @global boolean $cfg['Export']['excel_columns']
  */
-$cfg['Export']['excel_columns'] = false;
+$cfg['Export']['excel_columns'] = true;
 
 /**
  *
@@ -1935,7 +1887,7 @@ $cfg['Export']['sql_metadata'] = false;
  *
  * @global boolean $cfg['Export']['sql_use_transaction']
  */
-$cfg['Export']['sql_use_transaction'] = false;
+$cfg['Export']['sql_use_transaction'] = true;
 
 /**
  *
@@ -2364,27 +2316,6 @@ $cfg['Import']['ods_recognize_percentages'] = true;
  */
 $cfg['Import']['ods_recognize_currency'] = true;
 
-/**
- *
- *
- * @global string $cfg['Import']['xml_col_names']
- */
-$cfg['Import']['xls_col_names'] = false;
-
-/**
- *
- *
- * @global string $cfg['Import']['xml_empty_rows']
- */
-$cfg['Import']['xls_empty_rows'] = true;
-
-/**
- *
- *
- * @global string $cfg['Import']['xlsx_col_names']
- */
-$cfg['Import']['xlsx_col_names'] = false;
-
 /*******************************************************************************
  * Schema export defaults
 */
@@ -2565,7 +2496,7 @@ $cfg['DefaultLang'] = 'en';
  *
  * @global string $cfg['DefaultConnectionCollation']
  */
-$cfg['DefaultConnectionCollation'] = 'utf8_unicode_ci';
+$cfg['DefaultConnectionCollation'] = 'utf8mb4_unicode_ci';
 
 /**
  * Force: always use this language, e.g. 'en'
@@ -2599,7 +2530,7 @@ $cfg['RecodingEngine'] = 'auto';
 /**
  * Specify some parameters for iconv used in character set conversion. See iconv
  * documentation for details:
- * http://www.gnu.org/software/libiconv/documentation/libiconv/iconv_open.3.html
+ * https://www.gnu.org/software/libiconv/documentation/libiconv/iconv_open.3.html
  *
  * @global string $cfg['IconvExtraParams']
  */
@@ -2762,14 +2693,14 @@ $cfg['TablePrimaryKeyOrder'] = 'NONE';
 $cfg['RememberSorting'] = true;
 
 /**
- * shows stored relation-comments in 'browse' mode.
+ * shows column comments in 'browse' mode.
  *
  * @global boolean $cfg['ShowBrowseComments']
  */
 $cfg['ShowBrowseComments'] = true;
 
 /**
- * shows stored relation-comments in 'table property' mode.
+ * shows column comments in 'table property' mode.
  *
  * @global boolean $cfg['ShowPropertyComments']
  */
@@ -2883,13 +2814,6 @@ $cfg['TitleDefault'] = '@HTTP_HOST@ | @PHPMYADMIN@';
  */
 
 /**
- * using themes manager please set up here the path to 'themes' else leave empty
- *
- * @global string $cfg['ThemePath']
- */
-$cfg['ThemePath'] = './themes';
-
-/**
  * if you want to use selectable themes and if ThemesPath not empty
  * set it to true, else set it to false (default is false);
  *
@@ -2898,7 +2822,7 @@ $cfg['ThemePath'] = './themes';
 $cfg['ThemeManager'] = true;
 
 /**
- * set up default theme, if ThemePath not empty you can set up here an valid
+ * set up default theme, you can set up here an valid
  * path to themes or 'original' for the original pma-theme
  *
  * @global string $cfg['ThemeDefault']
@@ -3039,7 +2963,7 @@ $cfg['CheckConfigurationPermissions'] = true;
  * is replaced by form with button.
  * This is required as some web servers (IIS) have problems with long URLs.
  * The recommended limit is 2000
- * (see http://www.boutell.com/newfaq/misc/urllength.html) but we put
+ * (see https://www.boutell.com/newfaq/misc/urllength.html) but we put
  * 1000 to accommodate Suhosin, see bug #3358750.
  */
 $cfg['LinkLengthLimit'] = 1000;
@@ -3096,6 +3020,13 @@ $cfg['DBG'] = array();
 $cfg['DBG']['sql'] = false;
 
 /**
+ * Log executed queries and their execution times to syslog
+ *
+ * @global boolean $cfg['DBG']['sql']
+ */
+$cfg['DBG']['sqllog'] = false;
+
+/**
  * Enable to let server present itself as demo server.
  *
  * @global boolean $cfg['DBG']['demo']
@@ -3122,7 +3053,7 @@ $cfg['DefaultFunctions'] = array(
 );
 
 /**
- * Max rows retreived for zoom search
+ * Max rows retrieved for zoom search
  */
 $cfg['maxRowPlotLimit'] = 500;
 
@@ -3142,3 +3073,10 @@ $cfg['MysqlMinVersion'] = array(
     'internal' => 50500,
     'human' => '5.5.0'
 );
+
+/**
+ * Disable shortcuts
+ *
+ * @global array $cfg['DisableShortcutKeys']
+ */
+$cfg['DisableShortcutKeys'] = false;

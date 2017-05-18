@@ -4,6 +4,32 @@
  */
 
 /**
+ * checks whether browser supports web storage
+ *
+ * @param type the type of storage i.e. localStorage or sessionStorage
+ *
+ * @returns bool
+ */
+function isStorageSupported(type, warn)
+{
+    try {
+        window[type].setItem('PMATest', 'test');
+        // Check whether key-value pair was set successfully
+        if (window[type].getItem('PMATest') === 'test') {
+            // Supported, remove test variable from storage
+            window[type].removeItem('PMATest');
+            return true;
+        }
+    } catch(error) {
+        // Not supported
+        if (warn) {
+            PMA_ajaxShowMessage(PMA_messages.strNoLocalStorage, false);
+        }
+    }
+    return false;
+}
+
+/**
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('config.js', function () {
@@ -559,13 +585,14 @@ function setTab(tab_id)
 {
     $('ul.tabs').each(function() {
         var $this = $(this);
-        if (!$this.find('li a[href=#' + tab_id + ']').length) {
+        if (!$this.find('li a[href="#' + tab_id + '"]').length) {
             return;
         }
-        $this.find('li').removeClass('active').find('a[href=#' + tab_id + ']').parent().addClass('active');
+        $this.find('li').removeClass('active').find('a[href="#' + tab_id + '"]').parent().addClass('active');
         $this.parent().find('div.tabs_contents fieldset').hide().filter('#' + tab_id).show();
-        location.hash = 'tab_' + tab_id;
-        $this.parent().find('input[name=tab_hash]').val(location.hash);
+        var hashValue = 'tab_' + tab_id;
+        location.hash = hashValue;
+        $this.parent().find('input[name=tab_hash]').val(hashValue);
     });
 }
 
@@ -600,8 +627,12 @@ AJAX.registerOnload('config.js', function () {
     var tab_check_fnc = function () {
         if (location.hash != prev_hash) {
             prev_hash = location.hash;
-            if (location.hash.match(/^#tab_.+/) && $('#' + location.hash.substr(5)).length) {
-                setTab(location.hash.substr(5));
+            if (prev_hash.match(/^#tab_[a-zA-Z0-9_]+$/)) {
+                // session ID is sometimes appended here
+                var hash = prev_hash.substr(5).split('&')[0];
+                if ($('#' + hash).length) {
+                    setTab(hash);
+                }
             }
         }
     };
@@ -711,7 +742,7 @@ AJAX.registerOnload('config.js', function () {
         });
 
     // detect localStorage state
-    var ls_supported = window.localStorage || false;
+    var ls_supported = isStorageSupported('localStorage', true);
     var ls_exists = ls_supported ? (window.localStorage.config || false) : false;
     $('div.localStorage-' + (ls_supported ? 'un' : '') + 'supported').hide();
     $('div.localStorage-' + (ls_exists ? 'empty' : 'exists')).hide();
@@ -767,8 +798,8 @@ function savePrefsToLocalStorage(form)
         type: 'POST',
         data: {
             ajax_request: true,
-            server: $form.find('input[name=server]').val(),
-            token: $form.find('input[name=token]').val(),
+            server: PMA_commonParams.get('server'),
+            token: PMA_commonParams.get('token'),
             submit_get_json: true
         },
         success: function (data) {
@@ -807,11 +838,11 @@ function updatePrefsDate()
 }
 
 /**
- * Prepares message which informs that localStorage preferences are available and can be imported
+ * Prepares message which informs that localStorage preferences are available and can be imported or deleted
  */
 function offerPrefsAutoimport()
 {
-    var has_config = (window.localStorage || false) && (window.localStorage.config || false);
+    var has_config = (isStorageSupported('localStorage')) && (window.localStorage.config || false);
     var $cnt = $('#prefs_autoload');
     if (!$cnt.length || !has_config) {
         return;
@@ -822,9 +853,19 @@ function offerPrefsAutoimport()
         if ($a.attr('href') == '#no') {
             $cnt.remove();
             $.post('index.php', {
-                token: $cnt.find('input[name=token]').val(),
+                token: PMA_commonParams.get('token'),
+                server: PMA_commonParams.get('server'),
                 prefs_autoload: 'hide'
-            });
+            }, null, 'html');
+            return;
+        } else if ($a.attr('href') == '#delete') {
+            $cnt.remove();
+            localStorage.clear();
+            $.post('index.php', {
+                token: PMA_commonParams.get('token'),
+                server: PMA_commonParams.get('server'),
+                prefs_autoload: 'hide'
+            }, null, 'html');
             return;
         }
         $cnt.find('input[name=json]').val(window.localStorage.config);

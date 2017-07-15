@@ -179,6 +179,9 @@ class Translator
             $expr = ltrim(substr($expr, 1));
         }
 
+        // Cleanup from unwanted chars
+        $expr = preg_replace('@[^n0-9:\(\)\?=!<>/%&| ]@', '', $expr);
+
         return $expr;
     }
 
@@ -194,6 +197,9 @@ class Translator
         $parts = explode(';', $expr, 2);
         $nplurals = explode('=', trim($parts[0]), 2);
         if (strtolower(rtrim($nplurals[0])) != 'nplurals') {
+            return 1;
+        }
+        if (count($nplurals) == 1) {
             return 1;
         }
 
@@ -232,7 +238,11 @@ class Translator
 
         // cache header field for plural forms
         if (is_null($this->pluralequation)) {
-            $header = $this->cache_translations[''];
+            if (isset($this->cache_translations[''])) {
+                $header = $this->cache_translations[''];
+            } else {
+                $header = '';
+            }
             $expr = $this->extractPluralsForms($header);
             $this->pluralequation = $this->sanitizePluralExpression($expr);
             $this->pluralcount = $this->extractPluralCount($expr);
@@ -253,9 +263,13 @@ class Translator
         if (is_null($this->pluralexpression)) {
             $this->pluralexpression = new ExpressionLanguage();
         }
-        $plural = $this->pluralexpression->evaluate(
-            $this->getPluralForms(), array('n' => $n)
-        );
+        try {
+            $plural = $this->pluralexpression->evaluate(
+                $this->getPluralForms(), array('n' => $n)
+            );
+        } catch (\Exception $e) {
+            $plural = 0;
+        }
 
         if ($plural >= $this->pluralcount) {
             $plural = $this->pluralcount - 1;
@@ -286,6 +300,10 @@ class Translator
 
         $result = $this->cache_translations[$key];
         $list = explode(chr(0), $result);
+
+        if (!isset($list[$select])) {
+            return $list[0];
+        }
 
         return $list[$select];
     }
